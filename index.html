@@ -1,78 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>My Vocab</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Roboto&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-  <link rel="stylesheet" href="app.css">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Vocabulary</title>
 </head>
-
 <body>
-  <section class="main">
-    <header>
-      <h1 class="main-title">Vocabulary<span class="h1-span">(v0.1)</span></h1>
-    </header>
-    <form class="addWord">
-      <input class="input" id="word" name="word" type="text" placeholder="new word" autocomplete="off">
-      <input class="input" id="translation" name="translation" type="text" placeholder="translation" autocomplete="off">
-      <button type="button" class="btn-add button">Add new word</button>
-    </form>
-    <div class="title-box">
-      <h2 class="title" data-name="Words to learn">No words added</h2>
-    </div>
-    <ul class="to-learn"></ul>
-    <div class="learned-title-box">
-      <h2 class="title learned-title" data-name="Learned words">No words learned</h2>
-    </div>
-    <ul class="learned"></ul>
-    <div class="delete-block">
-      <button class="delete-all"><span class="delete-all-text">CLEAR VOCAB</span></button>
-    </div>
-  </section>
+    <section class="content">
 
-  <!-- Edit word modal  -->
-  <div class="modal" data-modal="edit">
-    <svg class="modal__cross modal__close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path
-          d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>
-    </svg>
-    <h3 class="modal__title">Word editor</h3>
+    </section>
 
-    <form class="form">
-      <div class="form__inputs">
-        <label><!-- labels here in case of further effects ;) -->
-        <input class="form__input" name="word" type="text" autocomplete="off" required>
-      </label>
-        <span class="form__separator">&#9866;</span>
-        <label>
-          <input class="form__input form__translation" name="translation" type="text" autocomplete="off" required>
-        </label>
-      </div>
-      <button class="form__btn button" type="submit">Save</button>
-    </form>
-
-  </div>
-
-<!--  <div class="modal" data-modal="delete">-->
-<!--    <svg class="modal__cross modal__close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">-->
-<!--      <path-->
-<!--          d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>-->
-<!--    </svg>-->
-<!--    <h3 class="modal__title">Confirm deletion of word<span class="modal__delete-word"></span>:</h3>-->
-<!--    <div class="modal__buttons">-->
-<!--      <button class="modal__delete-btn button" type="button">Yes</button>-->
-<!--      <button class="modal__undo-btn button" type="button">No</button>-->
-<!--    </div>-->
-
-<!--  </div>-->
-
-  <div class="overlay" id="overlay-modal"></div>
-  <script src="index.js"></script>
+    <script src="dist/dev-bundle.js"></script>
 </body>
-
 </html>
