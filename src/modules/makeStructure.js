@@ -9,9 +9,15 @@ const makeVocabHeader = () => {
 const makeForm = () => {
     return `
         <form class="vocab__form">
-          <input class="vocab__input" id="word" name="word" type="text" placeholder="new word" autocomplete="off">
-          <input class="vocab__input" id="translation" name="translation" type="text" placeholder="translation" autocomplete="off">
-          <button class="vocab__add-btn button" type="submit">Add new word</button>
+            <label class="vocab__label">
+                <input class="vocab__input" id="word" name="word" type="text" placeholder="new word" autocomplete="off">
+                <span class="vocab__warning">Обязательное поле!</span>
+            </label>
+            <label class="vocab__label">
+                <input class="vocab__input" id="translation" name="translation" type="text" placeholder="translation" autocomplete="off">
+                <span class="vocab__warning">Обязательное поле!</span>
+            </label>
+            <button class="vocab__add-btn button" type="submit">Add new word</button>
         </form> 
     `;
 };

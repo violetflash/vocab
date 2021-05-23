@@ -1,0 +1,134 @@
+$main-color: #f00;
+
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  block-size: inherit;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #282c34;
+  font-family: 'Roboto', sans-serif;
+}
+
+.button {
+  padding: 10px;
+  background-color: #aaf3ab;
+  border: 2px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  outline: transparent;
+  transition: all 0.3s;
+}
+
+.title {
+  position: relative;
+  margin: 0 auto 50px;
+  padding-bottom: 10px;
+  width: 50%;
+  text-align: center;
+  font-family: 'Caveat', cursive;
+  font-size: 40px;
+  overflow: hidden;
+  /*border-bottom: 1px solid #837d7d;*/
+}
+
+.title::before {
+  position: absolute;
+  top: 53px;
+  left: -244px;
+  content: '';
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  border: 1px solid #837d7d;
+}
+
+.title span {
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.content {
+  margin: 100px 0 0;
+  padding: 20px 50px 50px;
+  border-radius: 5px 5px 0 0;
+  background-color: #f1f1e4;
+}
+
+.vocab {
+
+  &__form {
+    display: flex;
+    align-items: center;
+  }
+
+  &__label {
+    position: relative;
+    margin-right: 20px;
+  }
+
+  &__input {
+    padding: 10px 15px;
+  }
+
+  &__warning {
+    display: block;
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    font-size: 14px;
+    color: #e75656;
+    transition: all 0.3s ease;
+
+    &.js-active {
+      color: tomato;
+      opacity: 1;
+      visibility: visible;
+      animation: anim 0.4s;
+    }
+  }
+
+  &__words {
+    margin-top: 50px;
+  }
+}
+
+
+@keyframes anim {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+
+/* ==== MODAL ====*/
+.overlay {
+  opacity: 0;
+  visibility: hidden;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 20;
+  transition: all 0.3s;
+}
