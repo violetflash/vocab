@@ -10,7 +10,7 @@
 ## Файловая структура
 
 ```
-webpack-frontend-template
+Vocab
 ├── dist/
 ├── src/
 │   ├── assets/
