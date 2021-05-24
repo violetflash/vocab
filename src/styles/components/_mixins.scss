@@ -1,0 +1,37 @@
+
+//<Подключение шрифта>=====================================================================================================================
+@mixin font($font_name, $file_name, $weight, $style) {
+
+  @font-face {
+    font-family: $font_name;
+    font-display: swap;
+    src: url("../assets/fonts/#{$file_name}.woff2") format("woff2");
+    src: url("../assets/fonts/#{$file_name}.woff") format("woff");
+    font-weight: #{$weight};
+    font-style: #{$style};
+  }
+}
+//</Подключение шрифта>=====================================================================================================================
+
+//<Адаптивный шрифт>=====================================================================================================================
+@mixin adaptive-font($pcSize, $mobSize, $maxSize) {
+  $addSize: $pcSize - $mobSize;
+  @if $maxSize == 1 {
+    font-size: $pcSize + px;
+    @media (max-width: #{$maxWidthContainer + px}) {
+      font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidthContainer - 320}));
+    }
+  } @else {
+    font-size: calc(#{$mobSize + px} + #{$addSize} * ((100vw - 320px) / #{$maxWidth - 320}));
+  }
+}
+//</Адаптивный шрифт>=====================================================================================================================
+
+// FOCUS ===============================================================================
+@mixin focus {
+  transition: all 0.3s ease 0s;
+  &:focus {
+    outline: transparent;
+    box-shadow: 0 0 0 3px rgba(21, 156, 228, 0.4);
+  }
+}

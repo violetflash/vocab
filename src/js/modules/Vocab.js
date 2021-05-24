@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 // Add the Firebase products that you want to use
 import "firebase/database";
 import makeStructure from './makeStructure';
-import {writeWord, readDatabase, checkInputs} from './utils';
+import { writeWord, readDatabase, checkInputs } from './utils';
 
 //TODO header - make canvas with arc
 
@@ -38,18 +38,20 @@ class Vocab {
     }
 
     eventListeners() {
-        this.root.addEventListener('click', (e) => {
+        this.root.addEventListener('click', e => {
             const target = e.target;
+            if (target.closest('.some-class')) {
+                return;
+            }
 
         });
 
         const form = this.root.querySelector('form');
         const inputs = form.querySelectorAll('input[type="text"]');
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', e => {
             e.preventDefault();
 
             checkInputs(inputs);
-            console.log(1)
         });
     }
 

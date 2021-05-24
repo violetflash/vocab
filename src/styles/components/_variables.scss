@@ -1,0 +1,31 @@
+// цвета сайта
+:root {
+  --mainColor: #252525;
+  --mainColor-light: rgba(#252525, 0.5);
+  --accent: #f23d18;
+  --grey: #f4f4f4;
+}
+
+// для спользования режима RGBA
+$mainColor: #252525;
+$mainColor-hover: #000;
+$mainColor-light: rgba(#252525, 0.5);
+$white: #fff;
+$grey: #f4f4f4;
+$accent: #f23d18;
+
+// <Шрифт по умолчанию>========================
+$fontFamily: "Roboto", sans-serif;
+$fontFamily2: "Caveat", cursive;
+
+// <Переменные контейнера>=====================
+$minWidth: 320;
+$maxWidth: 1400;
+$maxWidthContainer: 1234;
+$md1: $maxWidthContainer + 12;
+$md2: 991.98;
+$md3: 767.98;
+$md4: 479.98;
+
+// <Переменные контента>
+$modalWidth: 490px;

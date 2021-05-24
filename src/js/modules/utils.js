@@ -6,9 +6,9 @@ const writeWord = (firebase, target, word, translation, example = '') => {
     });
 };
 
-const readDatabase = (firebase, word) => {
+const readDatabase = firebase => {
     const dbRef = firebase.database().ref('vocab/');
-    dbRef.on('value', (snapshot) => {
+    dbRef.on('value', snapshot => {
         if (snapshot.exists()) {
             // console.log(snapshot.val());
             localStorage.setItem('vocab', JSON.stringify(snapshot.val()));
@@ -18,8 +18,8 @@ const readDatabase = (firebase, word) => {
     });
 };
 
-const checkInputs = (arr) => {
-    arr.forEach((input) => {
+const checkInputs = arr => {
+    arr.forEach(input => {
         if (!input.value) {
             input.nextElementSibling.classList.add('js-active');
             setTimeout(() => {
@@ -27,6 +27,6 @@ const checkInputs = (arr) => {
             }, 1000);
         }
     });
-}
+};
 
-export {writeWord, readDatabase, checkInputs};
+export { writeWord, readDatabase, checkInputs };

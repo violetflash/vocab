@@ -1,0 +1,50 @@
+@import "./components/mixins";
+@import "./components/fonts";
+@import "./components/variables";
+
+// <vendors + plugins>=================================
+//@import "components/vendors/vendors";
+
+// <Общие параметры>===================================
+@import "./components/settings";
+
+body {
+  margin: 0;
+  height: 100%;
+  font-family: $fontFamily;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1.2;
+  color: var(--mainColor);
+  background-color: $white;
+
+  &.js-overflow {
+    overflow: hidden;
+  }
+}
+
+// Оболочка
+.site-container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 100%;
+  background-color: #282c34;
+}
+
+// Главный контейнер
+.container {
+  margin: 0 auto;
+  padding: 0 15px;
+  max-width: $maxWidthContainer + px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// <ПОДКЛЮЧЕНИЕ ФАЙЛОВ СТИЛЕЙ СТРАНИЦ И ЭЛЕМЕНТОВ>===============================
+@import "./components/vocab";
+@import "./components/modal";
+// ===============================================================================
