@@ -3,7 +3,7 @@ import firebase from "firebase/app";
 // Add the Firebase products that you want to use
 import "firebase/database";
 import makeStructure from './makeStructure';
-import { writeWord, readDatabase, checkInputs } from './utils';
+import { writeWord, readDatabase, checkInputs, renderList } from './utils';
 
 //TODO header - make canvas with arc
 
@@ -12,11 +12,15 @@ class Vocab {
         {
             root,
             db,
+            word,
+            translation,
             firebaseConfig
         }
     ) {
         this.root = document.querySelector(root);
         this.db = db;
+        this.word = word;
+        this.translation = translation;
         this.firebaseConfig = firebaseConfig;
         this.actual = 'vocab/actual/';
         this.learned = 'vocab/learned/';
@@ -26,6 +30,7 @@ class Vocab {
 
     addNewWord(target, word, translation, example) {
         writeWord(firebase, target, word, translation, example);
+        this.getDatabase();
     }
 
     getDatabase() {
@@ -37,11 +42,26 @@ class Vocab {
         makeStructure(this.root);
     }
 
+    render() {
+        const { words } = this.words;
+        for (const key in words) {
+            if (key === 'actual') {
+                console.log('render for actual list');
+                for (const word in words[key]) {
+                    renderList(words[key][word]);
+                }
+                //TODO IM HERE! NEED TO ADD TARGET TO RENDER LIST
+                // renderList(insert source here);
+            }
+        }
+
+    }
+
     eventListeners() {
         this.root.addEventListener('click', e => {
             const target = e.target;
             if (target.closest('.some-class')) {
-                // return;
+                console.log(1);
             }
 
         });
@@ -50,8 +70,15 @@ class Vocab {
         const inputs = form.querySelectorAll('input[type="text"]');
         form.addEventListener('submit', e => {
             e.preventDefault();
-            console.log(1);
-            checkInputs(inputs);
+
+            if (checkInputs(inputs)) {  //write word to database
+                const word = document.querySelector(this.word).value;
+                const translation = document.querySelector(this.translation).value;
+                this.addNewWord(this.actual, word, translation);
+                form.reset();
+                this.render();
+            }
+
         });
     }
 
@@ -65,6 +92,11 @@ class Vocab {
         this.initFirebase();
         this.getDatabase();
         this.eventListeners();
+
+        //first time render
+        if  (this.words.learned || this.words.actual) {
+            this.render();
+        }
 
 
         // this.addNewWord(this.actual,'hello', 'привет', 'привет мир!');

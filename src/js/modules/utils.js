@@ -1,8 +1,7 @@
-const writeWord = (firebase, target, word, translation, example = '') => {
+const writeWord = (firebase, target, word, translation) => {
     firebase.database().ref(target + word).set({
         word,
         translation,
-        example,
     });
 };
 
@@ -19,14 +18,36 @@ const readDatabase = firebase => {
 };
 
 const checkInputs = arr => {
+    let res = true;
     arr.forEach(input => {
+        //add warning
         if (!input.value) {
             input.nextElementSibling.classList.add('js-active');
+
+            //remove warning
             setTimeout(() => {
                 input.nextElementSibling.classList.remove('js-active');
-            }, 1000);
+            }, 2000);
+            res = false;
         }
     });
+
+    return res;
 };
 
-export { writeWord, readDatabase, checkInputs };
+const renderList = (target, source) => {
+    target.innerHTML = '';  //clear list for each render process
+    target.insertAdjacentHTML('afterbegin', `
+        <li class="list__row">
+            <span class="list__word">${source.word}</span>
+            <span class="list__translation">${source.translation}</span>
+            <div class="list__controls">
+                <button class="list__move">Move to $</button>
+                <button class="list__edit">Edit</button>
+                <button class="list__remove">Delete</button>
+            </div>
+        </li>
+    `);
+};
+
+export { writeWord, readDatabase, checkInputs, renderList };
