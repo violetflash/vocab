@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 const isProduction = !isDevelopment;
@@ -21,22 +22,22 @@ const optimization = () => {
         config.minimizer = [
             new OptimizeCssAssetsWebpackPlugin(),
             new TerserWebpackPlugin()
-        ]
+        ];
     }
 
     return config;
 };
 
-const filename = ext => isDevelopment ? `[name].${ext}` : `[name].[hash].${ext}`;
+const filename = ext => (isDevelopment ? `[name].${ext}` : `[name].[hash].${ext}`);
 
-const cssLoaders = (extra) => {
+const cssLoaders = extra => {
     const loaders = [
         {
             loader: MiniCssExtractPlugin.loader,
-            options: {
-                hmr: isDevelopment,
-                reloadAll: true
-            }
+            // options: {
+            //     hmr: isDevelopment,
+            //     reloadAll: true
+            // }
         }, 'css-loader'
     ];
 
@@ -45,37 +46,6 @@ const cssLoaders = (extra) => {
     }
 
     return loaders;
-};
-
-const babelOptions = preset => {
-
-    const options = {
-        presets: [
-            '@babel/preset-env'
-        ],
-        plugins: [
-            '@babel/plugin-proposal-class-properties'
-        ]
-    };
-
-    if (preset) {
-        options.presets.push(preset);
-    }
-
-    return options;
-};
-
-const jsLoaders = () => {
-  const loaders = [{
-      loader: 'babel-loader',
-      options: babelOptions()
-  }];
-
-  if (isDevelopment) {
-      loaders.push('eslint-loader');
-  }
-
-  return loaders;
 };
 
 const plugins = () => {
@@ -87,21 +57,27 @@ const plugins = () => {
             }
         }),
         new CleanWebpackPlugin(),
-        new CopyWebpackPlugin([
-            {
-                from: path.resolve(__dirname, 'src/favicon.ico'),
-                to: path.resolve(__dirname, 'dist')
-            },
-            {
-                from: path.resolve(__dirname, 'src/assets'),
-                to: path.resolve(__dirname, 'dist/assets')
-            },
-
-        ]),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: path.resolve(__dirname, 'src/favicon.ico'),
+                    to: path.resolve(__dirname, 'dist')
+                },
+                {
+                    from: path.resolve(__dirname, 'src/assets'),
+                    to: path.resolve(__dirname, 'dist/assets')
+                },
+            ],
+        }),
         new MiniCssExtractPlugin({
             filename: `css/${filename('css')}`
-        })
+        }),
+
     ];
+
+    if (isDevelopment) {
+        base.push(new ESLintPlugin());
+    }
 
     if (isProduction) {
         base.push(new BundleAnalyzerPlugin());
@@ -191,24 +167,32 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: jsLoaders()
-            },
-            {
-                test: /\.ts$/,
-                exclude: /node_modules/,
-                loader: {
+                // loader: jsLoaders()
+                use: {
                     loader: 'babel-loader',
-                    options: babelOptions('@babel/preset-typescript')
+                    options: {
+                        presets: ['@babel/preset-env'],
+                        plugins: ['@babel/plugin-proposal-class-properties']
+                    }
                 }
+
             },
-            {
-                test: /\.jsx$/,
-                exclude: /node_modules/,
-                loader: {
-                    loader: 'babel-loader',
-                    options: babelOptions('@babel/preset-react')
-                }
-            }
+            // {
+            //     test: /\.ts$/,
+            //     exclude: /node_modules/,
+            //     loader: {
+            //         loader: 'babel-loader',
+            //         options: babelOptions('@babel/preset-typescript')
+            //     }
+            // },
+            // {
+            //     test: /\.jsx$/,
+            //     exclude: /node_modules/,
+            //     loader: {
+            //         loader: 'babel-loader',
+            //         options: babelOptions('@babel/preset-react')
+            //     }
+            // }
         ]
     }
 };
