@@ -57,6 +57,10 @@
 
   &__input {
     padding: 10px 15px;
+    border: none;
+    background-color: inherit;
+    border-bottom: 1px solid #837d7d;
+    font-size: 18px;
   }
 
   &__warning {

@@ -87,6 +87,7 @@ const plugins = () => {
 };
 
 module.exports = {
+    target: process.env.NODE_ENV === "development" ? "web" : "browserslist",
     context: path.resolve(__dirname, 'src'),
     mode: 'development',
     entry: {

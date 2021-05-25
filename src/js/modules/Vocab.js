@@ -41,7 +41,7 @@ class Vocab {
         this.root.addEventListener('click', e => {
             const target = e.target;
             if (target.closest('.some-class')) {
-                return;
+                // return;
             }
 
         });
@@ -50,7 +50,7 @@ class Vocab {
         const inputs = form.querySelectorAll('input[type="text"]');
         form.addEventListener('submit', e => {
             e.preventDefault();
-
+            console.log(1);
             checkInputs(inputs);
         });
     }
