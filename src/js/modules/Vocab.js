@@ -43,16 +43,24 @@ class Vocab {
     }
 
     render() {
-        const { words } = this.words;
+        const { words } = this;
+        let counter = 0;
+        const actual = document.getElementById('actual');
+        actual.innerHTML = '';
+        // const learned = document.getElementById('learned');
+
         for (const key in words) {
-            if (key === 'actual') {
-                console.log('render for actual list');
-                for (const word in words[key]) {
-                    renderList(words[key][word]);
-                }
-                //TODO IM HERE! NEED TO ADD TARGET TO RENDER LIST
-                // renderList(insert source here);
+            const length = Object.keys(words[key]).length;
+            for (const word in words[key]) {
+                const index = length - counter;
+                const target = document.getElementById(key);
+                renderList(target, words[key][word], index);
+                counter++;
+                console.log(words[key][word]);
             }
+            //TODO IM HERE! NEED TO ADD TARGET TO RENDER LIST
+            // renderList(insert source here);
+
         }
 
     }
@@ -64,6 +72,24 @@ class Vocab {
                 console.log(1);
             }
 
+        });
+
+        this.root.addEventListener('mouseover', e => {
+            let target = e.target;
+
+            if (target.closest('.list__row')) {
+                target = target.closest('.list__row');
+                target.querySelector('.list__controls').classList.add('js-active');
+            }
+        });
+
+        this.root.addEventListener('mouseout', e => {
+            let target = e.target;
+
+            if (target.closest('.list__row')) {
+                target = target.closest('.list__row');
+                target.querySelector('.list__controls').classList.remove('js-active');
+            }
         });
 
         const form = this.root.querySelector('form');

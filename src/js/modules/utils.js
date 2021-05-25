@@ -35,16 +35,15 @@ const checkInputs = arr => {
     return res;
 };
 
-const renderList = (target, source) => {
-    target.innerHTML = '';  //clear list for each render process
+const renderList = (target, source, index) => {
     target.insertAdjacentHTML('afterbegin', `
-        <li class="list__row">
+        <li class="list__row" data-index="${index})">
             <span class="list__word">${source.word}</span>
             <span class="list__translation">${source.translation}</span>
-            <div class="list__controls">
-                <button class="list__move">Move to $</button>
-                <button class="list__edit">Edit</button>
-                <button class="list__remove">Delete</button>
+            <div class="list__controls controls">
+                <button class="controls__move">Move to $</button>
+                <button class="controls__edit">Edit</button>
+                <button class="controls__remove">Delete</button>
             </div>
         </li>
     `);

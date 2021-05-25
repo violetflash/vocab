@@ -25,7 +25,7 @@ const makeActual = () => `
             <h2 class="vocab__title" data-name="Words to learn">No words added</h2>
         </div>
 <!--        <img class="" src="./assets/images/recycle.png" alt="">-->
-        <ul class="vocab__list list"></ul>
+        <ul id="actual" class="vocab__list list"></ul>
     </div>
 `;
 
@@ -35,7 +35,7 @@ const makeLearned = () => `
             <h2 class="vocab__title" data-name="Learned words">No words learned</h2>
         </div>
 <!--        <img class="" src="./assets/images/sort.png" alt="">-->
-        <ul class="vocab__list list"></ul>
+        <ul id="learned" class="vocab__list list"></ul>
     </div>
 `;
 

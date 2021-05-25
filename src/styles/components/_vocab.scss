@@ -96,6 +96,82 @@
   }
 }
 
+.list {
+  &__row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 5px 0 5px 20px;
+    border-top: 1px solid #ccc;
+    transition: all 0.7s;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: attr(data-index);
+      margin-right: 10px;
+      font-size: 12px;
+      color: #757575;
+    }
+
+    &:last-child {
+      border-bottom: 1px solid #ccc;
+    }
+  }
+
+  &__word {
+    position: relative;
+    margin-right: 20px;
+    font-weight: 700;
+
+    &:after {
+      content: '-';
+      margin-left: 15px;
+    }
+  }
+
+  &__translation {
+    background-color: #e5e2d7;
+    padding: 5px 10px;
+  }
+
+  &__controls {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(10px);
+    transition: all 0.3s ease-in-out;
+
+    &.js-active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+}
+
+.controls {
+  &__edit {
+    border: none;
+    /*padding: 4px;*/
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 10px;
+    width: 16px;
+    height: 16px;
+    //background-image: url('../assets/images/recycle.png);
+    background-position: center;
+    background-size: 16px;
+    background-repeat: no-repeat;
+    outline: transparent;
+  }
+}
+
 
 @keyframes anim {
   0% {
