@@ -41,30 +41,47 @@ const makeLearned = () => `
     </div>
 `;
 
-const makeEditModal = () => `
-    <div class="overlay">
-        <div class="modal modal-edit" data-modal="edit">
-            <svg class="modal__cross modal__close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 
-                    9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>
-            </svg>
-            <h3 class="modal__title">Word editor</h3>
-            <form class="modal__form">
-                <div class="modal__inputs">
-                    <label><!-- labels here in case of further effects ;) -->
-                        <input class="modal__input" name="word" type="text" autocomplete="off">
-                    </label>
-                    <span class="modal__separator">&#9866;</span>
-                    <label>
-                        <input class="modal__input modal__translation" name="translation" type="text" 
-                            autocomplete="off">
-                    </label>
-                </div>
-                <button class="modal__btn button" type="submit">Save</button>
-            </form>
+const makeModals = () => `
+    <div class="modal modal-edit">
+        <svg class="modal__cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 
+                9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>
+        </svg>
+        <h3 class="modal__title">Word editor</h3>
+        <form class="modal__form">
+            <div class="modal__inputs">
+                <label><!-- labels here in case of further effects ;) -->
+                    <input class="modal__input" name="word" type="text" autocomplete="off">
+                </label>
+                <span class="modal__separator">&#9866;</span>
+                <label>
+                    <input class="modal__input modal__translation" name="translation" type="text" 
+                        autocomplete="off">
+                </label>
+            </div>
+            <button class="modal__btn button" type="submit">Save</button>
+        </form>
+    </div>
+    
+    <div class="modal modal-delete">
+        <svg class="modal__cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 
+                9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>
+        </svg>
+        <h3 class="modal__title">Confirm deletion of word:
+            <div class="modal__subtitle"><span class="modal__word-to-delete"></span></div>
+            
+        </h3>
+        <div class="modal__buttons">
+            <button class="modal__delete-btn button" type="button">Yes</button>
+            <button class="modal__undo-btn button" type="button">No</button>
         </div>
     </div>
+    
+    <div class="overlay"></div>
 `;
+
+
 
 const makeStructure = root => {
     root.insertAdjacentHTML('afterbegin', makeVocabHeader());
@@ -73,7 +90,7 @@ const makeStructure = root => {
     main.insertAdjacentHTML('beforeend', makeForm());
     main.insertAdjacentHTML('beforeend', makeActual());
     main.insertAdjacentHTML('beforeend', makeLearned());
-    main.insertAdjacentHTML('beforeend', makeEditModal());
+    main.insertAdjacentHTML('beforeend', makeModals());
     root.append(main);
 };
 

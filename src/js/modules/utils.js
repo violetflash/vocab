@@ -10,6 +10,7 @@ const deleteWord = (firebase, reference) => {
     firebase.database().ref(reference).remove();
 };
 
+const capitalizer = word => word[0].toUpperCase() + word.slice(1);
 
 
 const readDatabase = firebase => {
@@ -43,14 +44,14 @@ const checkInputs = arr => {
 };
 
 const renderList = (target, source, index, moveTo, list) => {
-    const word = source.word[0].toUpperCase() + source.word.slice(1);
+    const word = capitalizer(source.word);
     target.insertAdjacentHTML('beforeend', `
         <li class="list__row" data-index="${index})"  data-master="${list}">
             <span class="list__word">${word}</span>
             <span class="list__translation">${source.translation}</span>
             <div class="list__controls controls">
                 <button class="controls__move button" data-move="${moveTo}">
-                    <span class="controls__tooltip">Move to ${list}</span>
+                    Move to <strong>${moveTo}</strong>
                 </button>
                 <button class="controls__edit button">
                     <span class="controls__tooltip">Edit</span>
@@ -72,6 +73,16 @@ const updateTitle = (list, index) => {
     title.textContent = `${text}: ${index}`;
 };
 
+const lockScreen = () => {
+    document.querySelector('.overlay').classList.add('js-active');
+    document.body.classList.add('js-lock');
+};
+
+const unlockScreen = () => {
+    document.querySelector('.overlay').classList.remove('js-active');
+    document.body.classList.remove('js-lock');
+};
+
 export {
     writeWord,
     deleteWord,
@@ -79,5 +90,8 @@ export {
     checkInputs,
     renderList,
     clearList,
-    updateTitle
+    updateTitle,
+    lockScreen,
+    unlockScreen,
+    capitalizer,
 };
