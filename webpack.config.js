@@ -60,13 +60,13 @@ const plugins = () => {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: path.resolve(__dirname, 'src/favicon.ico'),
-                    to: path.resolve(__dirname, 'dist')
+                    from: path.resolve(__dirname, 'src/assets/images/favicon.ico'),
+                    to: path.resolve(__dirname, 'dist/assets/images/')
                 },
-                {
-                    from: path.resolve(__dirname, 'src/assets'),
-                    to: path.resolve(__dirname, 'dist/assets')
-                },
+                // {
+                //     from: path.resolve(__dirname, 'src/assets'),
+                //     to: path.resolve(__dirname, 'dist/assets')
+                // },
             ],
         }),
         new MiniCssExtractPlugin({
@@ -132,7 +132,7 @@ module.exports = {
                 use: cssLoaders('sass-loader')
             },
             {
-                test: /\.(png|jpg|svg|gif)$/,
+                test: /\.(ico|png|jpg|svg|gif)$/,
                 // use: ['file-loader']
                 use: [
                     {
