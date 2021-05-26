@@ -1,6 +1,5 @@
 .button {
   padding: 10px;
-  background-color: #aaf3ab;
   border: 2px solid transparent;
   border-radius: 2px;
   cursor: pointer;
@@ -70,6 +69,7 @@
 
   &__add-btn {
     font-size: 16px;
+    background-color: #aaf3ab;
   }
 
   &__warning {
@@ -138,38 +138,81 @@
 
   &__controls {
     margin-left: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(10px);
-    transition: all 0.3s ease-in-out;
-
-    &.js-active {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
   }
 }
 
 .controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: all 0.3s ease-in-out;
+
+  &.js-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  & button {
+    position: relative;
+    margin: 0 10px 0 0;
+    &:last-child {
+      margin: 0;
+    }
+
+    &:hover .controls__tooltip {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &__tooltip {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    visibility: hidden;
+    opacity: 0;
+    top: -45px;
+    right: -10px;
+    height: 36px;
+    padding: 2px 5px;
+    background-color: #8ad1ec;
+    border-radius: 5px;
+    //text-decoration: underline;
+    transition: all 0.3s ease-in-out;
+  }
+
   &__edit {
-    border: none;
-    /*padding: 4px;*/
-    border-radius: 2px;
-    cursor: pointer;
-    font-size: 10px;
-    width: 16px;
-    height: 16px;
+    background-image: url('../assets/images/edit.png');
+    background-position: center;
+    background-size: 20px;
+    background-repeat: no-repeat;
+
+  }
+
+  &__move {
+    background-image: url('../assets/images/checked.png');
+    background-position: center;
+    background-size: 20px;
+    background-repeat: no-repeat;
+
+  }
+
+  &__remove {
     background-image: url('../assets/images/recycle.png');
     background-position: center;
-    background-size: 16px;
+    background-size: 20px;
     background-repeat: no-repeat;
-    outline: transparent;
   }
+
+
 }
 
 

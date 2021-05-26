@@ -3,7 +3,15 @@ import firebase from "firebase/app";
 // Add the Firebase products that you want to use
 import "firebase/database";
 import makeStructure from './makeStructure';
-import { writeWord, readDatabase, checkInputs, renderList } from './utils';
+import {
+    writeWord,
+    deleteWord,
+    readDatabase,
+    checkInputs,
+    renderList,
+    clearList,
+    updateTitle,
+} from './utils';
 
 //TODO header - make canvas with arc
 
@@ -22,15 +30,17 @@ class Vocab {
         this.word = word;
         this.translation = translation;
         this.firebaseConfig = firebaseConfig;
+        this.refPrefix = 'vocab';
         this.actual = 'vocab/actual/';
         this.learned = 'vocab/learned/';
         this.words = localStorage.getItem('vocab') ? JSON.parse(localStorage.getItem('vocab')) : {};
 
     }
 
-    addNewWord(target, word, translation, example) {
-        writeWord(firebase, target, word, translation, example);
+    addNewWord(reference, word, translation) {
+        writeWord(firebase, reference, word, translation);
         this.getDatabase();
+        this.render();
     }
 
     getDatabase() {
@@ -43,33 +53,53 @@ class Vocab {
     }
 
     render() {
+        this.getDatabase();
         const { words } = this;
-        let counter = 0;
-        const actual = document.getElementById('actual');
-        actual.innerHTML = '';
-        // const learned = document.getElementById('learned');
+        clearList('#actual');
+        clearList('#learned');
+
+        //todo check title func
 
         for (const key in words) {
-            const length = Object.keys(words[key]).length;
+            let index = 0;    //index for every row in list
+            const oppositeList = key === 'actual' ? 'Learned' : 'Actual';    //  for move-to button
             for (const word in words[key]) {
-                const index = length - counter;
                 const target = document.getElementById(key);
-                renderList(target, words[key][word], index);
-                counter++;
-                console.log(words[key][word]);
+                renderList(target, words[key][word], index + 1, oppositeList, key);
+                index++;
             }
-            //TODO IM HERE! NEED TO ADD TARGET TO RENDER LIST
-            // renderList(insert source here);
 
+            updateTitle(key, index);
         }
+    }
 
+    deleteWord(target) {
+        const row = target.closest('.list__row');
+        const word = row.querySelector('.list__word').textContent.toLowerCase();
+        const translation = row.querySelector('.list__translation').textContent.toLowerCase();
+        const list = row.dataset.master;
+        const ref = `${this.refPrefix}/${list}/${word}`;
+        deleteWord(firebase, ref);
+        this.render();
+        return { word, translation };
     }
 
     eventListeners() {
         this.root.addEventListener('click', e => {
-            const target = e.target;
-            if (target.closest('.some-class')) {
-                console.log(1);
+            let target = e.target;
+
+            if (target.closest('.controls__move')) {
+                target = target.closest('.controls__move');
+                const { word, translation } = this.deleteWord(target);
+                const targetList = target.dataset.move.toLowerCase();
+                console.log(targetList);
+                const reference = `${this.refPrefix}/${targetList}/`;
+                this.addNewWord(reference, word, translation);
+                return;
+            }
+
+            if (target.closest('.controls__remove')) {
+                this.deleteWord(target);
             }
 
         });
@@ -80,7 +110,13 @@ class Vocab {
             if (target.closest('.list__row')) {
                 target = target.closest('.list__row');
                 target.querySelector('.list__controls').classList.add('js-active');
+                // return;
             }
+
+            if (target.classList.contains('controls__move')) {
+                console.log(target);
+            }
+
         });
 
         this.root.addEventListener('mouseout', e => {
@@ -89,7 +125,9 @@ class Vocab {
             if (target.closest('.list__row')) {
                 target = target.closest('.list__row');
                 target.querySelector('.list__controls').classList.remove('js-active');
+                return;
             }
+
         });
 
         const form = this.root.querySelector('form');
@@ -102,7 +140,8 @@ class Vocab {
                 const translation = document.querySelector(this.translation).value;
                 this.addNewWord(this.actual, word, translation);
                 form.reset();
-                this.render();
+                document.getElementById('word').focus();
+
             }
 
         });
@@ -120,10 +159,11 @@ class Vocab {
         this.eventListeners();
 
         //first time render
-        if  (this.words.learned || this.words.actual) {
-            this.render();
-        }
+        // if  (this.words.learned || this.words.actual) {
+        //     this.render();
+        // }
 
+        this.render();
 
         // this.addNewWord(this.actual,'hello', 'привет', 'привет мир!');
         // this.addNewWord(this.learned,'bye', 'пока');

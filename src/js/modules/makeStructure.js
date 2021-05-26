@@ -22,7 +22,7 @@ const makeForm = () => `
 const makeActual = () => `
     <div class="vocab__words">
         <div class="vocab__title-box">
-            <h2 class="vocab__title" data-name="Words to learn">No words added</h2>
+            <h2 class="vocab__title" data-full="Words to learn" data-empty="No words added">No words added</h2>
         </div>
 <!--        <img class="" src="./assets/images/recycle.png" alt="">-->
         <ul id="actual" class="vocab__list list"></ul>
@@ -32,7 +32,9 @@ const makeActual = () => `
 const makeLearned = () => `
     <div class="vocab__words vocab__words--learned">
         <div class="vocab__title-box">
-            <h2 class="vocab__title" data-name="Learned words">No words learned</h2>
+            <h2 class="vocab__title" 
+            data-full="Learned words" 
+            data-empty="No words learned">No words learned</h2>
         </div>
 <!--        <img class="" src="./assets/images/sort.png" alt="">-->
         <ul id="learned" class="vocab__list list"></ul>
