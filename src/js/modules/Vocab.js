@@ -1,3 +1,5 @@
+//TODO: search field with links to anchors, controls behavior refactor, adaptive
+
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import firebase from "firebase/app";
 // Add the Firebase products that you want to use
@@ -23,16 +25,10 @@ class Vocab {
     constructor(
         {
             root,
-            db,
-            word,
-            translation,
             firebaseConfig
         }
     ) {
         this.root = document.querySelector(root);
-        this.db = db;
-        this.word = word;
-        this.translation = translation;
         this.firebaseConfig = firebaseConfig;
         this.refPrefix = 'vocab';
         this.actual = 'vocab/actual/';
@@ -109,12 +105,10 @@ class Vocab {
         modal.classList.add('js-active');
     }
 
-    hideModal(modal) {
+    hideModals() {
         unlockScreen();
-        modal.classList.remove('js-active');
-        if (modal.classList.contains('modal-delete')) {
-            showBlocks('.list__translation');
-        }
+        document.querySelectorAll('.modal').forEach(modal => modal.classList.remove('js-active'));
+        showBlocks('.list__translation');
     }
 
     modalWordHandle(target, modalSelector) {
@@ -140,10 +134,15 @@ class Vocab {
         }
 
         this.showModal(modal);
-        console.log(this.translation);
     }
 
     eventListeners() {
+        const confirm = document.querySelector('.modal__confirm-input');
+        const deleteBtn = document.querySelector('.modal__delete-btn');
+        const undoBtn = document.querySelector('.modal__undo-btn');
+        const forms = this.root.querySelectorAll('form');
+        const inputs = [document.getElementById('word'), document.getElementById('translation')];
+
         this.root.addEventListener('click', e => {
             let target = e.target;
 
@@ -161,8 +160,8 @@ class Vocab {
                 this.modalWordHandle(target, '.modal-delete');
             }
 
-            if (target.closest('.modal__cross')) {
-                this.hideModal(target.closest('.modal'));
+            if (target.closest('.modal__cross') || target.classList.contains('overlay')) {
+                this.hideModals();
             }
 
             if (target.closest('.modal__delete-btn')) {
@@ -171,11 +170,11 @@ class Vocab {
                 const ref = `${this.refPrefix}/${list}/${word}`;
                 deleteWord(firebase, ref);
                 this.render();
-                this.hideModal(target.closest('.modal'));
+                this.hideModals();
             }
 
             if (target.closest('.modal__undo-btn')) {
-                this.hideModal(target.closest('.modal'));
+                this.hideModals();
             }
 
             if (target.closest('.controls__edit')) {
@@ -201,7 +200,6 @@ class Vocab {
 
         });
 
-
         this.root.addEventListener('mouseout', e => {
             let target = e.target;
 
@@ -213,19 +211,42 @@ class Vocab {
 
         });
 
-        const form = this.root.querySelector('form');
-        const inputs = form.querySelectorAll('input[type="text"]');
-        form.addEventListener('submit', e => {
-            e.preventDefault();
 
-            if (checkInputs(inputs)) {  //write word to database
-                const word = document.querySelector(this.word).value;
-                const translation = document.querySelector(this.translation).value;
-                this.addNewWord(this.actual, word, translation);
-                form.reset();
-                document.getElementById('word').focus();
+        forms.forEach(form => {
+            form.addEventListener('submit', e => {
+                e.preventDefault();
+
+                if (form.classList.contains('vocab__form') && checkInputs(inputs)) {  //write word to database
+                    const word = document.querySelector('#word').value.toLowerCase();
+                    const translation = document.querySelector('#translation').value.toLowerCase();
+                    this.addNewWord(this.actual, word, translation);
+                    form.reset();
+                    document.getElementById('word').focus();
+                }
+
+                if (form.closest('.modal-edit')) {
+                    const wordField = form.querySelector('input[name="word"]');
+                    const word = wordField.value.toLowerCase().trim();
+                    const translationField = form.querySelector('input[name="translation"]');
+                    const translation = translationField.value.toLowerCase().trim();
+                    const list = document.querySelector('.modal-edit').dataset.list;
+                    const ref = `${this.refPrefix}/${list}/`;
+                    this.addNewWord(ref, word, translation);
+                    this.hideModals();
+                }
+
+            });
+        });
+
+
+        confirm.addEventListener('input', () => {
+            if (confirm.value.toLowerCase() === this.translation) {
+                deleteBtn.style.display = 'inline-block';
+                undoBtn.style.display = 'none';
+            } else {
+                deleteBtn.style.display = 'none';
+                undoBtn.style.display = 'inline-block';
             }
-
         });
     }
 

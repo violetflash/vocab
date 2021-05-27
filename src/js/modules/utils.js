@@ -42,12 +42,13 @@ const checkInputs = arr => {
 const renderList = (target, source, index, moveTo, list) => {
     const word = capitalizer(source.word);
     target.insertAdjacentHTML('beforeend', `
-        <li class="list__row" data-index="${index})"  data-master="${list}">
+        <li id="${source.word}" class="list__row" data-index="${index})"  data-master="${list}">
             <span class="list__word">${word}</span>
             <span class="list__translation">${source.translation}</span>
             <div class="list__controls controls">
                 <button class="controls__move button" data-move="${moveTo}">
-                    Move to <strong>${moveTo}</strong>
+                    <i class="controls__move-icon"></i>
+                    <span class="controls__move-tooltip">Move to <strong>${moveTo}</strong></span>
                 </button>
                 <button class="controls__edit button">
                     <span class="controls__tooltip">Edit</span>

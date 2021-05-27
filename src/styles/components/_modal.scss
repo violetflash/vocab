@@ -83,22 +83,21 @@
   }
 
   &__title {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
   }
 
   &__subtitle {
-    margin-top: 10px;
+    margin: 20px 0;
   }
 
   &__delete-btn,
   &__undo-btn,
   &__btn {
-    border: 1px solid transparent;
+    border: 1px solid tomato;
     transition: all 0.3s ease;
     padding: 2px 10px;
 
     &:hover {
-      border-color: tomato;
       background-color: tomato;
       color: white;
     }
@@ -106,10 +105,15 @@
 
   &__undo-btn,
   &__btn {
+    border-color: green;
     &:hover {
       border-color: green;
       background-color: green;
     }
+  }
+
+  &__btn {
+    margin-top: 20px;
   }
 
   &__delete-btn {
@@ -127,10 +131,6 @@
     text-align: center;
     padding: 4px 10px;
     font-size: 16px;
-  }
-
-  &__btn {
-    margin-top: 20px;
   }
 
   &__input {

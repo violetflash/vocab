@@ -81,7 +81,7 @@ const makeModals = () => `
             
         </h3>
         <div class="modal__buttons">
-            <button class="modal__delete-btn button" type="button" disabled>Delete</button>
+            <button class="modal__delete-btn button" type="submit">Delete</button>
             <button class="modal__undo-btn button" type="button">No</button>
         </div>
     </div>

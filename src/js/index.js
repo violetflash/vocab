@@ -1,14 +1,8 @@
-// import './index.html';
-// import './css/style.css';
 import '../styles/index.scss';
-
 import Vocab from './modules/Vocab';
 
 const myVocab = new Vocab({
     root: '.content',
-    db: 'link to firebase realtime database',
-    word: '#word',
-    translation: '#translation',
     firebaseConfig: {
         apiKey: "AIzaSyDdSPunbCu6orihKiCAfmKUwDNRnmTE4sg",
         authDomain: "vocab-c6f05.firebaseapp.com",

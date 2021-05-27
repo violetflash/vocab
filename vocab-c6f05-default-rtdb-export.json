@@ -1,0 +1,144 @@
+{
+  "vocab" : {
+    "actual" : {
+      "accommodation" : {
+        "translation" : "жильё, помещение",
+        "word" : "accommodation"
+      },
+      "afford" : {
+        "translation" : "иметь возможность",
+        "word" : "afford"
+      },
+      "bloody" : {
+        "translation" : "чертовски",
+        "word" : "bloody"
+      },
+      "blurt" : {
+        "translation" : "болтать",
+        "word" : "blurt"
+      },
+      "wazzup" : {
+        "translation" : "чокак",
+        "word" : "wazzup"
+      }
+    },
+    "learned" : {
+      "cluttered" : {
+        "translation" : "загромождённый",
+        "word" : "cluttered"
+      },
+      "compel" : {
+        "translation" : "принуждать",
+        "word" : "compel"
+      },
+      "condemn" : {
+        "translation" : "осуждать",
+        "word" : "condemn"
+      },
+      "condolences" : {
+        "translation" : "соболезнования",
+        "word" : "condolences"
+      },
+      "cunning" : {
+        "translation" : "хитрость",
+        "word" : "cunning"
+      },
+      "demand" : {
+        "translation" : "требовать",
+        "word" : "demand"
+      },
+      "envy" : {
+        "translation" : "зависть",
+        "word" : "envy"
+      },
+      "excessive" : {
+        "translation" : "излишний",
+        "word" : "excessive"
+      },
+      "fancy" : {
+        "translation" : "изысканный",
+        "word" : "fancy"
+      },
+      "foray" : {
+        "translation" : "набег",
+        "word" : "foray"
+      },
+      "garland" : {
+        "translation" : "венок",
+        "word" : "garland"
+      },
+      "glimpse" : {
+        "translation" : "намек",
+        "word" : "glimpse"
+      },
+      "gratitude" : {
+        "translation" : "благодарность",
+        "word" : "gratitude"
+      },
+      "grub" : {
+        "translation" : "личинка",
+        "word" : "grub"
+      },
+      "hang" : {
+        "translation" : "вешать",
+        "word" : "hang"
+      },
+      "harlots" : {
+        "translation" : "блудницы",
+        "word" : "harlots"
+      },
+      "hello" : {
+        "translation" : "привет",
+        "word" : "hello"
+      },
+      "lust" : {
+        "translation" : "похоть",
+        "word" : "lust"
+      },
+      "mess" : {
+        "translation" : "месиво, беспорядок",
+        "word" : "mess"
+      },
+      "occasionally" : {
+        "translation" : "иногда, изредка",
+        "word" : "occasionally"
+      },
+      "quivere" : {
+        "translation" : "дрожать",
+        "word" : "quivere"
+      },
+      "sake" : {
+        "translation" : "ради",
+        "word" : "sake"
+      },
+      "slander" : {
+        "translation" : "клевета",
+        "word" : "slander"
+      },
+      "smuggler" : {
+        "translation" : "контрабандист",
+        "word" : "smuggler"
+      },
+      "spiteful" : {
+        "translation" : "злобный",
+        "word" : "spiteful"
+      },
+      "sweep" : {
+        "translation" : "сметать",
+        "word" : "sweep"
+      },
+      "trundled off" : {
+        "translation" : "откатиться",
+        "word" : "trundled off"
+      },
+      "waddle" : {
+        "translation" : "ходить вразвалку",
+        "word" : "waddle"
+      },
+      "whims" : {
+        "translation" : "капризы",
+        "word" : "whims"
+      }
+    }
+  }
+}

@@ -211,19 +211,47 @@
     background-position: center;
     background-size: 20px;
     background-repeat: no-repeat;
-
   }
 
   &__move {
-    border: 1px solid #8ad1ec;
-    padding: 0 10px;
-    max-width: 80px;
-    transition: all 0.3s ease-in-out;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+
 
     &:hover {
-      background-color: #8ad1ec;
+      //background-color: #8ad1ec;
       color: #4e4d4d;
+      .controls__move-tooltip {
+        transform: translate(-20%, -50%);
+        opacity: 1;
+        visibility: visible;
+      }
     }
+  }
+
+  &__move-icon {
+    width: 20px;
+    height: 20px;
+    background-image: url('../assets/images/download.png');
+    background-position: center;
+    background-size: 20px;
+    background-repeat: no-repeat;
+  }
+
+  &__move-tooltip {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(0, -50%);
+    border: 1px solid #8ad1ec;
+    padding: 0 10px;
+    width: 80px;
+    transition: all 0.3s ease-in-out;
   }
 
   &__remove {
@@ -236,6 +264,18 @@
 
 .js-lock {
   overflow: hidden;
+}
+
+#learned {
+  .controls__move-icon {
+    background-image: url('../assets/images/down-arrow.png');
+    transition: all 0.3s ease 0s;
+    transform: rotate(180deg);
+
+    &:hover {
+      //transform: rotate(180deg);
+    }
+  }
 }
 
 
