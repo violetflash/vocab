@@ -17,6 +17,7 @@ import {
     unlockScreen,
     capitalizer,
     showBlocks,
+    scroll,
 } from './utils';
 
 //TODO header - make canvas with arc
@@ -102,6 +103,7 @@ class Vocab {
                     elem.style.display = 'none';
                     afterLine.style.display = 'flex';
                     info.textContent = `Hidden words: ${list.children.length - num}`;
+                    scroll(afterLine);
                 } else {
                     info.textContent = `Hidden words: 0`;
                     afterLine.style.display = 'none';

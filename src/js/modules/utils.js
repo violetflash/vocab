@@ -87,6 +87,10 @@ const showBlocks = className => {
     });
 };
 
+const scroll = e => {
+    e.scrollIntoView({ behavior: "smooth", block: "start" });
+};
+
 export {
     writeWord,
     deleteWord,
@@ -99,4 +103,5 @@ export {
     unlockScreen,
     capitalizer,
     showBlocks,
+    scroll,
 };
