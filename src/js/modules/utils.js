@@ -5,13 +5,9 @@ const writeWord = (firebase, reference, word, translation) => {
     });
 };
 
-const deleteWord = (firebase, reference) => {
-    console.log(reference);
-    firebase.database().ref(reference).remove();
-};
+const deleteWord = (firebase, reference) => firebase.database().ref(reference).remove();
 
 const capitalizer = word => word[0].toUpperCase() + word.slice(1);
-
 
 const readDatabase = firebase => {
     const dbRef = firebase.database().ref('vocab/');
@@ -66,11 +62,11 @@ const renderList = (target, source, index, moveTo, list) => {
 
 const clearList = target => document.querySelector(target).innerHTML = '';
 
-const updateTitle = (list, index) => {
+const updateTitleCounter = (list, index) => {
     const target = document.getElementById(list);
-    const title = target.previousElementSibling.querySelector('.vocab__title');
-    const text = title.dataset.full;
-    title.textContent = `${text}: ${index}`;
+    const counter = target.previousElementSibling.querySelector('.vocab__title-counter');
+    // const text = title.dataset.full;
+    counter.textContent = index;
 };
 
 const lockScreen = () => {
@@ -83,6 +79,13 @@ const unlockScreen = () => {
     document.body.classList.remove('js-lock');
 };
 
+const showBlocks = className => {
+    const blocks = document.querySelectorAll(className);
+    blocks.forEach(elem => {
+        elem.style.opacity = 1;
+    });
+};
+
 export {
     writeWord,
     deleteWord,
@@ -90,8 +93,9 @@ export {
     checkInputs,
     renderList,
     clearList,
-    updateTitle,
+    updateTitleCounter,
     lockScreen,
     unlockScreen,
     capitalizer,
+    showBlocks,
 };

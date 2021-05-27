@@ -10,10 +10,11 @@ import {
     checkInputs,
     renderList,
     clearList,
-    updateTitle,
+    updateTitleCounter,
     lockScreen,
     unlockScreen,
     capitalizer,
+    showBlocks,
 } from './utils';
 
 //TODO header - make canvas with arc
@@ -55,6 +56,20 @@ class Vocab {
         makeStructure(this.root);
     }
 
+    checkTitle(titleSelector, listSelector) {
+        const title = document.querySelector(titleSelector);
+        const list = document.getElementById(listSelector);
+        const counter = title.nextElementSibling;
+
+        if (list.innerHTML === '') {
+            counter.style.display = 'none';
+            title.textContent = title.dataset.empty;
+        } else {
+            counter.style.display = 'block';
+            title.textContent = title.dataset.full;
+        }
+    }
+
     render() {
         this.getDatabase();
         const { words } = this;
@@ -65,15 +80,17 @@ class Vocab {
 
         for (const key in words) {
             let index = 0;    //index for every row in list
-            const oppositeList = key === 'actual' ? 'Learned' : 'Actual';    //  for move-to button
+            const oppositeList = key === 'actual' ? 'Learned' : 'Actual';    //  list name for move-to button
             for (const word in words[key]) {
                 const target = document.getElementById(key);
                 renderList(target, words[key][word], index + 1, oppositeList, key);
                 index++;
             }
 
-            updateTitle(key, index);
+            updateTitleCounter(key, index);
         }
+        this.checkTitle('.vocab__title-actual', 'actual');
+        this.checkTitle('.vocab__title-learned', 'learned');
     }
 
     deleteWord(target) {
@@ -95,6 +112,35 @@ class Vocab {
     hideModal(modal) {
         unlockScreen();
         modal.classList.remove('js-active');
+        if (modal.classList.contains('modal-delete')) {
+            showBlocks('.list__translation');
+        }
+    }
+
+    modalWordHandle(target, modalSelector) {
+        const modal = document.querySelector(modalSelector);
+        const row = target.closest('.list__row');
+        const wordField = row.querySelector('.list__word');
+        const word = wordField.textContent.toLowerCase();
+        const translationField = row.querySelector('.list__translation');
+        const translation = translationField.textContent.toLowerCase();
+        //attributes for further word handle
+        modal.dataset.word = word;
+        modal.dataset.list = row.dataset.master;
+
+        if (modalSelector === '.modal-delete') {
+            this.translation = translation;
+            translationField.style.opacity = 0;
+            modal.querySelector('.modal__word-to-delete').textContent = ` ${capitalizer(word)}`;
+        }
+
+        if (modalSelector === '.modal-edit') {
+            modal.querySelector('input[name="word"]').value = ` ${capitalizer(word)}`;
+            modal.querySelector('input[name="translation"]').value = ` ${capitalizer(translation)}`;
+        }
+
+        this.showModal(modal);
+        console.log(this.translation);
     }
 
     eventListeners() {
@@ -112,15 +158,7 @@ class Vocab {
             }
 
             if (target.closest('.controls__remove')) {
-                const deleteModal = document.querySelector('.modal-delete');
-                const row = target.closest('.list__row');
-                const word = row.querySelector('.list__word').textContent.toLowerCase();
-                //attributes for further word deleting
-                deleteModal.dataset.wordToDelete = word;
-                deleteModal.dataset.listToDelete = row.dataset.master;
-                deleteModal.querySelector('.modal__word-to-delete').textContent = ` ${capitalizer(word)}`;
-                this.showModal(deleteModal);
-                // this.deleteWord(target);
+                this.modalWordHandle(target, '.modal-delete');
             }
 
             if (target.closest('.modal__cross')) {
@@ -128,8 +166,8 @@ class Vocab {
             }
 
             if (target.closest('.modal__delete-btn')) {
-                const list = target.closest('.modal').dataset.listToDelete;
-                const word = target.closest('.modal').dataset.wordToDelete;
+                const list = target.closest('.modal').dataset.list;
+                const word = target.closest('.modal').dataset.word;
                 const ref = `${this.refPrefix}/${list}/${word}`;
                 deleteWord(firebase, ref);
                 this.render();
@@ -141,19 +179,7 @@ class Vocab {
             }
 
             if (target.closest('.controls__edit')) {
-                const editModal = document.querySelector('.modal-edit');
-                const row = target.closest('.list__row');
-                const word = row.querySelector('.list__word').textContent.toLowerCase();
-                const translation = row.querySelector('.list__translation').textContent.toLowerCase();
-                //attributes for further modal show
-                editModal.dataset.wordToShow = word;
-                editModal.dataset.translationToShow = translation;
-                editModal.dataset.listToDelete = row.dataset.master;
-                editModal.querySelector('input[name="word"]').value = ` ${capitalizer(word)}`;
-                editModal.querySelector('input[name="translation"]').value = ` ${capitalizer(translation)}`;
-                console.log(editModal.querySelector('input[name="word"]'));
-                this.showModal(editModal);
-                // this.deleteWord(target);
+                this.modalWordHandle(target, '.modal-edit');
             }
 
 
@@ -224,7 +250,7 @@ class Vocab {
         // this.addNewWord(this.actual,'hello', 'привет', 'привет мир!');
         // this.addNewWord(this.learned,'bye', 'пока');
         // this.addNewWord(this.learned,'overlap', 'перекрытие');
-        console.log(this.words);
+
 
     }
 }

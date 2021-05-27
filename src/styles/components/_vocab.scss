@@ -54,6 +54,18 @@
     align-items: center;
   }
 
+  &__title-box {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title-counter {
+    display: none;
+    margin-left: 15px;
+    font-size: 21px;
+    font-weight: 700;
+  }
+
   &__label {
     position: relative;
     margin-right: 20px;
@@ -205,7 +217,7 @@
   &__move {
     border: 1px solid #8ad1ec;
     padding: 0 10px;
-    max-width: 100px;
+    max-width: 80px;
     transition: all 0.3s ease-in-out;
 
     &:hover {
@@ -224,121 +236,6 @@
 
 .js-lock {
   overflow: hidden;
-}
-
-.overlay {
-  opacity: 0;
-  visibility: hidden;
-
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 20;
-  transition: all 0.3s;
-
-  &.js-active {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 30;
-
-  max-width: 500px;
-  width: 100%;
-
-  //display: none;
-  opacity: 0;
-  visibility: hidden;
-
-  padding: 20px 50px;
-  box-shadow: 0 3px 10px -.5px rgba(0, 0, 0, .2);
-  text-align: center;
-  border-radius: 3px;
-  transition: 0.3s all;
-  background-color: #f1f1e4;
-
-  &.js-active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  &__cross {
-    width: 15px;
-    height: 15px;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    fill: #444;
-    cursor: pointer;
-  }
-
-  &__word-to-delete {
-    position: relative;
-    padding: 0 5px;
-    border-bottom: 2px solid #8ad1ec;
-    font-weight: 400;
-
-    &::before,
-    &::after {
-      position: absolute;
-      content: '-';
-      left: -10px;
-    }
-
-    &::after {
-      right: -10px;
-      left: unset;
-    }
-  }
-
-  &__title {
-    margin-bottom: 20px;
-  }
-
-  &__subtitle {
-    margin-top: 10px;
-  }
-
-  &__delete-btn,
-  &__undo-btn,
-  &__btn {
-    border: 1px solid transparent;
-    transition: all 0.3s ease;
-    padding: 2px 10px;
-
-    &:hover {
-      border-color: tomato;
-      background-color: tomato;
-      color: white;
-    }
-  }
-
-  &__undo-btn,
-  &__btn {
-    &:hover {
-      border-color: green;
-      background-color: green;
-    }
-  }
-
-  &__btn {
-    margin-top: 20px;
-  }
-
-  &__input {
-    border: none;
-    padding: 5px 10px;
-    font-size: 14px;
-  }
 }
 
 

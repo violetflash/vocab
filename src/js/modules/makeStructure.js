@@ -22,7 +22,10 @@ const makeForm = () => `
 const makeActual = () => `
     <div class="vocab__words">
         <div class="vocab__title-box">
-            <h2 class="vocab__title" data-full="Words to learn" data-empty="No words added">No words added</h2>
+            <h2 class="vocab__title vocab__title-actual" data-full="Words to learn:" 
+                data-empty="No words added">No words added
+            </h2>
+            <span class="vocab__title-counter">2222</span>
         </div>
 <!--        <img class="" src="./assets/images/recycle.png" alt="">-->
         <ul id="actual" class="vocab__list list"></ul>
@@ -32,9 +35,11 @@ const makeActual = () => `
 const makeLearned = () => `
     <div class="vocab__words vocab__words--learned">
         <div class="vocab__title-box">
-            <h2 class="vocab__title" 
-            data-full="Learned words" 
-            data-empty="No words learned">No words learned</h2>
+            <h2 class="vocab__title vocab__title-learned" 
+                data-full="Learned words:" 
+                data-empty="No words learned">No words learned
+            </h2>
+            <span class="vocab__title-counter">11111</span>
         </div>
 <!--        <img class="" src="./assets/images/sort.png" alt="">-->
         <ul id="learned" class="vocab__list list"></ul>
@@ -70,10 +75,13 @@ const makeModals = () => `
         </svg>
         <h3 class="modal__title">Confirm deletion of word:
             <div class="modal__subtitle"><span class="modal__word-to-delete"></span></div>
+            <p class="modal__confirm">
+                <input class="modal__confirm-input" type="text" placeholder="translate it">
+            </p>
             
         </h3>
         <div class="modal__buttons">
-            <button class="modal__delete-btn button" type="button">Yes</button>
+            <button class="modal__delete-btn button" type="button" disabled>Delete</button>
             <button class="modal__undo-btn button" type="button">No</button>
         </div>
     </div>
