@@ -51,10 +51,10 @@ const renderList = (target, source, index, moveTo, list) => {
                     <span class="controls__move-tooltip">Move to <strong>${moveTo}</strong></span>
                 </button>
                 <button class="controls__edit button">
-                    <span class="controls__tooltip">Edit</span>
+<!--                    <span class="controls__tooltip">Edit</span>-->
                 </button>
                 <button class="controls__remove button">
-                    <span class="controls__tooltip">Delete</span>
+<!--                    <span class="controls__tooltip">Delete</span>-->
                 </button>
             </div>
         </li>

@@ -33,6 +33,7 @@ class Vocab {
         this.refPrefix = 'vocab';
         this.actual = 'vocab/actual/';
         this.learned = 'vocab/learned/';
+        this.numToShow = 20;
         this.words = localStorage.getItem('vocab') ? JSON.parse(localStorage.getItem('vocab')) : {};
 
     }
@@ -84,9 +85,29 @@ class Vocab {
             }
 
             updateTitleCounter(key, index);
+            this.checkListLength(key, this.numToShow);
         }
         this.checkTitle('.vocab__title-actual', 'actual');
         this.checkTitle('.vocab__title-learned', 'learned');
+
+    }
+
+    checkListLength(listSelector, num) {
+        const list = document.getElementById(listSelector);
+        const afterLine = list.nextElementSibling;
+        const info = afterLine.querySelector('.vocab__info');
+        if (list.children.length > 20) {
+            [...list.children].forEach((elem, index) => {
+                if (index + 1 > num) {
+                    elem.style.display = 'none';
+                    afterLine.style.display = 'flex';
+                    info.textContent = `Hidden words: ${list.children.length - num}`;
+                } else {
+                    info.textContent = `Hidden words: 0`;
+                    afterLine.style.display = 'none';
+                }
+            });
+        }
     }
 
     deleteWord(target) {
@@ -102,7 +123,11 @@ class Vocab {
 
     showModal(modal) {
         lockScreen();
+        if (modal.classList.contains('modal-delete')) {
+            document.querySelector('.modal__confirm-input').value = '';
+        }
         modal.classList.add('js-active');
+
     }
 
     hideModals() {
@@ -181,8 +206,11 @@ class Vocab {
                 this.modalWordHandle(target, '.modal-edit');
             }
 
-
-
+            if (target.closest('.vocab__more')) {
+                this.numToShow += 20;
+                this.render();
+                // this.checkListLength(list, 40);
+            }
         });
 
         this.root.addEventListener('mouseover', e => {
@@ -194,9 +222,7 @@ class Vocab {
                 // return;
             }
 
-            if (target.classList.contains('controls__move')) {
-                console.log(target);
-            }
+
 
         });
 
@@ -206,8 +232,8 @@ class Vocab {
             if (target.closest('.list__row')) {
                 target = target.closest('.list__row');
                 target.querySelector('.list__controls').classList.remove('js-active');
-                return;
             }
+
 
         });
 

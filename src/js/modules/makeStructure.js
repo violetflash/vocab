@@ -29,6 +29,11 @@ const makeActual = () => `
         </div>
 <!--        <img class="" src="./assets/images/recycle.png" alt="">-->
         <ul id="actual" class="vocab__list list"></ul>
+        <div class="vocab__after-line">
+            <span class="vocab__info">Hidden words:</span>
+            <button class="vocab__more">Show more</button>
+        </div>
+        
     </div>
 `;
 
@@ -43,6 +48,10 @@ const makeLearned = () => `
         </div>
 <!--        <img class="" src="./assets/images/sort.png" alt="">-->
         <ul id="learned" class="vocab__list list"></ul>
+        <div class="vocab__after-line">
+            <span class="vocab__info">Hidden words:</span>
+            <button class="vocab__more">Show more</button>
+        </div>
     </div>
 `;
 
