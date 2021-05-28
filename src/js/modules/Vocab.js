@@ -113,6 +113,7 @@ class Vocab {
         const afterLine = list.nextElementSibling;
         const info = afterLine.querySelector('.vocab__info-num');
         const max = this.getMaxWordWidth(listSelector);
+        console.log(max);
         if (list.children.length > 0) {
             [...list.children].forEach((elem, index) => {
                 const wordField = elem.querySelector('.list__word');
