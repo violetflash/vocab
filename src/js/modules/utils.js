@@ -31,7 +31,7 @@ const checkInputs = arr => {
             //remove warning
             setTimeout(() => {
                 input.nextElementSibling.classList.remove('js-active');
-            }, 2000);
+            }, 3000);
             res = false;
         }
     });
@@ -87,10 +87,6 @@ const showBlocks = className => {
     });
 };
 
-const scroll = e => {
-    e.scrollIntoView({ behavior: "smooth", block: "start" });
-};
-
 export {
     writeWord,
     deleteWord,
@@ -103,5 +99,4 @@ export {
     unlockScreen,
     capitalizer,
     showBlocks,
-    scroll,
 };

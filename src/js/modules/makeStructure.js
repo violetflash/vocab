@@ -8,12 +8,12 @@ const makeForm = () => `
     <form class="vocab__form">
         <label class="vocab__label">
             <input class="vocab__input" id="word" name="word" type="text" placeholder="new word" autocomplete="off">
-            <span class="vocab__warning">Обязательное поле!</span>
+            <span class="vocab__warning">input field must not be empty!</span>
         </label>
         <label class="vocab__label">
             <input class="vocab__input" id="translation" name="translation" type="text" 
                 placeholder="translation" autocomplete="off">
-            <span class="vocab__warning">Обязательное поле!</span>
+            <span class="vocab__warning">input field must not be empty!</span>
         </label>
         <button class="vocab__add-btn button" type="submit">Add new word</button>
     </form> 
@@ -30,7 +30,7 @@ const makeActual = () => `
 <!--        <img class="" src="./assets/images/recycle.png" alt="">-->
         <ul id="actual" class="vocab__list list"></ul>
         <div class="vocab__after-line">
-            <span class="vocab__info">Hidden words:</span>
+            <span class="vocab__info">Hidden words: <strong class="vocab__info-num"></strong></span>
             <button class="vocab__more">Show more</button>
         </div>
         
@@ -49,7 +49,7 @@ const makeLearned = () => `
 <!--        <img class="" src="./assets/images/sort.png" alt="">-->
         <ul id="learned" class="vocab__list list"></ul>
         <div class="vocab__after-line">
-            <span class="vocab__info">Hidden words:</span>
+            <span class="vocab__info">Hidden words: <strong class="vocab__info-num"></strong></span>
             <button class="vocab__more">Show more</button>
         </div>
     </div>

@@ -9,6 +9,30 @@
         "translation" : "иметь возможность",
         "word" : "afford"
       },
+      "ancestral" : {
+        "translation" : "родовой, наследственный",
+        "word" : "ancestral"
+      },
+      "approach" : {
+        "translation" : "подход, приближение, доступ",
+        "word" : "approach"
+      },
+      "arose" : {
+        "translation" : "возникать, появляться, происходить",
+        "word" : "arose"
+      },
+      "assumption" : {
+        "translation" : "предположение, допущение, вступление",
+        "word" : "assumption"
+      },
+      "awkward" : {
+        "translation" : "неуклюжий, неудобный, неловкий",
+        "word" : "awkward"
+      },
+      "bizzare" : {
+        "translation" : "причудливый",
+        "word" : "bizzare"
+      },
       "bloody" : {
         "translation" : "чертовски",
         "word" : "bloody"
@@ -17,19 +41,13 @@
         "translation" : "болтать",
         "word" : "blurt"
       },
-      "wazzup" : {
-        "translation" : "чокак",
-        "word" : "wazzup"
-      }
-    },
-    "learned" : {
+      "clunky" : {
+        "translation" : "неуклюжий",
+        "word" : "clunky"
+      },
       "cluttered" : {
         "translation" : "загромождённый",
         "word" : "cluttered"
-      },
-      "compel" : {
-        "translation" : "принуждать",
-        "word" : "compel"
       },
       "condemn" : {
         "translation" : "осуждать",
@@ -39,29 +57,41 @@
         "translation" : "соболезнования",
         "word" : "condolences"
       },
+      "constraint" : {
+        "translation" : "скованность, принуждение, стеснение",
+        "word" : "constraint"
+      },
+      "coupling" : {
+        "translation" : "муфта, связь, соединение",
+        "word" : "coupling"
+      },
       "cunning" : {
         "translation" : "хитрость",
         "word" : "cunning"
       },
-      "demand" : {
-        "translation" : "требовать",
-        "word" : "demand"
+      "dunder" : {
+        "translation" : "глупость",
+        "word" : "dunder"
       },
-      "envy" : {
-        "translation" : "зависть",
-        "word" : "envy"
-      },
-      "excessive" : {
-        "translation" : "излишний",
-        "word" : "excessive"
+      "emit" : {
+        "translation" : "излучать, испускать, выделять",
+        "word" : "emit"
       },
       "fancy" : {
         "translation" : "изысканный",
         "word" : "fancy"
       },
+      "fetch" : {
+        "translation" : "получать, выбирать, привести",
+        "word" : "fetch"
+      },
       "foray" : {
         "translation" : "набег",
         "word" : "foray"
+      },
+      "from the get go" : {
+        "translation" : "с самого начала",
+        "word" : "from the get go"
       },
       "garland" : {
         "translation" : "венок",
@@ -70,6 +100,14 @@
       "glimpse" : {
         "translation" : "намек",
         "word" : "glimpse"
+      },
+      "govern" : {
+        "translation" : "управлять, определять, регулировать",
+        "word" : "govern"
+      },
+      "grasp" : {
+        "translation" : " понять, осознать, схватывать",
+        "word" : "grasp"
       },
       "gratitude" : {
         "translation" : "благодарность",
@@ -87,9 +125,25 @@
         "translation" : "блудницы",
         "word" : "harlots"
       },
-      "hello" : {
-        "translation" : "привет",
-        "word" : "hello"
+      "hodgepodge" : {
+        "translation" : "мешанина, смесь, всякая всячина",
+        "word" : "hodgepodge"
+      },
+      "horrendous" : {
+        "translation" : "устрашающий, вселяющий ужас",
+        "word" : "horrendous"
+      },
+      "inevitable" : {
+        "translation" : "неизбежный, неминуемый, неизменный",
+        "word" : "inevitable"
+      },
+      "intimidate" : {
+        "translation" : "запугивать, пугать, устрашать",
+        "word" : "intimidate"
+      },
+      "litter" : {
+        "translation" : "помет, мусор",
+        "word" : "litter"
       },
       "lust" : {
         "translation" : "похоть",
@@ -99,13 +153,111 @@
         "translation" : "месиво, беспорядок",
         "word" : "mess"
       },
+      "obnoxious" : {
+        "translation" : "неприятный, противный, отвратительный",
+        "word" : "obnoxious"
+      },
       "occasionally" : {
         "translation" : "иногда, изредка",
         "word" : "occasionally"
       },
+      "odd" : {
+        "translation" : "странный, нечетный, необычный",
+        "word" : "odd"
+      },
+      "overlap" : {
+        "translation" : "перекрытие, совпадение, нахлестка",
+        "word" : "overlap"
+      },
+      "preceded" : {
+        "translation" : "предшествовать, превосходить, предпосылать",
+        "word" : "preceded"
+      },
+      "quirky" : {
+        "translation" : "ушлый, ловкий",
+        "word" : "quirky"
+      },
       "quivere" : {
         "translation" : "дрожать",
         "word" : "quivere"
+      },
+      "rather" : {
+        "translation" : "скорее, довольно, вернее",
+        "word" : "rather"
+      },
+      "vast" : {
+        "translation" : "огромный, обширный, громадный",
+        "word" : "vast"
+      },
+      "waddle" : {
+        "translation" : "ходить вразвалку",
+        "word" : "waddle"
+      },
+      "wazzup" : {
+        "translation" : "чокак",
+        "word" : "wazzup"
+      },
+      "whims" : {
+        "translation" : "капризы",
+        "word" : "whims"
+      }
+    },
+    "learned" : {
+      "compel" : {
+        "translation" : "принуждать",
+        "word" : "compel"
+      },
+      "confident" : {
+        "translation" : "уверенный, самоуверенный, самонадеянный",
+        "word" : "confident"
+      },
+      "demand" : {
+        "translation" : "требовать",
+        "word" : "demand"
+      },
+      "distinct" : {
+        "translation" : "особый, отдельный, отчетливый",
+        "word" : "distinct"
+      },
+      "distinction" : {
+        "translation" : "различие, отличие, различение",
+        "word" : "distinction"
+      },
+      "dump" : {
+        "translation" : "свалка, отвал, дыра",
+        "word" : "dump"
+      },
+      "envy" : {
+        "translation" : "зависть",
+        "word" : "envy"
+      },
+      "excessive" : {
+        "translation" : "излишний",
+        "word" : "excessive"
+      },
+      "pivoted" : {
+        "translation" : "вертеться, вращаться",
+        "word" : "pivoted"
+      },
+      "resemblance" : {
+        "translation" : "сходство",
+        "word" : "resemblance"
+      },
+      "respective" : {
+        "translation" : "соответственный",
+        "word" : "respective"
+      },
+      "retain" : {
+        "translation" : "удерживать, сохранять, хранить",
+        "word" : "retain"
+      },
+      "revolving" : {
+        "translation" : "возобновляемый, вращающийся, поворотный",
+        "word" : "revolving"
+      },
+      "rid" : {
+        "translation" : "освобождать, избавлять",
+        "word" : "rid"
       },
       "sake" : {
         "translation" : "ради",
@@ -123,21 +275,21 @@
         "translation" : "злобный",
         "word" : "spiteful"
       },
+      "subroutine" : {
+        "translation" : "стандартная подпрограмма",
+        "word" : "subroutine"
+      },
       "sweep" : {
         "translation" : "сметать",
         "word" : "sweep"
       },
+      "though" : {
+        "translation" : "хотя, однако, несмотря на",
+        "word" : "though"
+      },
       "trundled off" : {
         "translation" : "откатиться",
         "word" : "trundled off"
-      },
-      "waddle" : {
-        "translation" : "ходить вразвалку",
-        "word" : "waddle"
-      },
-      "whims" : {
-        "translation" : "капризы",
-        "word" : "whims"
       }
     }
   }
