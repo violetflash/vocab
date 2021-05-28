@@ -7,7 +7,7 @@ const makeVocabHeader = () => `
 const makeSearchInput = () => `
     <div class="search">
         <div class="search__content">
-            <input class="search__input" type="text" placeholder="search word...">
+            <input class="search__input" type="text" placeholder="search for word...">
             <div class="search__close-button"></div>
             <div class="search__dropdown dropdown">
                 <div class="dropdown__autocomplete">
@@ -15,6 +15,7 @@ const makeSearchInput = () => `
                         
                     </ul>
                 </div>
+                <div class="dropdown__no-match">No matches found...</div>
             </div>
         </div>
     </div>   

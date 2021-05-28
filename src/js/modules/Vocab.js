@@ -21,6 +21,7 @@ import {
     scroll,
     makeWordsList,
     makeDropdownLink,
+    scrollDistance,
 } from './utils';
 
 //TODO header - make canvas with arc
@@ -51,7 +52,6 @@ class Vocab {
         readDatabase(firebase);
         this.words = JSON.parse(localStorage.getItem('vocab'));
         this.wordsList = makeWordsList(this.words);
-        console.log(this.wordsList);
     }
 
     makeLayout() {
@@ -107,6 +107,7 @@ class Vocab {
                     afterLine.style.display = 'flex';
                     info.textContent = list.children.length - num;
                 } else {
+                    elem.style.display = 'flex';
                     info.textContent = 0;
                     afterLine.style.display = 'none';
                 }
@@ -165,21 +166,40 @@ class Vocab {
         this.showModal(modal);
     }
 
+    clearDropdown() {
+        const dropdownList = document.querySelector('.dropdown__list');
+        dropdownList.innerHTML = '';
+    }
+
+    addDropdownElement(word) {
+        const dropdownList = document.querySelector('.dropdown__list');
+        dropdownList.insertAdjacentHTML('beforeend', makeDropdownLink(word, word));
+    }
 
 
     searchHandler(e) {
         const dropdownList = document.querySelector('.dropdown__list');
-        dropdownList.innerHTML = '';
+        const noMatch = document.querySelector('.dropdown__no-match');
+        this.clearDropdown();
         checkSearchInputValue('.search__input', '.search__close-button');
         if (e.target.value) {
+
+
             const regExp = new RegExp(e.target.value);
             this.wordsList.forEach(elem => {
                 if (regExp.test(elem)) {
-                    // console.log(elem);
                     const word = elem.replace(regExp, match => `<strong>${match}</strong>`);
                     dropdownList.insertAdjacentHTML('beforeend', makeDropdownLink(word, elem));
                 }
             });
+
+            const check = dropdownList.querySelector('.dropdown__link');
+
+            if (!check) {
+                noMatch.style.display = 'block';
+            } else {
+                noMatch.style.display = 'none';
+            }
         }
 
 
@@ -237,26 +257,55 @@ class Vocab {
                 const lineHeight = list.querySelector('.list__row').clientHeight;
                 this.numToShow[list.id] += 20;
                 this.render();
-
-                window.scrollBy({
-                    top: lineHeight * 20,
-                    behavior: 'smooth'
-                });
+                scrollDistance(lineHeight * 20);
             }
 
             if (target.closest('.search__close-button')) {
                 target.previousElementSibling.value = '';
+                this.clearDropdown();
                 target.style.display = 'none';
             }
 
             if (target.closest('.dropdown__link')) {
                 e.preventDefault();
+                searchInput.value = target.textContent;
                 const link = e.target.href.replace(/.+#/g, '');
                 const elem = document.getElementById(link);
-                scroll(elem);
-                searchInput.value = target.textContent;
-                checkSearchInputValue('.search__input', '.search__close-button');
+                const word = elem.querySelector('.list__word').textContent.toLowerCase();
+                const list = elem.dataset.master;
+                const index = parseInt(elem.dataset.index);
 
+                if (index > this.numToShow[list]) {
+                    this.numToShow[list] = index;
+                    this.checkListLength(list, this.numToShow[list]);
+                }
+
+                elem.classList.add('js-active');
+                setTimeout(() => {
+                    elem.classList.remove('js-active');
+                }, 2000);
+                scroll(elem);
+                this.clearDropdown();
+                this.addDropdownElement(word, link);
+                checkSearchInputValue('.search__input', '.search__close-button');
+            }
+
+            if (document.documentElement.clientWidth < 768) {
+
+                if (target.closest('.list__row')) {
+                    const listSelector = target.dataset.master;
+                    const index = parseInt(target.dataset.index);
+                    const list = document.getElementById(listSelector);
+                    [...list.children].forEach((elem, idx) => {
+
+                        if (idx < index) {
+                            elem.style.transform = 'translateY(0)';
+                            return;
+                        }
+
+                        elem.style.transform = 'translateY(30px)';
+                    });
+                }
             }
         });
 

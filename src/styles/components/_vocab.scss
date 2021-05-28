@@ -1,6 +1,13 @@
 .content {
-  //max-width: 700px;
   width: 100%;
+  margin: 100px 0 0;
+  padding: 20px 50px 50px;
+  border-radius: 5px 5px 0 0;
+  background-color: #f1f1e4;
+
+  @media (max-width: $md3+px) {
+    padding: 20px 15px 50px;
+  }
 }
 
 .button {
@@ -29,19 +36,25 @@
   font-size: 16px;
 }
 
-.content {
-  margin: 100px 0 0;
-  padding: 20px 50px 50px;
-  border-radius: 5px 5px 0 0;
-  background-color: #f1f1e4;
-}
-
 .vocab {
 
   &__form {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: $md3+px) {
+      flex-direction: column;
+    }
+  }
+
+  &__label {
+    position: relative;
+    margin-right: 20px;
+
+    @media (max-width: $md3+px) {
+      margin: 0 0 20px;
+    }
   }
 
   &__title-box {
@@ -65,11 +78,6 @@
     }
   }
 
-  &__label {
-    position: relative;
-    margin-right: 20px;
-  }
-
   &__input {
     padding: 5px 10px;
     border: none;
@@ -85,7 +93,7 @@
 
   &__add-btn {
     font-size: 16px;
-    background-color: #aaf3ab;
+    background-color: #A9E0F6;
   }
 
   &__warning {
@@ -119,6 +127,10 @@
     //display: flex;
     align-items: center;
     justify-content: center;
+
+    @media (max-width: $md3+px) {
+      margin-top: 40px;
+    }
   }
 
   &__info {
@@ -140,6 +152,11 @@
     padding: 5px 0 5px 20px;
     border-top: 1px solid #ccc;
     transition: all 0.7s;
+    //background-color: #BDE6F6;
+
+    &.js-active {
+      background-color: #A7F8C5;
+    }
 
     &::before {
       position: absolute;
@@ -202,31 +219,15 @@
     &:last-child {
       margin: 0;
     }
-
-    //&:hover .controls__tooltip {
-    //  visibility: visible;
-    //  opacity: 1;
-    //  transform: translateY(0);
-    //}
   }
 
-  //&__tooltip {
-  //  position: absolute;
-  //  display: flex;
-  //  align-items: center;
-  //  justify-content: center;
-  //
-  //  visibility: hidden;
-  //  opacity: 0;
-  //  top: -45px;
-  //  right: -10px;
-  //  height: 36px;
-  //  padding: 2px 5px;
-  //  background-color: #8ad1ec;
-  //  border-radius: 5px;
-  //  //text-decoration: underline;
-  //  transition: all 0.3s ease-in-out;
-  //}
+  @media (max-width: $md3+px) {
+    position: absolute;
+    right: 20px;
+    top: 100%;
+  }
+
+
 
   &__edit {
     background-image: url('../assets/images/edit.png');

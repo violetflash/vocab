@@ -5,6 +5,8 @@ const writeWord = (firebase, reference, word, translation) => {
     });
 };
 
+const removeSpaces = string => string.replace(/\s/g, '');
+
 const deleteWord = (firebase, reference) => firebase.database().ref(reference).remove();
 
 const capitalizer = word => word[0].toUpperCase() + word.slice(1);
@@ -35,12 +37,19 @@ const makeWordsList = vocab => {
 
 const makeDropdownLink = (word, anchor) => `
     <li class="dropdown__row">
-        <a class="dropdown__link" href="#${anchor}">${word}</a>
+        <a class="dropdown__link" href="#${removeSpaces(anchor)}">${word}</a>
     </li>
 `;
 
 const scroll = e => {
     e.scrollIntoView({ behavior: "smooth", block: "start" });
+};
+
+const scrollDistance = distance => {
+    window.scrollBy({
+        top: distance,
+        behavior: 'smooth'
+    });
 };
 
 const checkSearchInputValue = (inputSelector, buttonSelector) => {
@@ -73,8 +82,9 @@ const checkInputs = arr => {
 
 const renderList = (target, source, index, moveTo, list) => {
     const word = capitalizer(source.word);
+    const id = removeSpaces(source.word);
     target.insertAdjacentHTML('beforeend', `
-        <li id="${source.word}" class="list__row" data-index="${index})"  data-master="${list}">
+        <li id="${id}" class="list__row" data-index="${index})"  data-master="${list}">
             <span class="list__word">${word}</span>
             <span class="list__translation">${source.translation}</span>
             <div class="list__controls controls">
@@ -135,4 +145,5 @@ export {
     checkSearchInputValue,
     makeDropdownLink,
     scroll,
+    scrollDistance,
 };

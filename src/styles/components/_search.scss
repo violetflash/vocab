@@ -67,13 +67,24 @@
     background-color: #fff;
     //border-top: 2px solid #f1f1e4;
     box-shadow: 0 3px 10px -.5px rgba(0, 0, 0, .2);
+  }
 
+  &__no-match {
+    display: none;
+    position: absolute;
+    top: 14px;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 3px 10px -.5px rgba(0, 0, 0, .2);
+  }
 
+  &__no-match,
+  &__link {
+    padding: 10px 15px;
   }
 
   &__link {
     display: block;
-    padding: 10px 15px;
     transition: all 0.3s ease 0s;
 
     &:hover {
