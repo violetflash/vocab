@@ -73,10 +73,8 @@ class Vocab {
     }
 
     render() {
-        console.log('render!');
         this.getDatabase();
         const { words } = this;
-        console.log(this.words);
         clearList('#actual');
         clearList('#learned');
 
@@ -115,7 +113,7 @@ class Vocab {
         const afterLine = list.nextElementSibling;
         const info = afterLine.querySelector('.vocab__info-num');
         const max = this.getMaxWordWidth(listSelector);
-        console.log(max);
+
         if (list.children.length > 0) {
             [...list.children].forEach((elem, index) => {
                 const wordField = elem.querySelector('.list__word');
@@ -275,11 +273,14 @@ class Vocab {
             }
 
             if (target.closest('.vocab__more')) {
+                const hidden = target.closest('.vocab__after-line').querySelector('.vocab__info-num').textContent;
                 const list = target.closest('.vocab__after-line').previousElementSibling;
                 const lineHeight = list.querySelector('.list__row').clientHeight;
+                const amount = +hidden > 20 ? 22 : +hidden;
                 this.numToShow[list.id] += 20;
                 this.render();
-                scrollDistance(lineHeight * 20);
+
+                scrollDistance(lineHeight * amount);
             }
 
             if (target.closest('.search__close-button')) {
