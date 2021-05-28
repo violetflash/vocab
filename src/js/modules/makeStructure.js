@@ -4,6 +4,18 @@ const makeVocabHeader = () => `
     </header>
 `;
 
+const makeSearchInput = () => `
+    <div class="search">
+        <div class="search__content">
+            <input class="search__input" type="text" placeholder="search word...">
+            <div class="search__close-button"></div>
+            <div class="search__dropdown dropdown">
+                <div class="dropdown__autocomplete"></div>
+            </div>
+        </div>
+    </div>   
+`;
+
 const makeForm = () => `
     <form class="vocab__form">
         <label class="vocab__label">
@@ -105,6 +117,7 @@ const makeStructure = root => {
     const main = document.createElement('div');
     main.className = 'main';
     main.insertAdjacentHTML('beforeend', makeForm());
+    main.insertAdjacentHTML('beforeend', makeSearchInput());
     main.insertAdjacentHTML('beforeend', makeActual());
     main.insertAdjacentHTML('beforeend', makeLearned());
     main.insertAdjacentHTML('beforeend', makeModals());

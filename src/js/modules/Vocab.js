@@ -161,12 +161,22 @@ class Vocab {
         this.showModal(modal);
     }
 
+    searchHandler(e) {
+        const clearBtn = document.querySelector('.search__close-button');
+        if (e.target.value) {
+            clearBtn.style.display = 'flex';
+        } else {
+            clearBtn.style.display = 'none';
+        }
+    }
+
     eventListeners() {
         const confirm = document.querySelector('.modal__confirm-input');
         const deleteBtn = document.querySelector('.modal__delete-btn');
         const undoBtn = document.querySelector('.modal__undo-btn');
         const forms = this.root.querySelectorAll('form');
         const inputs = [document.getElementById('word'), document.getElementById('translation')];
+        const searchInput = document.querySelector('.search__input');
 
         this.root.addEventListener('click', e => {
             let target = e.target;
@@ -217,6 +227,11 @@ class Vocab {
                     behavior: 'smooth'
                 });
             }
+
+            if (target.closest('.search__close-button')) {
+                target.previousElementSibling.value = '';
+                target.style.display = 'none';
+            }
         });
 
         this.root.addEventListener('mouseover', e => {
@@ -239,7 +254,6 @@ class Vocab {
 
 
         });
-
 
         forms.forEach(form => {
             form.addEventListener('submit', e => {
@@ -267,7 +281,6 @@ class Vocab {
             });
         });
 
-
         confirm.addEventListener('input', () => {
             if (confirm.value.toLowerCase() === this.translation) {
                 deleteBtn.style.display = 'inline-block';
@@ -277,6 +290,8 @@ class Vocab {
                 undoBtn.style.display = 'inline-block';
             }
         });
+
+        searchInput.addEventListener('input', this.searchHandler.bind(this));
     }
 
     initFirebase() {
