@@ -48,4 +48,36 @@
       transform: rotate(45deg);
     }
   }
+
+  &__dropdown {
+
+
+  }
+}
+
+.dropdown {
+  position: absolute;
+  width: 100%;
+  top: 70%;
+  //bottom: 0;
+  //background-color: #fff;
+  z-index: 50;
+
+  &__autocomplete {
+    background-color: #fff;
+    //border-top: 2px solid #f1f1e4;
+    box-shadow: 0 3px 10px -.5px rgba(0, 0, 0, .2);
+
+
+  }
+
+  &__link {
+    display: block;
+    padding: 10px 15px;
+    transition: all 0.3s ease 0s;
+
+    &:hover {
+      background-color: #BDE6F6;
+    }
+  }
 }

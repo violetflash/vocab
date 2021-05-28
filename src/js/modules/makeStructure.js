@@ -10,7 +10,11 @@ const makeSearchInput = () => `
             <input class="search__input" type="text" placeholder="search word...">
             <div class="search__close-button"></div>
             <div class="search__dropdown dropdown">
-                <div class="dropdown__autocomplete"></div>
+                <div class="dropdown__autocomplete">
+                    <ul class="dropdown__list">
+                        
+                    </ul>
+                </div>
             </div>
         </div>
     </div>   

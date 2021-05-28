@@ -21,6 +21,38 @@ const readDatabase = firebase => {
     });
 };
 
+const makeWordsList = vocab => {
+    let wordList = [];
+    for (const vocabKey in vocab) {
+        const list = Object.values(vocab[vocabKey]).reduce((arr, elem) => {
+            arr.push(elem.word);
+            return arr;
+        }, []);
+        wordList = wordList.concat(list);
+    }
+    return wordList;
+};
+
+const makeDropdownLink = (word, anchor) => `
+    <li class="dropdown__row">
+        <a class="dropdown__link" href="#${anchor}">${word}</a>
+    </li>
+`;
+
+const scroll = e => {
+    e.scrollIntoView({ behavior: "smooth", block: "start" });
+};
+
+const checkSearchInputValue = (inputSelector, buttonSelector) => {
+    const input = document.querySelector(inputSelector);
+    const button = document.querySelector(buttonSelector);
+    if (input.value) {
+        button.style.display = 'flex';
+    } else {
+        button.style.display = 'none';
+    }
+};
+
 const checkInputs = arr => {
     let res = true;
     arr.forEach(input => {
@@ -99,4 +131,8 @@ export {
     unlockScreen,
     capitalizer,
     showBlocks,
+    makeWordsList,
+    checkSearchInputValue,
+    makeDropdownLink,
+    scroll,
 };

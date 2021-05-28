@@ -17,7 +17,10 @@ import {
     unlockScreen,
     capitalizer,
     showBlocks,
-    // scroll,
+    checkSearchInputValue,
+    scroll,
+    makeWordsList,
+    makeDropdownLink,
 } from './utils';
 
 //TODO header - make canvas with arc
@@ -41,13 +44,14 @@ class Vocab {
 
     addNewWord(reference, word, translation) {
         writeWord(firebase, reference, word, translation);
-        this.getDatabase();
         this.render();
     }
 
     getDatabase() {
         readDatabase(firebase);
         this.words = JSON.parse(localStorage.getItem('vocab'));
+        this.wordsList = makeWordsList(this.words);
+        console.log(this.wordsList);
     }
 
     makeLayout() {
@@ -161,13 +165,25 @@ class Vocab {
         this.showModal(modal);
     }
 
+
+
     searchHandler(e) {
-        const clearBtn = document.querySelector('.search__close-button');
+        const dropdownList = document.querySelector('.dropdown__list');
+        dropdownList.innerHTML = '';
+        checkSearchInputValue('.search__input', '.search__close-button');
         if (e.target.value) {
-            clearBtn.style.display = 'flex';
-        } else {
-            clearBtn.style.display = 'none';
+            const regExp = new RegExp(e.target.value);
+            this.wordsList.forEach(elem => {
+                if (regExp.test(elem)) {
+                    // console.log(elem);
+                    const word = elem.replace(regExp, match => `<strong>${match}</strong>`);
+                    dropdownList.insertAdjacentHTML('beforeend', makeDropdownLink(word, elem));
+                }
+            });
         }
+
+
+
     }
 
     eventListeners() {
@@ -231,6 +247,16 @@ class Vocab {
             if (target.closest('.search__close-button')) {
                 target.previousElementSibling.value = '';
                 target.style.display = 'none';
+            }
+
+            if (target.closest('.dropdown__link')) {
+                e.preventDefault();
+                const link = e.target.href.replace(/.+#/g, '');
+                const elem = document.getElementById(link);
+                scroll(elem);
+                searchInput.value = target.textContent;
+                checkSearchInputValue('.search__input', '.search__close-button');
+
             }
         });
 
@@ -302,7 +328,6 @@ class Vocab {
     init() {
         this.makeLayout();
         this.initFirebase();
-        this.getDatabase();
         this.eventListeners();
 
         //first time render
