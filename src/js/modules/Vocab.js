@@ -363,12 +363,14 @@ class Vocab {
                 }
 
                 if (form.closest('.modal-edit') && checkInputs(modalInputs)) {
+                    const oldWord = document.querySelector('.modal-edit').dataset.word;
                     const wordField = form.querySelector('input[name="word"]');
                     const word = wordField.value.toLowerCase().trim();
                     const translationField = form.querySelector('input[name="translation"]');
                     const translation = translationField.value.toLowerCase().trim();
                     const list = document.querySelector('.modal-edit').dataset.list;
                     const ref = `${this.refPrefix}/${list}/`;
+                    deleteWord(firebase, ref + oldWord);
                     this.addNewWord(ref, word, translation);
                     this.hideModals();
                 }

@@ -119,6 +119,10 @@
 
   &__btn {
     margin-top: 20px;
+
+    @media (max-width: $md3+px) {
+      margin-top: 0;
+    }
   }
 
   &__delete-btn {
@@ -143,19 +147,19 @@
     align-items: center;
     justify-content: space-between;
 
-    @media (max-width: $md2+px) {
+    @media (max-width: $md3+px) {
       flex-direction: column;
     }
   }
 
   &__separator {
-    @media (max-width: $md2+px) {
+    @media (max-width: $md3+px) {
       display: none;
     }
   }
 
   &__label {
-    @media (max-width: $md2+px) {
+    @media (max-width: $md3+px) {
       margin-bottom: 30px;
     }
 
@@ -172,6 +176,10 @@
   &__warning {
     bottom: unset;
     left: 30px;
+  }
+
+  &__buttons {
+    margin-top: 30px;
   }
 }
 
