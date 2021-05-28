@@ -39,7 +39,7 @@ class Vocab {
         this.actual = 'vocab/actual/';
         this.learned = 'vocab/learned/';
         this.numToShow = { 'actual': 20, 'learned': 20 }; //default num of showed lines
-        this.words = localStorage.getItem('vocab') ? JSON.parse(localStorage.getItem('vocab')) : {};
+        this.words = JSON.parse(localStorage.getItem('vocab'));
 
     }
 
@@ -73,8 +73,10 @@ class Vocab {
     }
 
     render() {
+        console.log('render!');
         this.getDatabase();
         const { words } = this;
+        console.log(this.words);
         clearList('#actual');
         clearList('#learned');
 
@@ -401,17 +403,10 @@ class Vocab {
         this.makeLayout();
         this.initFirebase();
         this.eventListeners();
+        // readDatabase(firebase);
+        // this.words = JSON.parse(localStorage.getItem('vocab'));
 
-        //first time render
-        // if  (this.words.learned || this.words.actual) {
-        //     this.render();
-        // }
-        this.getDatabase();
         this.render();
-
-        // this.addNewWord(this.actual,'hello', 'привет', 'привет мир!');
-        // this.addNewWord(this.learned,'bye', 'пока');
-        // this.addNewWord(this.learned,'overlap', 'перекрытие');
 
 
     }
