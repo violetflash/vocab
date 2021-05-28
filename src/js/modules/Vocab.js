@@ -403,10 +403,19 @@ class Vocab {
         this.makeLayout();
         this.initFirebase();
         this.eventListeners();
-        // readDatabase(firebase);
-        // this.words = JSON.parse(localStorage.getItem('vocab'));
 
-        this.render();
+        //first time render
+        const dbRef = firebase.database().ref('vocab/');
+        dbRef.on('value', snapshot => {
+            if (snapshot.exists()) {
+                // console.log(snapshot.val());
+                localStorage.setItem('vocab', JSON.stringify(snapshot.val()));
+                this.render();
+            } else {
+                console.log("No data available");
+            }
+        });
+
 
 
     }
