@@ -306,7 +306,7 @@ class Vocab {
                 elem.classList.add('js-active');
                 setTimeout(() => {
                     elem.classList.remove('js-active');
-                }, 2000);
+                }, 4000);
                 scroll(elem);
                 this.clearDropdown();
                 this.addDropdownElement(word, link);
