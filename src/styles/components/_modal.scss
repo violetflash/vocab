@@ -45,6 +45,11 @@
     visibility: visible;
   }
 
+  @media (max-width: $md3+px) {
+    max-width: unset;
+    width: unset;
+  }
+
   &__cross {
     width: 15px;
     height: 15px;
@@ -137,15 +142,39 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (max-width: $md2+px) {
+      flex-direction: column;
+    }
+  }
+
+  &__separator {
+    @media (max-width: $md2+px) {
+      display: none;
+    }
+  }
+
+  &__label {
+    @media (max-width: $md2+px) {
+      margin-bottom: 30px;
+    }
+
   }
 
   &__input {
+    position: relative;
     border: none;
     padding: 5px 10px;
     font-size: 14px;
     margin: 0 10px;
   }
+
+  &__warning {
+    bottom: unset;
+    left: 30px;
+  }
 }
+
 
 .modal-edit {
   padding: 20px;

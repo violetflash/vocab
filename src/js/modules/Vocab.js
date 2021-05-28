@@ -96,12 +96,28 @@ class Vocab {
         this.checkTitle('.vocab__title-learned', 'learned');
     }
 
+    getMaxWordWidth(listSelector) {
+        const list = document.getElementById(listSelector);
+        let max = 0;
+        [...list.children].forEach(elem => {
+            const wordWidth = elem.querySelector('.list__word').clientWidth;
+            if (max < wordWidth) {
+                max = wordWidth;
+            }
+        });
+        return max;
+    }
+
     checkListLength(listSelector, num) {
         const list = document.getElementById(listSelector);
         const afterLine = list.nextElementSibling;
         const info = afterLine.querySelector('.vocab__info-num');
+        const max = this.getMaxWordWidth(listSelector);
         if (list.children.length > 0) {
             [...list.children].forEach((elem, index) => {
+                const wordField = elem.querySelector('.list__word');
+                wordField.style.maxWidth = max + 'px';
+                wordField.style.width = '100%';
                 if (index + 1 > num) {
                     elem.style.display = 'none';
                     afterLine.style.display = 'flex';
@@ -185,7 +201,7 @@ class Vocab {
         if (e.target.value) {
 
 
-            const regExp = new RegExp(e.target.value);
+            const regExp = new RegExp(e.target.value.toLowerCase());
             this.wordsList.forEach(elem => {
                 if (regExp.test(elem)) {
                     const word = elem.replace(regExp, match => `<strong>${match}</strong>`);
@@ -212,6 +228,7 @@ class Vocab {
         const undoBtn = document.querySelector('.modal__undo-btn');
         const forms = this.root.querySelectorAll('form');
         const inputs = [document.getElementById('word'), document.getElementById('translation')];
+        const modalInputs = document.querySelectorAll('.modal__input');
         const searchInput = document.querySelector('.search__input');
 
         this.root.addEventListener('click', e => {
@@ -240,6 +257,8 @@ class Vocab {
                 const word = target.closest('.modal').dataset.word;
                 const ref = `${this.refPrefix}/${list}/${word}`;
                 deleteWord(firebase, ref);
+                deleteBtn.style.display = 'none';
+                undoBtn.style.display = 'inline-block';
                 this.render();
                 this.hideModals();
             }
@@ -293,6 +312,7 @@ class Vocab {
             if (document.documentElement.clientWidth < 768) {
 
                 if (target.closest('.list__row')) {
+                    target = target.closest('.list__row');
                     const listSelector = target.dataset.master;
                     const index = parseInt(target.dataset.index);
                     const list = document.getElementById(listSelector);
@@ -342,7 +362,7 @@ class Vocab {
                     document.getElementById('word').focus();
                 }
 
-                if (form.closest('.modal-edit')) {
+                if (form.closest('.modal-edit') && checkInputs(modalInputs)) {
                     const wordField = form.querySelector('input[name="word"]');
                     const word = wordField.value.toLowerCase().trim();
                     const translationField = form.querySelector('input[name="translation"]');
@@ -383,7 +403,7 @@ class Vocab {
         // if  (this.words.learned || this.words.actual) {
         //     this.render();
         // }
-
+        this.getDatabase();
         this.render();
 
         // this.addNewWord(this.actual,'hello', 'привет', 'привет мир!');

@@ -25,12 +25,12 @@ const makeForm = () => `
     <form class="vocab__form">
         <label class="vocab__label">
             <input class="vocab__input" id="word" name="word" type="text" placeholder="new word" autocomplete="off">
-            <span class="vocab__warning">input field must not be empty!</span>
+            <span class="input-warning">This field must not be empty!</span>
         </label>
         <label class="vocab__label">
             <input class="vocab__input" id="translation" name="translation" type="text" 
                 placeholder="translation" autocomplete="off">
-            <span class="vocab__warning">input field must not be empty!</span>
+            <span class="input-warning">This field must not be empty!</span>
         </label>
         <button class="vocab__add-btn button" type="submit">Add new word</button>
     </form> 
@@ -81,13 +81,15 @@ const makeModals = () => `
         <h3 class="modal__title">Word editor</h3>
         <form class="modal__form">
             <div class="modal__inputs">
-                <label><!-- labels here in case of further effects ;) -->
+                <label class="modal__label"><!-- labels here in case of further effects ;) -->
                     <input class="modal__input" name="word" type="text" autocomplete="off">
+                    <span class="input-warning modal__warning">This field must not be empty!</span>
                 </label>
                 <span class="modal__separator">&#9866;</span>
-                <label>
+                <label class="modal__label">
                     <input class="modal__input modal__translation" name="translation" type="text" 
                         autocomplete="off">
+                    <span class="input-warning modal__warning">This field must not be empty!</span>
                 </label>
             </div>
             <button class="modal__btn button" type="submit">Save</button>

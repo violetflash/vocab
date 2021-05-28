@@ -23,12 +23,9 @@
   position: relative;
   margin: 0 auto 50px;
   padding-bottom: 10px;
-  width: 50%;
   text-align: center;
   font-family: $fontFamily2;
   font-size: 40px;
-  overflow: hidden;
-  /*border-bottom: 1px solid #837d7d;*/
 }
 
 .title span {
@@ -36,8 +33,26 @@
   font-size: 16px;
 }
 
-.vocab {
+.input-warning {
+  display: block;
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  font-size: 14px;
+  color: #e75656;
+  transition: all 0.3s ease;
 
+  &.js-active {
+    color: tomato;
+    opacity: 1;
+    visibility: visible;
+    animation: anim 0.4s;
+  }
+}
+
+.vocab {
   &__form {
     display: flex;
     align-items: center;
@@ -96,27 +111,11 @@
     background-color: #A9E0F6;
   }
 
-  &__warning {
-    display: block;
-    position: absolute;
-    bottom: -18px;
-    left: 0;
-    opacity: 0;
-    visibility: hidden;
-    font-size: 14px;
-    color: #e75656;
-    transition: all 0.3s ease;
-
-    &.js-active {
-      color: tomato;
-      opacity: 1;
-      visibility: visible;
-      animation: anim 0.4s;
-    }
-  }
-
   &__words {
     margin-top: 50px;
+    @media (max-width: $md3+px) {
+      margin-top: 70px;
+    }
   }
 
   &__after-line {
@@ -151,7 +150,7 @@
     align-items: center;
     padding: 5px 0 5px 20px;
     border-top: 1px solid #ccc;
-    transition: all 0.7s;
+    transition: all 0.3s;
     //background-color: #BDE6F6;
 
     &.js-active {
@@ -175,15 +174,11 @@
 
   &__word {
     position: relative;
-    margin-right: 20px;
+    margin-right: 40px;
     font-weight: 700;
-    max-width: 150px;
-    width: 100%;
 
-    &:after {
-      position: absolute;
-      content: '-';
-      right: 0;
+    @media (max-width: $md3+px) {
+      margin-right: 10px;
     }
   }
 
@@ -210,7 +205,11 @@
   &.js-active {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
+    transform: translateX(0);
+
+    @media (max-width: $md3+px) {
+      transform: translateX(40%);
+    }
   }
 
   & button {
@@ -223,8 +222,10 @@
 
   @media (max-width: $md3+px) {
     position: absolute;
-    right: 20px;
+    right: 50%;
+    transform: translateX(50%);
     top: 100%;
+    transition: all 0.2s ease;
   }
 
 
