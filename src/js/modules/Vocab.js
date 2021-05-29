@@ -45,6 +45,7 @@ class Vocab {
 
     addNewWord(reference, word, translation) {
         writeWord(firebase, reference, word, translation);
+        this.getDatabase();
         this.render();
     }
 
@@ -73,7 +74,7 @@ class Vocab {
     }
 
     render() {
-        this.getDatabase();
+        // this.getDatabase();
         const { words } = this;
         clearList('#actual');
         clearList('#learned');
@@ -85,7 +86,7 @@ class Vocab {
             const oppositeList = key === 'actual' ? 'Learned' : 'Actual';    //  list name for move-to button
             for (const word in words[key]) {
                 const target = document.getElementById(key);
-                renderList(target, words[key][word], index + 1, oppositeList, key);
+                renderList(target, this.shuffle(words[key][word]), index + 1, oppositeList, key);
                 index++;
             }
 
@@ -139,7 +140,6 @@ class Vocab {
         const list = row.dataset.master;
         const ref = `${this.refPrefix}/${list}/${word}`;
         deleteWord(firebase, ref);
-        this.render();
         return { word, translation };
     }
 
@@ -193,6 +193,29 @@ class Vocab {
         dropdownList.insertAdjacentHTML('beforeend', makeDropdownLink(word, word));
     }
 
+    sortWords(array) {
+        function compare(a, b) {
+            if (a.word < b.word) {
+                return -1;
+            }
+            if (a.word > b.word) {
+                return 1;
+            }
+            return 0;
+        }
+        array.sort(compare);
+    }
+
+    //  Fisher Yates Shuffle
+    shuffle(array) {
+        // const {vocab} = toDoObject;
+        for (let i = array.length - 1; i > 0; i--) {
+            //  pick random index before current element
+            const j = Math.floor(Math.random() * (i + 1));
+            //  swap in place (shorthand way of swapping elements using destructuring
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
 
     searchHandler(e) {
         const dropdownList = document.querySelector('.dropdown__list');
@@ -217,6 +240,8 @@ class Vocab {
             } else {
                 noMatch.style.display = 'none';
             }
+        } else {
+            noMatch.style.display = 'none';
         }
 
 
@@ -242,6 +267,8 @@ class Vocab {
                 console.log(targetList);
                 const reference = `${this.refPrefix}/${targetList}/`;
                 this.addNewWord(reference, word, translation);
+                this.getDatabase();
+                this.render();
                 return;
             }
 
@@ -260,6 +287,7 @@ class Vocab {
                 deleteWord(firebase, ref);
                 deleteBtn.style.display = 'none';
                 undoBtn.style.display = 'inline-block';
+                this.getDatabase();
                 this.render();
                 this.hideModals();
             }
@@ -395,6 +423,17 @@ class Vocab {
         searchInput.addEventListener('input', this.searchHandler.bind(this));
     }
 
+    generateId() {
+        const newDate = new Date();
+        const date = newDate.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        }).replace(/[^0-9]/g, "");
+        const time = newDate.getTime().toString();
+        return date + time;
+    }
+
     initFirebase() {
         firebase.initializeApp(this.firebaseConfig);
         this.database = firebase.database();
@@ -416,9 +455,6 @@ class Vocab {
                 console.log("No data available");
             }
         });
-
-
-
     }
 }
 
