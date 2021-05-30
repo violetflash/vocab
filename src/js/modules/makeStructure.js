@@ -38,13 +38,21 @@ const makeForm = () => `
 
 const makeActual = () => `
     <div class="vocab__words">
-        <div class="vocab__title-box">
-            <h2 class="vocab__title vocab__title-actual" data-full="Words to learn:" 
-                data-empty="No words added">No words added
-            </h2>
-            <span class="vocab__title-counter">2222</span>
+        <div class="vocab__info-line">
+            <div class="vocab__title-box">
+                <h2 class="vocab__title vocab__title-actual" data-full="Words to learn:" 
+                    data-empty="No words added">No words added
+                </h2>
+                <span class="vocab__title-counter">2222</span>
+            </div>
+            <div class="vocab__controls">
+                <div class="vocab__sort sort">
+                    <button class="sort__shuffle">shuffle</button>
+                    <button class="sort__sort">ascending</button>
+<!--                    <button class="sort__descending">descending</button>-->
+                </div>
+            </div>
         </div>
-<!--        <img class="" src="./assets/images/recycle.png" alt="">-->
         <ul id="actual" class="vocab__list list"></ul>
         <div class="vocab__after-line">
             <span class="vocab__info">Hidden words: <strong class="vocab__info-num"></strong></span>
@@ -56,14 +64,22 @@ const makeActual = () => `
 
 const makeLearned = () => `
     <div class="vocab__words vocab__words--learned">
-        <div class="vocab__title-box">
-            <h2 class="vocab__title vocab__title-learned" 
-                data-full="Learned words:" 
-                data-empty="No words learned">No words learned
-            </h2>
-            <span class="vocab__title-counter">11111</span>
+        <div class="vocab__info-line">
+            <div class="vocab__title-box">
+                <h2 class="vocab__title vocab__title-learned" 
+                    data-full="Learned words:" 
+                    data-empty="No words learned">No words learned
+                </h2>
+                <span class="vocab__title-counter">11111</span>
+            </div>
+            <div class="vocab__controls">
+                <div class="vocab__sort sort">
+                    <button class="sort__shuffle">shuffle</button>
+                    <button class="sort__sort">ascending</button>
+<!--                    <button class="sort__descending">descending</button>-->
+                </div>
+            </div>
         </div>
-<!--        <img class="" src="./assets/images/sort.png" alt="">-->
         <ul id="learned" class="vocab__list list"></ul>
         <div class="vocab__after-line">
             <span class="vocab__info">Hidden words: <strong class="vocab__info-num"></strong></span>

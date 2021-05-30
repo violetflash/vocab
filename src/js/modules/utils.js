@@ -80,7 +80,7 @@ const checkInputs = arr => {
     return res;
 };
 
-const renderList = (target, source, index, moveTo, list) => {
+const renderRow = (target, source, index, moveTo, list) => {
     const word = capitalizer(source.word);
     const id = removeSpaces(source.word);
     target.insertAdjacentHTML('beforeend', `
@@ -129,12 +129,44 @@ const showBlocks = className => {
     });
 };
 
+const setCookie = (name, value, options = {}) => {
+
+    options = {
+        path: '/',
+        // при необходимости добавьте другие значения по умолчанию
+        ...options
+    };
+
+    if (options.expires instanceof Date) {
+        options.expires = options.expires.toUTCString();
+    }
+
+    let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+    for (const optionKey in options) {
+        updatedCookie += "; " + optionKey;
+        const optionValue = options[optionKey];
+        if (optionValue !== true) {
+            updatedCookie += "=" + optionValue;
+        }
+    }
+
+    document.cookie = updatedCookie;
+};
+
+const getCookie = name => {
+    const matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+};
+
 export {
     writeWord,
     deleteWord,
     readDatabase,
     checkInputs,
-    renderList,
+    renderRow,
     clearList,
     updateTitleCounter,
     lockScreen,
@@ -146,4 +178,6 @@ export {
     makeDropdownLink,
     scroll,
     scrollDistance,
+    setCookie,
+    getCookie,
 };
