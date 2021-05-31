@@ -24,7 +24,6 @@ const makeArraysFromData = response => {
             vocab[key].push(response[key][word]);
         }
     }
-    console.log(1);
     localStorage.setItem('vocab', JSON.stringify(vocab));
 };
 
@@ -34,7 +33,7 @@ const readDatabase = firebase => {
         if (snapshot.exists()) {
             makeArraysFromData(snapshot.val());
         } else {
-            console.log("No data available");
+            // console.log("No data available");
             localStorage.setItem('vocab', JSON.stringify({}));
         }
     });

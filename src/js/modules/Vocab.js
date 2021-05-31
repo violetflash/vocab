@@ -47,6 +47,7 @@ class Vocab {
     addNewWord(reference, word, translation) {
         writeWord(firebase, reference, word, translation);
         const dbRef = firebase.database().ref('vocab/');
+
         dbRef.on('value', snapshot => {
             if (snapshot.exists()) {
                 // makeArraysFromData(snapshot.val());
@@ -64,7 +65,7 @@ class Vocab {
                 this.data = vocab;
                 this.render();
             } else {
-                console.log("No data available");
+                this.root.removeEventListener('click', this.clickHandler);
             }
         });
     }
@@ -93,30 +94,18 @@ class Vocab {
         const title = document.querySelector(titleSelector);
         const list = document.getElementById(listSelector);
         const counter = title.nextElementSibling;
+        const beforeLine = list.previousElementSibling;
+        const sortingBtns = beforeLine.querySelector('.vocab__controls');
 
         if (list.innerHTML === '') {
             counter.style.display = 'none';
             title.textContent = title.dataset.empty;
+            sortingBtns.style.display = 'none';
         } else {
             counter.style.display = 'block';
             title.textContent = title.dataset.full;
+            sortingBtns.style.display = 'flex';
         }
-    }
-
-    sortList(listID) {
-        const data = JSON.parse(localStorage.getItem('vocab'));
-        //TODO this.data === undefined ???
-        // console.log(this.data);
-        if (this.sort[listID] === 'shuffle') {
-            this.shuffle(data[listID]);
-        } else if (this.sort[listID] === 'ascending') {
-            this.sortArray(data[listID]);
-        } else if (this.sort[listID] === 'descending') {
-            this.sortArray(data[listID]);
-            data[listID].reverse();
-        }
-        localStorage.setItem('vocab', JSON.stringify(data));
-        this.render();
     }
 
     resetSortOptions() {
@@ -264,6 +253,22 @@ class Vocab {
         }
     }
 
+    sortList(listID) {
+        const data = JSON.parse(localStorage.getItem('vocab'));
+        //TODO this.data === undefined ???
+        // console.log(this.data);
+        if (this.sort[listID] === 'shuffle') {
+            this.shuffle(data[listID]);
+        } else if (this.sort[listID] === 'ascending') {
+            this.sortArray(data[listID]);
+        } else if (this.sort[listID] === 'descending') {
+            this.sortArray(data[listID]);
+            data[listID].reverse();
+        }
+        localStorage.setItem('vocab', JSON.stringify(data));
+        this.render();
+    }
+
     searchHandler(e) {
         const dropdownList = document.querySelector('.dropdown__list');
         const noMatch = document.querySelector('.dropdown__no-match');
@@ -292,142 +297,144 @@ class Vocab {
         }
     }
 
-    eventListeners() {
-        const confirm = document.querySelector('.modal__confirm-input');
+    clickHandler(e) {
+
+        const searchInput = document.querySelector('.search__input');
         const deleteBtn = document.querySelector('.modal__delete-btn');
         const undoBtn = document.querySelector('.modal__undo-btn');
+
+        let target = e.target;
+
+        if (target.closest('.controls__move')) {
+            target = target.closest('.controls__move');
+            const { word, translation } = this.deleteWord(target);
+            const targetList = target.dataset.move.toLowerCase();
+            const reference = `${this.refPrefix}/${targetList}/`;
+            this.addNewWord(reference, word, translation);
+        }
+
+        if (target.closest('.controls__remove')) {
+            this.modalWordHandle(target, '.modal-delete');
+        }
+
+        if (target.closest('.modal__cross') || target.classList.contains('overlay')) {
+            this.hideModals();
+        }
+
+        if (target.closest('.modal__delete-btn')) {
+            const list = target.closest('.modal').dataset.list;
+            const word = target.closest('.modal').dataset.word;
+            const ref = `${this.refPrefix}/${list}/${word}`;
+            deleteWord(firebase, ref);
+            deleteBtn.style.display = 'none';
+            undoBtn.style.display = 'inline-block';
+            this.getData();
+            this.render();
+            this.hideModals();
+        }
+
+        if (target.closest('.modal__undo-btn')) {
+            this.hideModals();
+        }
+
+        if (target.closest('.controls__edit')) {
+            this.modalWordHandle(target, '.modal-edit');
+        }
+
+        if (target.closest('.vocab__more')) {
+            const hidden = target.closest('.vocab__after-line').querySelector('.vocab__info-num').textContent;
+            const list = target.closest('.vocab__after-line').previousElementSibling;
+            const lineHeight = list.querySelector('.list__row').clientHeight;
+            const amount = +hidden > 20 ? 22 : +hidden;
+            this.numToShow[list.id] += 20;
+            this.render();
+
+            scrollDistance(lineHeight * amount);
+        }
+
+        if (target.closest('.search__close-button')) {
+            target.previousElementSibling.value = '';
+            this.clearDropdown();
+            target.style.display = 'none';
+        }
+
+        if (target.closest('.dropdown__link')) {
+            e.preventDefault();
+            searchInput.value = target.textContent;
+            const link = e.target.href.replace(/.+#/g, '');
+            const elem = document.getElementById(link);
+            const word = elem.querySelector('.list__word').textContent.toLowerCase();
+            const list = elem.dataset.master;
+            const index = parseInt(elem.dataset.index);
+
+            if (index > this.numToShow[list]) {
+                this.numToShow[list] = index;
+                this.checkListLength(list, this.numToShow[list]);
+            }
+
+            elem.classList.add('js-active');
+            setTimeout(() => {
+                elem.classList.remove('js-active');
+            }, 4000);
+            scroll(elem);
+            this.clearDropdown();
+            this.addDropdownElement(word, link);
+            checkSearchInputValue('.search__input', '.search__close-button');
+        }
+
+        if (target.closest('.sort__shuffle') || target.closest('.sort__sort')) {
+            this.listID = target.closest('.vocab__info-line').nextElementSibling.id;
+        }
+
+        if (target.closest('.sort__shuffle')) {
+            const { listID } = this;
+            this.sort[listID] = 'shuffle';
+            localStorage.setItem('vocabSortOptions', JSON.stringify(this.sort));
+            this.sortList(listID);
+        }
+
+        if (target.closest('.sort__sort')) {
+            const { listID } = this;
+            if (this.sort[listID] === 'shuffle' || this.sort[listID] === 'descending') {
+                this.sort[listID] = 'ascending';
+            } else if (!this.sort[listID] || this.sort[listID] === 'ascending') {
+                this.sort[listID] = 'descending';
+            }
+
+            localStorage.setItem('vocabSortOptions', JSON.stringify(this.sort));
+            this.sortList(listID);
+        }
+
+        if (document.documentElement.clientWidth < 768) {
+
+            if (target.closest('.list__row')) {
+                target = target.closest('.list__row');
+                const listSelector = target.dataset.master;
+                const index = parseInt(target.dataset.index);
+                const list = document.getElementById(listSelector);
+                [...list.children].forEach((elem, idx) => {
+
+                    if (idx < index) {
+                        elem.style.transform = 'translateY(0)';
+                        return;
+                    }
+
+                    elem.style.transform = 'translateY(30px)';
+                });
+            }
+        }
+    }
+
+    eventListeners() {
+        const searchInput = document.querySelector('.search__input');
+        const deleteBtn = document.querySelector('.modal__delete-btn');
+        const undoBtn = document.querySelector('.modal__undo-btn');
+        const confirm = document.querySelector('.modal__confirm-input');
         const forms = this.root.querySelectorAll('form');
         const inputs = [document.getElementById('word'), document.getElementById('translation')];
         const modalInputs = document.querySelectorAll('.modal__input');
-        const searchInput = document.querySelector('.search__input');
 
-        let listID = '';
-
-        const clickHandler = async e => {
-            let target = e.target;
-
-            if (target.closest('.controls__move')) {
-                target = target.closest('.controls__move');
-                const { word, translation } = this.deleteWord(target);
-                const targetList = target.dataset.move.toLowerCase();
-                const reference = `${this.refPrefix}/${targetList}/`;
-                this.addNewWord(reference, word, translation);
-            }
-
-            if (target.closest('.controls__remove')) {
-                this.modalWordHandle(target, '.modal-delete');
-            }
-
-            if (target.closest('.modal__cross') || target.classList.contains('overlay')) {
-                this.hideModals();
-            }
-
-            if (target.closest('.modal__delete-btn')) {
-                const list = target.closest('.modal').dataset.list;
-                const word = target.closest('.modal').dataset.word;
-                const ref = `${this.refPrefix}/${list}/${word}`;
-                deleteWord(firebase, ref);
-                deleteBtn.style.display = 'none';
-                undoBtn.style.display = 'inline-block';
-                this.getData();
-                this.render();
-                this.hideModals();
-            }
-
-            if (target.closest('.modal__undo-btn')) {
-                this.hideModals();
-            }
-
-            if (target.closest('.controls__edit')) {
-                this.modalWordHandle(target, '.modal-edit');
-            }
-
-            if (target.closest('.vocab__more')) {
-                const hidden = target.closest('.vocab__after-line').querySelector('.vocab__info-num').textContent;
-                const list = target.closest('.vocab__after-line').previousElementSibling;
-                const lineHeight = list.querySelector('.list__row').clientHeight;
-                const amount = +hidden > 20 ? 22 : +hidden;
-                this.numToShow[list.id] += 20;
-                this.render();
-
-                scrollDistance(lineHeight * amount);
-            }
-
-            if (target.closest('.search__close-button')) {
-                target.previousElementSibling.value = '';
-                this.clearDropdown();
-                target.style.display = 'none';
-            }
-
-            if (target.closest('.dropdown__link')) {
-                e.preventDefault();
-                searchInput.value = target.textContent;
-                const link = e.target.href.replace(/.+#/g, '');
-                const elem = document.getElementById(link);
-                const word = elem.querySelector('.list__word').textContent.toLowerCase();
-                const list = elem.dataset.master;
-                const index = parseInt(elem.dataset.index);
-
-                if (index > this.numToShow[list]) {
-                    this.numToShow[list] = index;
-                    this.checkListLength(list, this.numToShow[list]);
-                }
-
-                elem.classList.add('js-active');
-                setTimeout(() => {
-                    elem.classList.remove('js-active');
-                }, 4000);
-                scroll(elem);
-                this.clearDropdown();
-                this.addDropdownElement(word, link);
-                checkSearchInputValue('.search__input', '.search__close-button');
-            }
-
-            if (target.closest('.sort__shuffle') || target.closest('.sort__sort')) {
-                listID = target.closest('.vocab__info-line').nextElementSibling.id;
-            }
-
-            if (target.closest('.sort__shuffle')) {
-                this.sort[listID] = 'shuffle';
-                localStorage.setItem('vocabSortOptions', JSON.stringify(this.sort));
-                this.sortList(listID);
-            }
-
-            if (target.closest('.sort__sort')) {
-
-                if (this.sort[listID] === 'shuffle' || this.sort[listID] === 'descending') {
-                    this.sort[listID] = 'ascending';
-                } else if (!this.sort[listID] || this.sort[listID] === 'ascending') {
-                    this.sort[listID] = 'descending';
-                }
-
-                localStorage.setItem('vocabSortOptions', JSON.stringify(this.sort));
-                this.sortList(listID);
-            }
-
-
-
-            if (document.documentElement.clientWidth < 768) {
-
-                if (target.closest('.list__row')) {
-                    target = target.closest('.list__row');
-                    const listSelector = target.dataset.master;
-                    const index = parseInt(target.dataset.index);
-                    const list = document.getElementById(listSelector);
-                    [...list.children].forEach((elem, idx) => {
-
-                        if (idx < index) {
-                            elem.style.transform = 'translateY(0)';
-                            return;
-                        }
-
-                        elem.style.transform = 'translateY(30px)';
-                    });
-                }
-            }
-        };
-
-        this.root.addEventListener('click', clickHandler);
+        this.root.addEventListener('click', this.clickHandler.bind(this));
 
         this.root.addEventListener('mouseover', e => {
             let target = e.target;
