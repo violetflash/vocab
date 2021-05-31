@@ -45,11 +45,16 @@ const makeActual = () => `
                 </h2>
                 <span class="vocab__title-counter">2222</span>
             </div>
+            <div class="vocab__training training">
+                <button class="training__btn">
+                    <span class="training__tooltip">Start training</span>
+                </button>
+                
+            </div>
             <div class="vocab__controls">
                 <div class="vocab__sort sort">
                     <button class="sort__shuffle"></button>
                     <button class="sort__sort"></button>
-<!--                    <button class="sort__descending">descending</button>-->
                 </div>
             </div>
         </div>
@@ -57,6 +62,7 @@ const makeActual = () => `
         <div class="vocab__after-line">
             <span class="vocab__info">Hidden words: <strong class="vocab__info-num"></strong></span>
             <button class="vocab__more">Show more</button>
+            <button class="vocab__less">Show less</button>
         </div>
         
     </div>
@@ -70,7 +76,7 @@ const makeLearned = () => `
                     data-full="Learned words:" 
                     data-empty="No words learned">No words learned
                 </h2>
-                <span class="vocab__title-counter">11111</span>
+                <span class="vocab__title-counter"></span>
             </div>
             <div class="vocab__controls">
                 <div class="vocab__sort sort">
@@ -84,6 +90,7 @@ const makeLearned = () => `
         <div class="vocab__after-line">
             <span class="vocab__info">Hidden words: <strong class="vocab__info-num"></strong></span>
             <button class="vocab__more">Show more</button>
+            <button class="vocab__less">Show less</button>
         </div>
     </div>
 `;
@@ -128,6 +135,29 @@ const makeModals = () => `
             <button class="modal__delete-btn button" type="submit">Delete</button>
             <button class="modal__undo-btn button" type="button">No</button>
         </div>
+    </div>
+    
+    <div class="modal modal-training">
+        <svg class="modal__cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 
+                9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>
+        </svg>
+        <h3 class="modal__title">Words training</h3>
+        <form class="modal__form">
+            <div class="modal__train-options">
+                
+                <div class="modal__select-label">
+                    Please choose which part of words would you like to train:
+                    <select class="modal__select"></select>
+                </div>
+<!--                <div class="modal__checkboxes">-->
+<!--                    <label class="modal__checkbox-label">answer 1-->
+<!--                        <input type="checkbox" class="modal__answer">-->
+<!--                    </label>-->
+<!--                </div>-->
+            </div>
+            <button class="modal__btn button" type="submit">START</button>
+        </form>
     </div>
     
     <div class="overlay"></div>

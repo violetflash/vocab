@@ -131,11 +131,10 @@
   }
 
   &__after-line {
-    display: none;
     padding: 0 20px;
     min-height: 40px;
     //background-color: #8ad1ec;
-    //display: flex;
+    display: flex;
     align-items: center;
     justify-content: center;
 
@@ -149,9 +148,51 @@
     width: 100%;
   }
 
-  &__more {
+  &__more,
+  &__less {
     padding: 5px 10px;
     background-color: #BDE6F6;
+  }
+
+  &__training {
+
+  }
+}
+
+.training {
+  display: flex;
+  align-items: center;
+
+  &__btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-image: url('../assets/images/training-border.png');
+    background-position: center;
+    background-size: 40px;
+    background-repeat: no-repeat;
+
+    &:hover {
+      background-image: url('../assets/images/training.png');
+
+      .training__tooltip {
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  }
+
+  &__tooltip {
+    position: absolute;
+    right: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+    transform: translateX(40%);
   }
 }
 

@@ -36,8 +36,8 @@ const makeArraysFromData = response => {
             vocab[key].push(response[key][word]);
         }
     }
-    const words = makeWordsList(vocab);
     localStorage.setItem('vocab', JSON.stringify(vocab));
+    const words = makeWordsList(vocab);
     localStorage.setItem('vocabWords', JSON.stringify(words));
 };
 
@@ -140,12 +140,14 @@ const unlockScreen = () => {
     document.body.classList.remove('js-lock');
 };
 
-const showBlocks = className => {
-    const blocks = document.querySelectorAll(className);
+const toggleElements = (className, option, root = document) => {
+    const blocks = root.querySelectorAll(className);
     blocks.forEach(elem => {
-        elem.style.opacity = 1;
+        elem.style.opacity = option === 'show' ? 1 : 0;
     });
 };
+
+
 
 const setCookie = (name, value, options = {}) => {
 
@@ -190,7 +192,7 @@ export {
     lockScreen,
     unlockScreen,
     capitalizer,
-    showBlocks,
+    toggleElements,
     makeWordsList,
     checkSearchInputValue,
     makeDropdownLink,

@@ -14,14 +14,15 @@ import {
     lockScreen,
     unlockScreen,
     capitalizer,
-    showBlocks,
+    toggleElements,
     checkSearchInputValue,
     scroll,
     makeDropdownLink,
     scrollDistance,
     setCookie,
     getCookie,
-    makeArraysFromData,
+    // makeArraysFromData,
+    makeWordsList,
 } from './utils';
 
 //TODO header - make canvas with arc
@@ -83,7 +84,6 @@ class Vocab {
         readDatabase(firebase);
         this.data = JSON.parse(localStorage.getItem('vocab'));
         this.words = JSON.parse(localStorage.getItem('vocabWords'));
-
     }
 
     makeLayout() {
@@ -161,7 +161,10 @@ class Vocab {
     checkListLength(listSelector, num) {
         const list = document.getElementById(listSelector);
         const afterLine = list.nextElementSibling;
+        const moreBtn = afterLine.querySelector('.vocab__more');
+        const lessBtn = afterLine.querySelector('.vocab__less');
         const info = afterLine.querySelector('.vocab__info-num');
+        const infoBlock = afterLine.querySelector('.vocab__info');
         const max = this.getMaxWordWidth(listSelector);
 
         if (list.children.length > 0) {
@@ -171,12 +174,18 @@ class Vocab {
                 wordField.style.width = '100%';
                 if (index + 1 > num) {
                     elem.style.display = 'none';
-                    afterLine.style.display = 'flex';
+                    info.style.display = 'inline-block';
+                    infoBlock.style.display = 'inline-block';
+                    moreBtn.style.display = 'inline-block';
+                    lessBtn.style.display = 'none';
                     info.textContent = list.children.length - num;
                 } else {
                     elem.style.display = 'flex';
                     info.textContent = 0;
-                    afterLine.style.display = 'none';
+                    info.style.display = 'none';
+                    infoBlock.style.display = 'none';
+                    moreBtn.style.display = 'none';
+                    lessBtn.style.display = 'inline-block';
                 }
             });
         }
@@ -193,7 +202,7 @@ class Vocab {
     hideModals() {
         unlockScreen();
         document.querySelectorAll('.modal').forEach(modal => modal.classList.remove('js-active'));
-        showBlocks('.list__translation');
+        toggleElements('.list__translation', 'show');
     }
 
     modalWordHandle(target, modalSelector) {
@@ -256,8 +265,7 @@ class Vocab {
 
     sortList(listID) {
         const data = JSON.parse(localStorage.getItem('vocab'));
-        //TODO this.data === undefined ???
-        // console.log(this.data);
+
         if (this.sort[listID] === 'shuffle') {
             this.shuffle(data[listID]);
         } else if (this.sort[listID] === 'ascending') {
@@ -353,6 +361,14 @@ class Vocab {
             scrollDistance(lineHeight * amount);
         }
 
+        if (target.closest('.vocab__less')) {
+            const list = target.closest('.vocab__after-line').previousElementSibling;
+            this.numToShow[list.id] = 20;
+            const targetToScroll = list.previousElementSibling;
+            scroll(targetToScroll);
+            setTimeout(this.render.bind(this), 800);
+        }
+
         if (target.closest('.search__close-button')) {
             target.previousElementSibling.value = '';
             this.clearDropdown();
@@ -404,6 +420,56 @@ class Vocab {
 
             localStorage.setItem('vocabSortOptions', JSON.stringify(this.sort));
             this.sortList(listID);
+        }
+
+        if (target.closest('.training__btn')) {
+            const trainModal = document.querySelector('.modal-training');
+            this.showModal(trainModal);
+            const actualList = document.getElementById('actual');
+            toggleElements('.list__translation', 'hide', actualList);
+
+            //making select options
+            const actual = JSON.parse(localStorage.getItem('vocab')).actual;
+            const select = trainModal.querySelector('.modal__select');
+            select.innerHTML = '<option value="all">All words</option>';
+            let full = 0;
+            const rest = actual.length % 20;
+            if (actual.length > 20) {
+                full = Math.floor(actual.length / 20);
+            }
+
+            if (full > 0) {
+                let num = 1;
+                for (let i = 1; i <= full; i++) {
+                    select.insertAdjacentHTML('beforeend', `
+                        <option value="${num}-${i * 20}">${i}) ${num}-${i * 20}</option>    
+                    `);
+                    num += 20;
+                }
+            }
+
+            if (rest && full > 0) {
+                const max = full * 20;
+                select.insertAdjacentHTML('beforeend', `
+                    <option value="${max + 1}-${max + rest}">
+                        ${full + 1}) ${max + 1}-${max + rest}
+                    </option>    
+                `);
+            } else if (rest) {
+                select.insertAdjacentHTML('beforeend', `
+                    <option value="1-${rest}">${1}) 1-${rest}</option>    
+                `);
+            }
+            // // const translations = actual.map(element => element.translation);
+            // const word = actual[Math.floor(Math.random() * actual.length)];
+            //
+            // actual.forEach((elem, index) => {
+            //     if (elem === word) {
+            //         actual.splice(index, 1);
+            //     }
+            // });
+
+
         }
 
         if (document.documentElement.clientWidth < 768) {
@@ -524,8 +590,18 @@ class Vocab {
             const dbRef = firebase.database().ref('vocab/');
             dbRef.on('value', snapshot => {
                 if (snapshot.exists()) {
-                    makeArraysFromData(snapshot.val());
-                    this.data = JSON.parse(localStorage.getItem('vocab'));
+                    const vocab = {};
+
+                    for (const key in snapshot.val()) {
+                        vocab[key] = [];
+                        for (const word in snapshot.val()[key]) {
+                            //making arrays in cause of further sorting
+                            vocab[key].push(snapshot.val()[key][word]);
+                        }
+                    }
+                    localStorage.setItem('vocab', JSON.stringify(vocab));
+                    const words = makeWordsList(vocab);
+                    localStorage.setItem('vocabWords', JSON.stringify(words));
                     this.render();
                 } else {
                     console.log("No data available");
