@@ -77,6 +77,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @media (max-width: $md4+px) {
+      flex-direction: column;
+      align-items: flex-start;
+      padding-bottom: 5px;
+    }
   }
 
   &__title-box {
@@ -328,35 +334,27 @@
 }
 
 .sort {
-  &__shuffle {
+  display: flex;
+  align-items: center;
+
+  & button {
     margin: 5px 10px;
     padding: 2px;
     width: 20px;
     height: 20px;
-    background-image: url('../assets/images/shuffle.png');
     background-position: center;
     background-size: 20px;
     background-repeat: no-repeat;
+  }
+
+  &__shuffle {
+    background-image: url('../assets/images/shuffle.png');
     transform: rotate(90deg);
   }
 
   &__sort {
-    margin: 5px 10px;
-    padding: 2px;
-    width: 20px;
-    height: 20px;
     background-image: url('../assets/images/sort-colored.png');
-    background-position: center;
-    background-size: 20px;
-    background-repeat: no-repeat;
-    border: 1px solid transparent;
     transform: scale(1.3);
-    transition: all 0.3s ease 0s;
-
-    &:hover {
-      //transform: scale(1.3);
-    ;
-    }
   }
 }
 

@@ -17,7 +17,6 @@ import {
     showBlocks,
     checkSearchInputValue,
     scroll,
-    makeWordsList,
     makeDropdownLink,
     scrollDistance,
     setCookie,
@@ -40,7 +39,7 @@ class Vocab {
         this.actualID = 'actual';
         this.learnedID = 'learned';
         this.numToShow = { 'actual': 20, 'learned': 20 }; //default num of showed lines
-        this.words = JSON.parse(localStorage.getItem('vocab'));
+        this.words = JSON.parse(localStorage.getItem('vocabWords'));
         this.sort = JSON.parse(localStorage.getItem('vocabSortOptions')) || { "actual": "", "learned": "" };
     }
 
@@ -83,7 +82,8 @@ class Vocab {
     getData() {
         readDatabase(firebase);
         this.data = JSON.parse(localStorage.getItem('vocab'));
-        this.wordsList = makeWordsList(this.words);
+        this.words = JSON.parse(localStorage.getItem('vocabWords'));
+
     }
 
     makeLayout() {
@@ -129,6 +129,7 @@ class Vocab {
     }
 
     render() {
+        // console.log(this.wordsList);
         const { actualID, learnedID } = this;
         const data = JSON.parse(localStorage.getItem('vocab'));
 
@@ -278,7 +279,7 @@ class Vocab {
         if (e.target.value) {
             const regExp = new RegExp(e.target.value.toLowerCase());
 
-            this.wordsList.forEach(elem => {
+            this.words.forEach(elem => {
                 if (regExp.test(elem)) {
                     const word = elem.replace(regExp, match => `<strong>${match}</strong>`);
                     dropdownList.insertAdjacentHTML('beforeend', makeDropdownLink(word, elem));

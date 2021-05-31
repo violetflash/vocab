@@ -13,6 +13,18 @@ const deleteWord = (firebase, reference) => firebase.database().ref(reference).r
 
 const capitalizer = word => word[0].toUpperCase() + word.slice(1);
 
+const makeWordsList = vocab => {
+    let wordList = [];
+    for (const vocabKey in vocab) {
+        console.log(vocabKey);
+        if (vocab[vocabKey]) {
+            const list = vocab[vocabKey].map(elem => elem.word);
+            wordList = wordList.concat(list);
+        }
+    }
+    return wordList;
+};
+
 const makeArraysFromData = response => {
     //making arrays
     const vocab = {};
@@ -24,7 +36,9 @@ const makeArraysFromData = response => {
             vocab[key].push(response[key][word]);
         }
     }
+    const words = makeWordsList(vocab);
     localStorage.setItem('vocab', JSON.stringify(vocab));
+    localStorage.setItem('vocabWords', JSON.stringify(words));
 };
 
 const readDatabase = firebase => {
@@ -37,17 +51,6 @@ const readDatabase = firebase => {
             localStorage.setItem('vocab', JSON.stringify({}));
         }
     });
-};
-
-const makeWordsList = vocab => {
-    let wordList = [];
-    for (const vocabKey in vocab) {
-        if (vocab[vocabKey]) {
-            const list = vocab[vocabKey].map(elem => elem.word);
-            wordList = wordList.concat(list);
-        }
-    }
-    return wordList;
 };
 
 const makeDropdownLink = (word, anchor) => `
