@@ -1,3 +1,5 @@
+
+
 const writeWord = (firebase, reference, word, translation) => {
     firebase.database().ref(reference + word).set({
         word,
@@ -11,14 +13,29 @@ const deleteWord = (firebase, reference) => firebase.database().ref(reference).r
 
 const capitalizer = word => word[0].toUpperCase() + word.slice(1);
 
+const makeArraysFromData = response => {
+    //making arrays
+    const vocab = {};
+
+    for (const key in response) {
+        vocab[key] = [];
+        for (const word in response[key]) {
+            //making arrays in cause of further sorting
+            vocab[key].push(response[key][word]);
+        }
+    }
+    console.log(1);
+    localStorage.setItem('vocab', JSON.stringify(vocab));
+};
+
 const readDatabase = firebase => {
     const dbRef = firebase.database().ref('vocab/');
     dbRef.on('value', snapshot => {
         if (snapshot.exists()) {
-            // console.log(snapshot.val());
-            localStorage.setItem('vocab', JSON.stringify(snapshot.val()));
+            makeArraysFromData(snapshot.val());
         } else {
             console.log("No data available");
+            localStorage.setItem('vocab', JSON.stringify({}));
         }
     });
 };
@@ -26,11 +43,10 @@ const readDatabase = firebase => {
 const makeWordsList = vocab => {
     let wordList = [];
     for (const vocabKey in vocab) {
-        const list = Object.values(vocab[vocabKey]).reduce((arr, elem) => {
-            arr.push(elem.word);
-            return arr;
-        }, []);
-        wordList = wordList.concat(list);
+        if (vocab[vocabKey]) {
+            const list = vocab[vocabKey].map(elem => elem.word);
+            wordList = wordList.concat(list);
+        }
     }
     return wordList;
 };
@@ -180,4 +196,5 @@ export {
     scrollDistance,
     setCookie,
     getCookie,
+    makeArraysFromData,
 };

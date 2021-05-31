@@ -1,5 +1,3 @@
-//TODO: search field with links to anchors, controls behavior refactor, adaptive
-
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import firebase from "firebase/app";
 // Add the Firebase products that you want to use
@@ -24,6 +22,7 @@ import {
     scrollDistance,
     setCookie,
     getCookie,
+    makeArraysFromData,
 } from './utils';
 
 //TODO header - make canvas with arc
@@ -47,27 +46,43 @@ class Vocab {
 
     addNewWord(reference, word, translation) {
         writeWord(firebase, reference, word, translation);
-        this.getData();
-        this.render();
+        const dbRef = firebase.database().ref('vocab/');
+        dbRef.on('value', snapshot => {
+            if (snapshot.exists()) {
+                // makeArraysFromData(snapshot.val());
+                const vocab = {};
+
+                for (const key in snapshot.val()) {
+                    vocab[key] = [];
+                    for (const word in snapshot.val()[key]) {
+                        //making arrays in cause of further sorting
+                        vocab[key].push(snapshot.val()[key][word]);
+                    }
+                }
+                // console.log(1);
+                localStorage.setItem('vocab', JSON.stringify(vocab));
+                this.data = vocab;
+                this.render();
+            } else {
+                console.log("No data available");
+            }
+        });
+    }
+
+    deleteWord(target) {
+        const row = target.closest('.list__row');
+        const word = row.querySelector('.list__word').textContent.toLowerCase();
+        const translation = row.querySelector('.list__translation').textContent.toLowerCase();
+        const list = row.dataset.master;
+        const ref = `${this.refPrefix}/${list}/${word}`;
+        deleteWord(firebase, ref);
+        return { word, translation };
     }
 
     getData() {
         readDatabase(firebase);
-        const vocab = JSON.parse(localStorage.getItem('vocab'));
+        this.data = JSON.parse(localStorage.getItem('vocab'));
         this.wordsList = makeWordsList(this.words);
-
-        //making arrays
-        this.data = {};
-
-        for (const key in vocab) {
-            this.data[key] = [];
-            for (const word in vocab[key]) {
-                //making arrays in cause of further sorting
-                this.data[key].push(vocab[key][word]);
-            }
-        }
-        localStorage.setItem('vocabArrays', JSON.stringify(this.data));
-        console.log(this.data);
     }
 
     makeLayout() {
@@ -89,18 +104,19 @@ class Vocab {
     }
 
     sortList(listID) {
+        const data = JSON.parse(localStorage.getItem('vocab'));
         //TODO this.data === undefined ???
-        console.log(this.data);
+        // console.log(this.data);
         if (this.sort[listID] === 'shuffle') {
-            this.shuffle(this.data[listID]);
+            this.shuffle(data[listID]);
         } else if (this.sort[listID] === 'ascending') {
-            this.sortArray(this.data[listID]);
+            this.sortArray(data[listID]);
         } else if (this.sort[listID] === 'descending') {
-            this.sortArray(this.data[listID]);
-            this.data[listID].reverse();
+            this.sortArray(data[listID]);
+            data[listID].reverse();
         }
+        localStorage.setItem('vocab', JSON.stringify(data));
         this.render();
-
     }
 
     resetSortOptions() {
@@ -111,9 +127,12 @@ class Vocab {
     renderList(arr, currentList, currentListId) {
         const oppositeList = currentListId === 'actual' ? 'Learned' : 'Actual'; //capitalized for move button text
 
-        arr.forEach((elem, index) => {
-            renderRow(currentList, elem, index + 1, oppositeList, currentListId);
-        });
+        if (arr) {
+            arr.forEach((elem, index) => {
+                renderRow(currentList, elem, index + 1, oppositeList, currentListId);
+            });
+        }
+
 
         this.checkListLength(currentListId, this.numToShow[currentListId]);
         const counter = currentList.children.length;
@@ -122,22 +141,16 @@ class Vocab {
 
     render() {
         const { actualID, learnedID } = this;
-        const data = JSON.parse(localStorage.getItem('vocabArrays'));
+        const data = JSON.parse(localStorage.getItem('vocab'));
+
         const actualList = document.getElementById(actualID);
         const learnedList = document.getElementById(learnedID);
 
         clearList(`#${actualID}`);
         clearList(`#${learnedID}`);
 
-        console.log('before render', this.sort);
-        console.log('rendering...');
-        //rendering arrays
         this.renderList(data[actualID], actualList, actualID);
         this.renderList(data[learnedID], learnedList, learnedID);
-
-        //reset sort options
-        // this.resetSortOptions();
-        console.log('after render', this.sort);
 
         this.checkTitle('.vocab__title-actual', 'actual');
         this.checkTitle('.vocab__title-learned', 'learned');
@@ -177,16 +190,6 @@ class Vocab {
                 }
             });
         }
-    }
-
-    deleteWord(target) {
-        const row = target.closest('.list__row');
-        const word = row.querySelector('.list__word').textContent.toLowerCase();
-        const translation = row.querySelector('.list__translation').textContent.toLowerCase();
-        const list = row.dataset.master;
-        const ref = `${this.refPrefix}/${list}/${word}`;
-        deleteWord(firebase, ref);
-        return { word, translation };
     }
 
     showModal(modal) {
@@ -300,19 +303,15 @@ class Vocab {
 
         let listID = '';
 
-        this.root.addEventListener('click', e => {
+        const clickHandler = async e => {
             let target = e.target;
 
             if (target.closest('.controls__move')) {
                 target = target.closest('.controls__move');
                 const { word, translation } = this.deleteWord(target);
                 const targetList = target.dataset.move.toLowerCase();
-                console.log(targetList);
                 const reference = `${this.refPrefix}/${targetList}/`;
                 this.addNewWord(reference, word, translation);
-                this.getData();
-                this.render();
-                return;
             }
 
             if (target.closest('.controls__remove')) {
@@ -426,7 +425,9 @@ class Vocab {
                     });
                 }
             }
-        });
+        };
+
+        this.root.addEventListener('click', clickHandler);
 
         this.root.addEventListener('mouseover', e => {
             let target = e.target;
@@ -512,22 +513,22 @@ class Vocab {
         this.eventListeners();
 
         if (!getCookie('vocab')) {
-
             const dbRef = firebase.database().ref('vocab/');
             dbRef.on('value', snapshot => {
                 if (snapshot.exists()) {
-                    // console.log(snapshot.val());
-                    localStorage.setItem('vocab', JSON.stringify(snapshot.val()));
+                    makeArraysFromData(snapshot.val());
+                    this.data = JSON.parse(localStorage.getItem('vocab'));
+                    this.render();
                 } else {
                     console.log("No data available");
                 }
             });
 
-            this.getData();
             setCookie('vocab', this.generateId());
+        } else {
+            this.data = JSON.parse(localStorage.getItem('vocab'));
+            this.render();
         }
-
-        this.render();
     }
 }
 
