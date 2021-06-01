@@ -5,6 +5,14 @@
         "translation" : "обед из 12 блюд",
         "word" : "12-course meal"
       },
+      "a" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "translation" : "aa",
+        "word" : "a"
+      },
       "abuse" : {
         "translation" : "злоупотреблять",
         "word" : "abuse"
@@ -21,6 +29,14 @@
         "translation" : "родовой, наследственный",
         "word" : "ancestral"
       },
+      "ao" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "translation" : "ao",
+        "word" : "ao"
+      },
       "approach" : {
         "translation" : "подход, приближение, доступ",
         "word" : "approach"
@@ -30,6 +46,10 @@
         "word" : "arose"
       },
       "assumption" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "предположение, допущение, вступление",
         "word" : "assumption"
       },
@@ -42,6 +62,10 @@
         "word" : "bizzare"
       },
       "bloody" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "чертовски",
         "word" : "bloody"
       },
@@ -50,46 +74,90 @@
         "word" : "blurt"
       },
       "bristly" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "щетинистый",
         "word" : "bristly"
       },
       "cliff" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "утёс",
         "word" : "cliff"
       },
       "clunky" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "неуклюжий",
         "word" : "clunky"
       },
       "cluttered" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "загромождённый",
         "word" : "cluttered"
       },
       "compel" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "принуждать",
         "word" : "compel"
       },
       "condemn" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "осуждать",
         "word" : "condemn"
       },
       "condolences" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "соболезнования",
         "word" : "condolences"
       },
       "confident" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "уверенный, самоуверенный, самонадеянный",
         "word" : "confident"
       },
       "constraint" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "скованность, принуждение, стеснение",
         "word" : "constraint"
       },
       "cough" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "кашель",
         "word" : "cough"
       },
       "coupling" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "муфта, связь, соединение",
         "word" : "coupling"
       },
@@ -98,14 +166,26 @@
         "word" : "cunning"
       },
       "curly" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "кудрявый",
         "word" : "curly"
       },
       "demand" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "требовать",
         "word" : "demand"
       },
       "distinct" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "особый, отдельный, отчетливый",
         "word" : "distinct"
       },
@@ -114,6 +194,10 @@
         "word" : "distinction"
       },
       "dour" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "суровый",
         "word" : "dour"
       },
@@ -126,6 +210,10 @@
         "word" : "dump"
       },
       "dunder" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "глупость",
         "word" : "dunder"
       },
@@ -134,6 +222,10 @@
         "word" : "embroidered"
       },
       "emit" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "излучать, испускать, выделять",
         "word" : "emit"
       },
@@ -162,10 +254,18 @@
         "word" : "foul"
       },
       "from the get go" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "с самого начала",
         "word" : "from the get go"
       },
       "gambler" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "азартный игрок",
         "word" : "gambler"
       },
@@ -202,30 +302,58 @@
         "word" : "hang"
       },
       "harlots" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "блудницы",
         "word" : "harlots"
       },
       "hello" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "привет",
         "word" : "hello"
       },
       "hodgepodge" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "мешанина, смесь, всякая всячина",
         "word" : "hodgepodge"
       },
       "horrendous" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "устрашающий, вселяющий ужас",
         "word" : "horrendous"
       },
       "incomprehensibilities" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "непонятности",
         "word" : "incomprehensibilities"
       },
       "inevitable" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "неизбежный, неминуемый, неизменный",
         "word" : "inevitable"
       },
       "intimidate" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "запугивать, пугать, устрашать",
         "word" : "intimidate"
       },
@@ -234,18 +362,34 @@
         "word" : "litter"
       },
       "lunge" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "выпад",
         "word" : "lunge"
       },
       "lust" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "похоть",
         "word" : "lust"
       },
       "mess" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "месиво, беспорядок",
         "word" : "mess"
       },
       "oaf" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "тупица",
         "word" : "oaf"
       },
@@ -254,6 +398,10 @@
         "word" : "obnoxious"
       },
       "obsession" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "навязчивая идея",
         "word" : "obsession"
       },
@@ -262,6 +410,10 @@
         "word" : "occasionally"
       },
       "odd" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "странный, нечетный, необычный",
         "word" : "odd"
       },
@@ -270,18 +422,34 @@
         "word" : "ought"
       },
       "overlap" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "перекрытие, совпадение, нахлестка",
         "word" : "overlap"
       },
       "pity" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "жалость",
         "word" : "pity"
       },
       "pivoted" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "вертеться, вращаться",
         "word" : "pivoted"
       },
       "plank" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "доска",
         "word" : "plank"
       },
@@ -294,6 +462,10 @@
         "word" : "ponderous"
       },
       "pox" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "оспа",
         "word" : "pox"
       },
@@ -306,10 +478,18 @@
         "word" : "proclivities"
       },
       "quandary" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "затруднительное положение",
         "word" : "quandary"
       },
       "quirky" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
         "translation" : "ушлый, ловкий",
         "word" : "quirky"
       },
@@ -384,10 +564,6 @@
       "sweep" : {
         "translation" : "сметать",
         "word" : "sweep"
-      },
-      "test" : {
-        "translation" : "тест",
-        "word" : "test"
       },
       "though" : {
         "translation" : "хотя, однако, несмотря на",

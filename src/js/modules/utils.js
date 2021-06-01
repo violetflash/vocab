@@ -1,9 +1,11 @@
-
-
 const writeWord = (firebase, reference, word, translation) => {
     firebase.database().ref(reference + word).set({
         word,
         translation,
+        stats: {
+            right: 0,
+            wrong: 0
+        },
     });
 };
 
@@ -16,7 +18,6 @@ const capitalizer = word => word[0].toUpperCase() + word.slice(1);
 const makeWordsList = vocab => {
     let wordList = [];
     for (const vocabKey in vocab) {
-        console.log(vocabKey);
         if (vocab[vocabKey]) {
             const list = vocab[vocabKey].map(elem => elem.word);
             wordList = wordList.concat(list);
@@ -24,6 +25,14 @@ const makeWordsList = vocab => {
     }
     return wordList;
 };
+
+const sortObject = sourceObject => Object.keys(sourceObject).sort().reverse().reduce(
+    (obj, key) => {
+        obj[key] = sourceObject[key];
+        return obj;
+    },
+    {}
+);
 
 const makeArraysFromData = response => {
     //making arrays
@@ -33,7 +42,8 @@ const makeArraysFromData = response => {
         vocab[key] = [];
         for (const word in response[key]) {
             //making arrays in cause of further sorting
-            vocab[key].push(response[key][word]);
+            const sorted = sortObject(response[key][word]);
+            vocab[key].push(sorted);
         }
     }
     localStorage.setItem('vocab', JSON.stringify(vocab));
@@ -148,7 +158,6 @@ const toggleElements = (className, option, root = document) => {
 };
 
 
-
 const setCookie = (name, value, options = {}) => {
 
     options = {
@@ -201,4 +210,5 @@ export {
     setCookie,
     getCookie,
     makeArraysFromData,
+    sortObject,
 };

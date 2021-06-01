@@ -45,16 +45,17 @@ const makeActual = () => `
                 </h2>
                 <span class="vocab__title-counter">2222</span>
             </div>
-            <div class="vocab__training training">
-                <button class="training__btn">
-                    <span class="training__tooltip">Start training</span>
-                </button>
-                
-            </div>
-            <div class="vocab__controls">
-                <div class="vocab__sort sort">
-                    <button class="sort__shuffle"></button>
-                    <button class="sort__sort"></button>
+            <div class="vocab__adaptive-box">
+                <div class="vocab__training training">
+                    <button class="training__btn">
+                        <span class="training__tooltip">Start training</span>
+                    </button>     
+                </div>
+                <div class="vocab__controls">
+                    <div class="vocab__sort sort">
+                        <button class="sort__shuffle"></button>
+                        <button class="sort__sort"></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -145,7 +146,7 @@ const makeModals = () => `
         <h3 class="modal__title">Words training</h3>
         <form class="modal__form">
             <div class="modal__train-options">
-                
+               
                 <div class="modal__select-label">
                     Please choose which part of words would you like to train:
                     <select class="modal__select"></select>

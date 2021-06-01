@@ -1,3 +1,5 @@
+//TODO Huge lags bug on moving words. EventListeners accumulation
+
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import firebase from "firebase/app";
 // Add the Firebase products that you want to use
@@ -23,6 +25,7 @@ import {
     getCookie,
     // makeArraysFromData,
     makeWordsList,
+    sortObject
 } from './utils';
 
 //TODO header - make canvas with arc
@@ -56,8 +59,9 @@ class Vocab {
                 for (const key in snapshot.val()) {
                     vocab[key] = [];
                     for (const word in snapshot.val()[key]) {
+                        const sorted = sortObject(snapshot.val()[key][word]);
                         //making arrays in cause of further sorting
-                        vocab[key].push(snapshot.val()[key][word]);
+                        vocab[key].push(sorted);
                     }
                 }
                 // console.log(1);
@@ -184,7 +188,6 @@ class Vocab {
                     info.style.display = 'none';
                     infoBlock.style.display = 'none';
                     moreBtn.style.display = 'none';
-
                 }
 
                 if  (index > 21 && info.textContent < list.children.length - 20) {
@@ -193,6 +196,9 @@ class Vocab {
                     lessBtn.style.display = 'none';
                 }
             });
+        } else {
+            infoBlock.style.display = 'none';
+            moreBtn.style.display = 'none';
         }
     }
 
@@ -310,6 +316,27 @@ class Vocab {
         } else {
             noMatch.style.display = 'none';
         }
+    }
+
+    generateTrainingArrays(vocab, select) {
+        this.trainOption = select.value;
+
+        this.trainArrays = {};
+        this.trainArrays.all = [...vocab];
+        this.trainArrays.parts = [];
+
+        while (vocab.length) {
+            this.trainArrays.parts.push(vocab.splice(0, 20));
+        }
+
+        this.trainArray = this.trainArrays.all;
+        //  pick random word and remove it from his array
+        // const word = actual[Math.floor(Math.random() * actual.length)];
+        // actual.forEach((elem, index) => {
+        //     if (elem === word) {
+        //         actual.splice(index, 1);
+        //     }
+        // });
     }
 
     clickHandler(e) {
@@ -442,41 +469,41 @@ class Vocab {
             const select = trainModal.querySelector('.modal__select');
             select.innerHTML = `<option value="all">All words (${actual.length})</option>`;
             let full = 0;
-            const rest = actual.length % 20;
             if (actual.length > 20) {
+                const rest = actual.length % 20;
                 full = Math.floor(actual.length / 20);
-            }
 
-            if (full > 0) {
-                let num = 1;
-                for (let i = 1; i <= full; i++) {
+
+                if (full > 0) {
+                    let num = 1;
+                    for (let i = 1; i <= full; i++) {
+                        select.insertAdjacentHTML('beforeend', `
+                            <option value="${i - 1}">${i}) ${num}-${i * 20}</option>    
+<!--                            <option value="${num}-${i * 20}">${i}) ${num}-${i * 20}</option>    -->
+                        `);
+                        num += 20;
+                    }
+                }
+
+                if (rest && full > 0) {
+                    const max = full * 20;
                     select.insertAdjacentHTML('beforeend', `
-                        <option value="${num}-${i * 20}">${i}) ${num}-${i * 20}</option>    
+<!--                        <option value="${max + 1}-${max + rest}">-->
+                        <option value="${full}">
+                            ${full + 1}) ${max + 1}-${max + rest}
+                        </option>    
                     `);
-                    num += 20;
+                } else if (rest) {
+                    select.insertAdjacentHTML('beforeend', `
+                        <option value="1-${rest}">${1}) 1-${rest}</option>    
+                    `);
                 }
             }
+            //preparing for training
+            this.translations = actual.map(element => element.translation);
+            this.generateTrainingArrays(actual, select);
+            console.log(this.trainArray);
 
-            if (rest && full > 0) {
-                const max = full * 20;
-                select.insertAdjacentHTML('beforeend', `
-                    <option value="${max + 1}-${max + rest}">
-                        ${full + 1}) ${max + 1}-${max + rest}
-                    </option>    
-                `);
-            } else if (rest) {
-                select.insertAdjacentHTML('beforeend', `
-                    <option value="1-${rest}">${1}) 1-${rest}</option>    
-                `);
-            }
-            // // const translations = actual.map(element => element.translation);
-            // const word = actual[Math.floor(Math.random() * actual.length)];
-            //
-            // actual.forEach((elem, index) => {
-            //     if (elem === word) {
-            //         actual.splice(index, 1);
-            //     }
-            // });
 
 
         }
@@ -509,6 +536,7 @@ class Vocab {
         const forms = this.root.querySelectorAll('form');
         const inputs = [document.getElementById('word'), document.getElementById('translation')];
         const modalInputs = document.querySelectorAll('.modal__input');
+        const modalSelect = document.querySelector('.modal__select');
 
         this.root.addEventListener('click', this.clickHandler.bind(this));
 
@@ -571,6 +599,17 @@ class Vocab {
             }
         });
 
+        modalSelect.addEventListener('change', () => {
+            this.trainOption = modalSelect.value;
+            if (modalSelect.value === 'all') {
+                this.trainArray = this.trainArrays.all;
+            } else {
+                this.trainArray = this.trainArrays.parts[+modalSelect.value];
+            }
+
+            console.log(this.trainArray);
+        });
+
         searchInput.addEventListener('input', this.searchHandler.bind(this));
     }
 
@@ -619,7 +658,8 @@ class Vocab {
                         vocab[key] = [];
                         for (const word in snapshot.val()[key]) {
                             //making arrays in cause of further sorting
-                            vocab[key].push(snapshot.val()[key][word]);
+                            const sorted = sortObject(snapshot.val()[key][word]);
+                            vocab[key].push(sorted);
                         }
                     }
                     localStorage.setItem('vocab', JSON.stringify(vocab));
