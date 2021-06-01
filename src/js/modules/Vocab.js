@@ -177,7 +177,6 @@ class Vocab {
                     info.style.display = 'inline-block';
                     infoBlock.style.display = 'inline-block';
                     moreBtn.style.display = 'inline-block';
-                    lessBtn.style.display = 'none';
                     info.textContent = list.children.length - num;
                 } else {
                     elem.style.display = 'flex';
@@ -185,7 +184,13 @@ class Vocab {
                     info.style.display = 'none';
                     infoBlock.style.display = 'none';
                     moreBtn.style.display = 'none';
+
+                }
+
+                if  (index > 21 && info.textContent < list.children.length - 20) {
                     lessBtn.style.display = 'inline-block';
+                } else {
+                    lessBtn.style.display = 'none';
                 }
             });
         }

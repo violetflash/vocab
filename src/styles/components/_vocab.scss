@@ -151,11 +151,12 @@
   &__more,
   &__less {
     padding: 5px 10px;
+    margin: 0 20px;
     background-color: #BDE6F6;
   }
 
-  &__training {
-
+  &__less {
+    display: none;
   }
 }
 
