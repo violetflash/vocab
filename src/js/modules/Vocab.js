@@ -45,6 +45,7 @@ class Vocab {
         this.numToShow = { 'actual': 20, 'learned': 20 }; //default num of showed lines
         this.words = JSON.parse(localStorage.getItem('vocabWords'));
         this.sort = JSON.parse(localStorage.getItem('vocabSortOptions')) || { "actual": "", "learned": "" };
+        this.sliderPosition = 1;
     }
 
     addNewWord(reference, word, translation) {
@@ -190,7 +191,7 @@ class Vocab {
                     moreBtn.style.display = 'none';
                 }
 
-                if  (index > 21 && info.textContent < list.children.length - 20) {
+                if (index > 21 && info.textContent < list.children.length - 20) {
                     lessBtn.style.display = 'inline-block';
                 } else {
                     lessBtn.style.display = 'none';
@@ -214,6 +215,11 @@ class Vocab {
         unlockScreen();
         document.querySelectorAll('.modal').forEach(modal => modal.classList.remove('js-active'));
         toggleElements('.list__translation', 'show');
+        this.sliderPosition = 1;
+        setTimeout(() => {
+            document.querySelector('.test__slider-wrapper').style.transform = 'translateX(0)';
+        }, 300);
+
     }
 
     modalWordHandle(target, modalSelector) {
@@ -256,11 +262,12 @@ class Vocab {
         function compare(a, b) {
             if (a.word > b.word) {
                 return 1;
-            } else if (a.word < b.word)  {
+            } else if (a.word < b.word) {
                 return -1;
             }
             return 0;
         }
+
         array.sort(compare);
     }
 
@@ -318,6 +325,14 @@ class Vocab {
         }
     }
 
+    setActiveTrainArray(select) {
+        if (select.value === 'all') {
+            this.trainArray = this.trainArrays.all;
+        } else {
+            this.trainArray = this.trainArrays.parts[select.selectedIndex - 1];
+        }
+    }
+
     generateTrainingArrays(vocab, select) {
         this.trainOption = select.value;
 
@@ -329,7 +344,8 @@ class Vocab {
             this.trainArrays.parts.push(vocab.splice(0, 20));
         }
 
-        this.trainArray = this.trainArrays.all;
+        this.setActiveTrainArray(select);
+
         //  pick random word and remove it from his array
         // const word = actual[Math.floor(Math.random() * actual.length)];
         // actual.forEach((elem, index) => {
@@ -337,6 +353,26 @@ class Vocab {
         //         actual.splice(index, 1);
         //     }
         // });
+    }
+
+    checkTrainingAppear() {
+        const trainingBtn = document.querySelector('.training__btn');
+        const vocab = JSON.parse(localStorage.getItem('vocab'));
+
+        if (vocab.actual.length > 1) {
+            trainingBtn.style.display = 'flex';
+        } else {
+            trainingBtn.style.display = 'none';
+
+        }
+    }
+
+    checkSlidersEnd(target) {
+        const wrapper = target.closest('.test__slider-wrapper');
+        const length = wrapper.children.length;
+        if (this.sliderPosition === length) {
+            return true;
+        }
     }
 
     clickHandler(e) {
@@ -353,13 +389,17 @@ class Vocab {
             const targetList = target.dataset.move.toLowerCase();
             const reference = `${this.refPrefix}/${targetList}/`;
             this.addNewWord(reference, word, translation);
+            this.checkTrainingAppear();
         }
 
         if (target.closest('.controls__remove')) {
             this.modalWordHandle(target, '.modal-delete');
         }
 
-        if (target.closest('.modal__cross') || target.classList.contains('overlay')) {
+        if (target.closest('.modal__cross') ||
+            target.closest('.test__close') ||
+            target.classList.contains('overlay') ||
+            target.closest('.modal__undo-btn')) {
             this.hideModals();
         }
 
@@ -372,10 +412,6 @@ class Vocab {
             undoBtn.style.display = 'inline-block';
             this.getData();
             this.render();
-            this.hideModals();
-        }
-
-        if (target.closest('.modal__undo-btn')) {
             this.hideModals();
         }
 
@@ -459,8 +495,8 @@ class Vocab {
         }
 
         if (target.closest('.training__btn')) {
+            const sliderWrapper = document.querySelector('.test__slider-wrapper');
             const trainModal = document.querySelector('.modal-training');
-            this.showModal(trainModal);
             const actualList = document.getElementById('actual');
             toggleElements('.list__translation', 'hide', actualList);
 
@@ -500,21 +536,65 @@ class Vocab {
                 }
             }
             //preparing for training
-            this.translations = actual.map(element => element.translation);
+            this.translations = actual.map(element => element.translation); // ??
+
+
             this.generateTrainingArrays(actual, select);
-            console.log(this.trainArray);
+            select.selectedIndex = localStorage.getItem('test-select-index') || 0;
+            this.setActiveTrainArray(select);
+            this.makeAnswers(sliderWrapper);
+            this.showModal(trainModal);
         }
 
-        if  (target.closest('.modal-training .modal__btn')) {
+        if (target.closest('.modal-training .modal__btn')) {
+            const actualList = document.getElementById('actual');
             const testModal = document.querySelector('.test');
             this.hideModals();
             this.showModal(testModal);
+            toggleElements('.list__translation', 'hide', actualList);
         }
 
-        if (target.closest('.test__btn')) {
+        if (target.closest('.test__next')) {
             const wrapper = target.closest('.test__slider-wrapper');
-            let position = 0;
-            const length = wrapper.children.length;
+            // this.checkSlidersEnd(target);
+
+            wrapper.style.transform = `translateX(-${this.sliderPosition * 100}%)`;
+            this.sliderPosition++;
+        }
+
+        if (target.closest('.test__answer')) {
+            //check for the already been clicked
+            const word = target.closest('.test__slide').querySelector('.test__word').textContent;
+            const answerBlock = target.closest('.test__answers');
+            const answers = answerBlock.querySelectorAll('.test__answer');
+            const nextBtn = answerBlock.nextElementSibling.querySelector('.test__next');
+            const closeBtn = answerBlock.nextElementSibling.querySelector('.test__close');
+            const right = target.closest('.test__slide').querySelector('.test__stats-right');
+            const wrong = target.closest('.test__slide').querySelector('.test__stats-wrong');
+
+            for (let i = 0; i < answers.length; i++) {
+                if (answers[i].classList.contains('js-right') || answers[i].classList.contains('js-wrong')) {
+                    return;
+                }
+            }
+
+            //CONDITION OF SUCCESS PICK
+            this.trainArray.forEach(elem => {
+                if (elem.word === word && target.textContent === elem.translation) {
+                    target.classList.add('js-right');
+                    right.textContent = +right.textContent + 1;
+                } else if (elem.word === word && target.textContent !== elem.translation) {
+                    target.classList.add('js-wrong');
+                    wrong.textContent = +wrong.textContent + 1;
+                }
+            });
+
+            if (!this.checkSlidersEnd(target)) {
+                nextBtn.style.display = 'inline-block';
+            } else {
+                closeBtn.style.display = 'inline-block';
+            }
+
         }
 
         if (document.documentElement.clientWidth < 768) {
@@ -609,17 +689,63 @@ class Vocab {
         });
 
         modalSelect.addEventListener('change', () => {
+            const sliderWrapper = document.querySelector('.test__slider-wrapper');
+            sliderWrapper.innerHTML = '';
             this.trainOption = modalSelect.value;
-            if (modalSelect.value === 'all') {
-                this.trainArray = this.trainArrays.all;
-            } else {
-                this.trainArray = this.trainArrays.parts[+modalSelect.value];
-            }
+            this.setActiveTrainArray(modalSelect);
+            localStorage.setItem('test-select-index', JSON.stringify(modalSelect.selectedIndex));
 
-            console.log(this.trainArray);
+            this.makeAnswers(sliderWrapper);
         });
 
         searchInput.addEventListener('input', this.searchHandler.bind(this));
+    }
+
+    makeAnswers(sliderWrapper) {
+        this.vocabToTrain = JSON.parse(localStorage.getItem('vocab')).actual;
+        this.trainArray.forEach(elem => {
+            const answers = [elem.translation];
+
+            this.vocabToTrain.forEach((obj, index) => {
+                if (obj.words === elem.word) {
+                    this.vocabToTrain.splice(index, 1);
+                }
+            });
+
+            for (let i = 0; i < 3; i++) {
+                const randIndex = Math.floor(Math.random() * this.vocabToTrain.length);
+                answers.push(this.vocabToTrain[randIndex].translation);
+            }
+
+            this.shuffle(answers);
+
+            sliderWrapper.insertAdjacentHTML('beforeend', this.makeTestSlide(elem, answers));
+        });
+    }
+
+    makeTestSlide(elem, answers) {
+        return `
+            <div class="test__slide">
+                <h1 class="test__word">${elem.word}</h1>
+                <div class="test__answers">
+                    <button class="test__answer" type="button">${answers[0]}</button>
+                    <button class="test__answer" type="button">${answers[1]}</button>
+                    <button class="test__answer" type="button">${answers[2]}</button>
+                    <button class="test__answer" type="button">${answers[3]}</button>
+                </div>
+                <div class="test__btn-box">
+                    <button class="test__next">Next</button>
+                    <button class="test__close">Close</button>
+                </div>
+                <div class="test__stats">
+                    <p class="test__stats-title">
+                        <span class="test__stats-word">${elem.word}</span>stats:
+                    </p>
+                    <div class="test__stats-right">${+elem.stats.right}</div>
+                    <div class="test__stats-wrong">${+elem.stats.wrong}</div>
+                </div>
+            </div>
+        `;
     }
 
     generateId() {
@@ -656,6 +782,7 @@ class Vocab {
         this.initFirebase();
         this.eventListeners();
         this.checkSortOptions();
+        this.checkTrainingAppear();
 
         if (!getCookie('vocab')) {
             const dbRef = firebase.database().ref('vocab/');

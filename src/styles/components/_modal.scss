@@ -208,6 +208,8 @@
 }
 .test {
   padding-bottom: 50px;
+  overflow: hidden;
+  max-width: 500px;
 
   &__slider {
     overflow: hidden;
@@ -240,6 +242,10 @@
     justify-content: center;
     flex-direction: column;
     width: 100%;
+
+    @media (max-width: $md3+px) {
+      width: unset;
+    }
   }
 
   &__answer {
@@ -253,6 +259,18 @@
 
     &:hover {
       background-color: #8ad1ec;
+    }
+
+    &.js-wrong {
+      background-color: red;
+    }
+
+    &.js-right {
+      background-color: limegreen;
+    }
+
+    @media (max-width: $md3+px) {
+      //width: unset;
     }
   }
 
@@ -271,12 +289,14 @@
   &__stats-right {
     border: 1px solid black;
     border-right-color: transparent;
+    border-right-width: 0.1px;
     background-color: #68e068;
   }
 
   &__stats-wrong {
     border: 1px solid black;
     border-left-color: transparent;
+    border-left-width: 0.1px;
     background-color: #ec7171;
   }
 
@@ -295,5 +315,18 @@
   &__btn-box {
     width: 100%;
     text-align: right;
+    min-height: 26px;
+
+    @media (max-width: $md3+px) {
+      width: unset;
+    }
+  }
+
+  &__next,
+  &__close {
+    display: none;
+    padding: 5px 15px;
+    text-transform: uppercase;
+    background-color: #ded3d3;
   }
 }
