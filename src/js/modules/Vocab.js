@@ -221,6 +221,7 @@ class Vocab {
         modal.dataset.word = word;
         modal.dataset.list = row.dataset.master;
 
+
         if (modalSelector === '.modal-delete') {
             this.translation = translation;
             translationField.style.opacity = 0;
@@ -419,9 +420,12 @@ class Vocab {
             const { listID } = this;
             if (this.sort[listID] === 'shuffle' || this.sort[listID] === 'descending') {
                 this.sort[listID] = 'ascending';
+                target.closest('.sort__sort').classList.remove('js-active');
             } else if (!this.sort[listID] || this.sort[listID] === 'ascending') {
                 this.sort[listID] = 'descending';
+                target.closest('.sort__sort').classList.add('js-active');
             }
+
 
             localStorage.setItem('vocabSortOptions', JSON.stringify(this.sort));
             this.sortList(listID);
@@ -436,7 +440,7 @@ class Vocab {
             //making select options
             const actual = JSON.parse(localStorage.getItem('vocab')).actual;
             const select = trainModal.querySelector('.modal__select');
-            select.innerHTML = '<option value="all">All words</option>';
+            select.innerHTML = `<option value="all">All words (${actual.length})</option>`;
             let full = 0;
             const rest = actual.length % 20;
             if (actual.length > 20) {
@@ -586,10 +590,24 @@ class Vocab {
         this.database = firebase.database();
     }
 
+    checkSortOptions() {
+        if (localStorage.getItem('vocabSortOptions')) {
+            const sortOptions = JSON.parse(localStorage.getItem('vocabSortOptions'));
+            for (const key in sortOptions) {
+                const target = document.getElementById(key).previousElementSibling.querySelector('.sort__sort');
+                if (sortOptions[key] === 'descending') {
+                    target.classList.add('js-active');
+                }
+            }
+        }
+
+    }
+
     init() {
         this.makeLayout();
         this.initFirebase();
         this.eventListeners();
+        this.checkSortOptions();
 
         if (!getCookie('vocab')) {
             const dbRef = firebase.database().ref('vocab/');
