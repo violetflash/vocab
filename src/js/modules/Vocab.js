@@ -503,9 +503,18 @@ class Vocab {
             this.translations = actual.map(element => element.translation);
             this.generateTrainingArrays(actual, select);
             console.log(this.trainArray);
+        }
 
+        if  (target.closest('.modal-training .modal__btn')) {
+            const testModal = document.querySelector('.test');
+            this.hideModals();
+            this.showModal(testModal);
+        }
 
-
+        if (target.closest('.test__btn')) {
+            const wrapper = target.closest('.test__slider-wrapper');
+            let position = 0;
+            const length = wrapper.children.length;
         }
 
         if (document.documentElement.clientWidth < 768) {
