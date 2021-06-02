@@ -46,8 +46,8 @@
   }
 
   @media (max-width: $md3+px) {
-    max-width: unset;
-    width: unset;
+    //max-width: unset;
+    //width: unset;
   }
 
   &__cross {
@@ -244,7 +244,7 @@
     width: 100%;
 
     @media (max-width: $md3+px) {
-      width: unset;
+      //width: unset;
     }
   }
 
@@ -321,7 +321,7 @@
     min-height: 26px;
 
     @media (max-width: $md3+px) {
-      width: unset;
+      //width: unset;
     }
   }
 
