@@ -155,6 +155,9 @@ class Vocab {
 
         this.checkSortOptionsRender();
         this.checkTrainingAppear();
+        this.checkListLength('actual', this.numToShow.actual);
+        this.checkListLength('learned', this.numToShow.learned);
+
     }
 
     getMaxWordWidth(listSelector) {
@@ -177,6 +180,7 @@ class Vocab {
         const info = afterLine.querySelector('.vocab__info-num');
         const infoBlock = afterLine.querySelector('.vocab__info');
         const max = this.getMaxWordWidth(listSelector);
+
 
         if (list.children.length > 0) {
             [...list.children].forEach((elem, index) => {
@@ -339,6 +343,7 @@ class Vocab {
         } else {
             this.trainArray = this.trainArrays.parts[select.selectedIndex - 1];
         }
+
     }
 
     generateTrainingArrays(vocab, select) {
@@ -353,26 +358,13 @@ class Vocab {
         }
 
         this.setActiveTrainArray(select);
-
-        //  pick random word and remove it from his array
-        // const word = actual[Math.floor(Math.random() * actual.length)];
-        // actual.forEach((elem, index) => {
-        //     if (elem === word) {
-        //         actual.splice(index, 1);
-        //     }
-        // });
     }
 
 
 
     checkTrainingAppear() {
         const trainingBtn = document.querySelector('.training__btn');
-        console.log(trainingBtn);
         const vocab = JSON.parse(localStorage.getItem('vocab'));
-        console.log(vocab);
-        console.log(vocab.actual);
-        console.log(vocab.actual.length);
-        console.log();
         if (vocab && vocab.actual && vocab.actual.length > 3) {
             trainingBtn.style.display = 'flex';
         } else {
@@ -389,7 +381,6 @@ class Vocab {
     }
 
     clickHandler(e) {
-
         const searchInput = document.querySelector('.search__input');
         const deleteBtn = document.querySelector('.modal__delete-btn');
         const undoBtn = document.querySelector('.modal__undo-btn');
@@ -402,7 +393,6 @@ class Vocab {
             const targetList = target.dataset.move.toLowerCase();
             const reference = `${this.refPrefix}/${targetList}/`;
             this.addNewWord(reference, word, translation);
-            // this.checkTrainingAppear();
         }
 
         if (target.closest('.controls__remove')) {
@@ -716,31 +706,21 @@ class Vocab {
 
     makeAnswers(sliderWrapper) {
         this.vocabToTrain = JSON.parse(localStorage.getItem('vocab')).actual;
-        console.log(this.vocabToTrain);
         this.trainArray.forEach(elem => {
             const answers = [elem.translation];
 
-            //Deleting element causes an index error
-            this.vocabToTrain.forEach((obj, index) => {
-                if (obj.word === elem.word && index !== 0) {
-                    // console.log('deleting element ', obj);
-                    this.vocabToTrain.splice(index, 1);
-                    // console.log(this.vocabToTrain);
-                }
-            });
-
-            console.log(this.vocabToTrain);
             if (this.vocabToTrain) {
-                for (let i = 0; i < 3; i++) {
+                while (answers.length !== 4) {
                     const randIndex = Math.floor(Math.random() * this.vocabToTrain.length);
-                    console.log(randIndex);
-                    // console.log(randIndex);
-                    // console.log(this.vocabToTrain[randIndex]);
+
+                    if (elem.translation === this.vocabToTrain[randIndex].translation ||
+                        answers.includes(this.vocabToTrain[randIndex].translation)) {
+                        continue;
+                    }
                     answers.push(this.vocabToTrain[randIndex].translation);
-                    console.log(this.vocabToTrain[randIndex].translation);
-                    this.vocabToTrain.splice(randIndex, 1);
                 }
             }
+
             this.shuffle(answers);
 
             sliderWrapper.insertAdjacentHTML('beforeend', this.makeTestSlide(elem, answers));
@@ -841,8 +821,9 @@ class Vocab {
                     localStorage.setItem('vocab', JSON.stringify(vocab));
                     const words = makeWordsList(vocab);
                     localStorage.setItem('vocabWords', JSON.stringify(words));
-                    this.render();
+                    // this.render();
                 } else {
+                    // this.render();
                     console.log("No data available");
                 }
             });
@@ -850,8 +831,10 @@ class Vocab {
             setCookie('vocab', this.generateId());
         } else {
             this.data = JSON.parse(localStorage.getItem('vocab'));
-            this.render();
+            // this.render();
         }
+
+        this.render();
     }
 }
 
