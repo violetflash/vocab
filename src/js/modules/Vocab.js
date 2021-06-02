@@ -144,11 +144,17 @@ class Vocab {
         clearList(`#${actualID}`);
         clearList(`#${learnedID}`);
 
-        this.renderList(data[actualID], actualList, actualID);
-        this.renderList(data[learnedID], learnedList, learnedID);
+        if (data) {
+            this.renderList(data[actualID], actualList, actualID);
+            this.renderList(data[learnedID], learnedList, learnedID);
+        }
+
 
         this.checkTitle('.vocab__title-actual', 'actual');
         this.checkTitle('.vocab__title-learned', 'learned');
+
+        this.checkSortOptionsRender();
+        this.checkTrainingAppear();
     }
 
     getMaxWordWidth(listSelector) {
@@ -283,6 +289,7 @@ class Vocab {
     }
 
     sortList(listID) {
+        const sliderWrapper = document.querySelector('.test__slider-wrapper');
         const data = JSON.parse(localStorage.getItem('vocab'));
 
         if (this.sort[listID] === 'shuffle') {
@@ -294,6 +301,7 @@ class Vocab {
             data[listID].reverse();
         }
         localStorage.setItem('vocab', JSON.stringify(data));
+        sliderWrapper.innerHTML = '';
         this.render();
     }
 
@@ -355,15 +363,20 @@ class Vocab {
         // });
     }
 
+
+
     checkTrainingAppear() {
         const trainingBtn = document.querySelector('.training__btn');
+        console.log(trainingBtn);
         const vocab = JSON.parse(localStorage.getItem('vocab'));
-
-        if (vocab.actual.length > 1) {
+        console.log(vocab);
+        console.log(vocab.actual);
+        console.log(vocab.actual.length);
+        console.log();
+        if (vocab && vocab.actual && vocab.actual.length > 3) {
             trainingBtn.style.display = 'flex';
         } else {
             trainingBtn.style.display = 'none';
-
         }
     }
 
@@ -389,7 +402,7 @@ class Vocab {
             const targetList = target.dataset.move.toLowerCase();
             const reference = `${this.refPrefix}/${targetList}/`;
             this.addNewWord(reference, word, translation);
-            this.checkTrainingAppear();
+            // this.checkTrainingAppear();
         }
 
         if (target.closest('.controls__remove')) {
@@ -703,20 +716,31 @@ class Vocab {
 
     makeAnswers(sliderWrapper) {
         this.vocabToTrain = JSON.parse(localStorage.getItem('vocab')).actual;
+        console.log(this.vocabToTrain);
         this.trainArray.forEach(elem => {
             const answers = [elem.translation];
 
+            //Deleting element causes an index error
             this.vocabToTrain.forEach((obj, index) => {
-                if (obj.words === elem.word) {
+                if (obj.word === elem.word && index !== 0) {
+                    // console.log('deleting element ', obj);
                     this.vocabToTrain.splice(index, 1);
+                    // console.log(this.vocabToTrain);
                 }
             });
 
-            for (let i = 0; i < 3; i++) {
-                const randIndex = Math.floor(Math.random() * this.vocabToTrain.length);
-                answers.push(this.vocabToTrain[randIndex].translation);
+            console.log(this.vocabToTrain);
+            if (this.vocabToTrain) {
+                for (let i = 0; i < 3; i++) {
+                    const randIndex = Math.floor(Math.random() * this.vocabToTrain.length);
+                    console.log(randIndex);
+                    // console.log(randIndex);
+                    // console.log(this.vocabToTrain[randIndex]);
+                    answers.push(this.vocabToTrain[randIndex].translation);
+                    console.log(this.vocabToTrain[randIndex].translation);
+                    this.vocabToTrain.splice(randIndex, 1);
+                }
             }
-
             this.shuffle(answers);
 
             sliderWrapper.insertAdjacentHTML('beforeend', this.makeTestSlide(elem, answers));
@@ -734,8 +758,8 @@ class Vocab {
                     <button class="test__answer" type="button">${answers[3]}</button>
                 </div>
                 <div class="test__btn-box">
-                    <button class="test__next">Next</button>
                     <button class="test__close">Close</button>
+                    <button class="test__next">Next</button>
                 </div>
                 <div class="test__stats">
                     <p class="test__stats-title">
@@ -774,7 +798,24 @@ class Vocab {
                 }
             }
         }
+    }
 
+    checkSortOptionsRender() {
+        const sortActual = document.querySelector('.sort-actual');
+        const sortLearned = document.querySelector('.sort-learned');
+        const vocab = JSON.parse(localStorage.getItem('vocab'));
+
+        if (vocab && vocab.actual && vocab.actual.length > 1) {
+            sortActual.style.display = 'flex';
+        } else {
+            sortActual.style.display = 'none';
+        }
+
+        if (vocab && vocab.learned && vocab.learned.length > 1) {
+            sortLearned.style.display = 'flex';
+        } else {
+            sortLearned.style.display = 'none';
+        }
     }
 
     init() {
@@ -782,7 +823,6 @@ class Vocab {
         this.initFirebase();
         this.eventListeners();
         this.checkSortOptions();
-        this.checkTrainingAppear();
 
         if (!getCookie('vocab')) {
             const dbRef = firebase.database().ref('vocab/');

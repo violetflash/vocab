@@ -313,6 +313,9 @@
   }
 
   &__btn-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
     text-align: right;
     min-height: 26px;
@@ -328,5 +331,13 @@
     padding: 5px 15px;
     text-transform: uppercase;
     background-color: #ded3d3;
+  }
+
+  &__next {
+    margin-left: auto;
+  }
+
+  &__close {
+    margin: 0 auto;
   }
 }
