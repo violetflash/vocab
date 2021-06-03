@@ -195,8 +195,9 @@
   }
 
   &__select {
+    display: block;
     padding: 5px 15px;
-    margin: 25px 0;
+    margin: 25px auto;
     outline: transparent;
     border: none;
   }
@@ -244,7 +245,7 @@
     width: 100%;
 
     @media (max-width: $md3+px) {
-      //width: unset;
+
     }
   }
 
@@ -270,7 +271,8 @@
     }
 
     @media (max-width: $md3+px) {
-      //width: unset;
+      font-size: 16px;
+      padding: 10px 15px;
     }
   }
 
