@@ -125,17 +125,17 @@ const makeModals = () => `
             <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 
                 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>
         </svg>
-        <h3 class="modal__title">Confirm deletion of word:</h3>
-        <div class="modal__subtitle"><span class="modal__word-to-delete"></span></div>
-        <p class="modal__confirm">
-            <input class="modal__confirm-input" type="text" placeholder="translate it">
-        </p>
-            
-        
-        <div class="modal__buttons">
-            <button class="modal__delete-btn button" type="submit">Delete</button>
-            <button class="modal__undo-btn button" type="button">No</button>
-        </div>
+        <form>
+            <h3 class="modal__title">Confirm deletion of word:</h3>
+            <div class="modal__subtitle"><span class="modal__word-to-delete"></span></div>
+            <p class="modal__confirm">
+                <input class="modal__confirm-input" type="text" placeholder="translate it">
+            </p>
+            <div class="modal__buttons">
+                <button class="modal__delete-btn button" type="submit">Delete</button>
+                <button class="modal__undo-btn button" type="button">No</button>
+            </div>
+        </form>
     </div>
     
     <div class="modal modal-training">
@@ -144,21 +144,15 @@ const makeModals = () => `
                 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>
         </svg>
         <h3 class="modal__title">Words training</h3>
-        <form class="modal__form">
+        <div class="modal__form">
             <div class="modal__train-options">
-               
                 <div class="modal__select-label">
                     Please choose which part of words would you like to train:
                     <select class="modal__select"></select>
                 </div>
-<!--                <div class="modal__checkboxes">-->
-<!--                    <label class="modal__checkbox-label">answer 1-->
-<!--                        <input type="checkbox" class="modal__answer">-->
-<!--                    </label>-->
-<!--                </div>-->
             </div>
-            <button class="modal__btn button" type="submit">START</button>
-        </form>
+            <button class="modal__btn button" type="button">START</button>
+        </div>
     </div>
     
     <div class="modal test">
@@ -168,9 +162,11 @@ const makeModals = () => `
         </svg>
         <div class="test__slider">
             <h3 class="test__title">Choose the correct option for the word:</h3>
-            <div class="test__slider-wrapper">
-                
-            </div>
+            <div class="test__slider-wrapper"></div>
+        </div>
+        <div class="test__counter counter">
+            <span class="counter__current">1</span>
+            <span class="counter__total">20</span>
         </div>
     </div>
     

@@ -45,7 +45,7 @@ class Vocab {
         this.numToShow = { 'actual': 20, 'learned': 20 }; //default num of showed lines
         this.words = JSON.parse(localStorage.getItem('vocabWords'));
         this.sort = JSON.parse(localStorage.getItem('vocabSortOptions')) || { "actual": "", "learned": "" };
-        this.sliderPosition = 1;
+        this.sliderPosition = 0;
     }
 
     addNewWord(reference, word, translation) {
@@ -73,6 +73,8 @@ class Vocab {
                 this.root.removeEventListener('click', this.clickHandler);
             }
         });
+        this.words.push(word);
+        localStorage.setItem('vocabWords', JSON.stringify(this.words));
     }
 
     deleteWord(target) {
@@ -375,9 +377,24 @@ class Vocab {
     checkSlidersEnd(target) {
         const wrapper = target.closest('.test__slider-wrapper');
         const length = wrapper.children.length;
-        if (this.sliderPosition === length) {
+        if (this.sliderPosition + 1 === length) {
+            const btnBox = document.querySelectorAll('.test__btn-box')[this.sliderPosition];
+            btnBox.style.justifyContent = 'space-between';
+            btnBox.style.width = '60%';
+            btnBox.style.marginRight = 'auto';
             return true;
         }
+    }
+
+    resetSearch() {
+        const dropdownList = document.querySelector('.dropdown__list');
+        const searchInput = document.querySelector('.search__input');
+        const searchCloseBtn = document.querySelector('.search__close-button');
+        const noMatch = document.querySelector('.dropdown__no-match');
+        dropdownList.innerHTML = '';
+        searchInput.value = '';
+        searchCloseBtn.style.display = 'none';
+        noMatch.style.display = 'none';
     }
 
     clickHandler(e) {
@@ -407,6 +424,7 @@ class Vocab {
         }
 
         if (target.closest('.modal__delete-btn')) {
+
             const list = target.closest('.modal').dataset.list;
             const word = target.closest('.modal').dataset.word;
             const ref = `${this.refPrefix}/${list}/${word}`;
@@ -416,6 +434,8 @@ class Vocab {
             this.getData();
             this.render();
             this.hideModals();
+            this.resetSearch();
+
         }
 
         if (target.closest('.controls__edit')) {
@@ -443,7 +463,7 @@ class Vocab {
 
         if (target.closest('.search__close-button')) {
             target.previousElementSibling.value = '';
-            this.clearDropdown();
+            this.resetSearch();
             target.style.display = 'none';
         }
 
@@ -551,20 +571,53 @@ class Vocab {
             this.showModal(trainModal);
         }
 
+        //MODAL WITH TRAINING OPTIONS
         if (target.closest('.modal-training .modal__btn')) {
             const actualList = document.getElementById('actual');
             const testModal = document.querySelector('.test');
+            const wrapper = document.querySelector('.test__slider-wrapper');
             this.hideModals();
             this.showModal(testModal);
             toggleElements('.list__translation', 'hide', actualList);
+            this.sliderPosition = 0;
+            this.pageCounter(this.sliderPosition, wrapper);
         }
 
+        //SLIDER NEXT
         if (target.closest('.test__next')) {
             const wrapper = target.closest('.test__slider-wrapper');
+            const prevBtns = document.querySelectorAll('.test__prev');
+            if (this.sliderPosition + 1) {
+                prevBtns.forEach((prev, index) => {
+                    if (index === 0) {
+                        return;
+                    }
+                    prev.style.display = 'inline-block';
+                });
+
+            } else {
+                prevBtns.forEach(prev => prev.style.display = 'none');
+            }
             // this.checkSlidersEnd(target);
 
+            ++this.sliderPosition;
             wrapper.style.transform = `translateX(-${this.sliderPosition * 100}%)`;
-            this.sliderPosition++;
+            console.log(this.sliderPosition * 100);
+            console.log(this.sliderPosition);
+            this.pageCounter(this.sliderPosition, wrapper);
+        }
+
+        //SLIDER PREV
+        if (target.closest('.test__prev')) {
+            const wrapper = target.closest('.test__slider-wrapper');
+            // this.checkSlidersEnd(target);
+            if (this.sliderPosition !== 0) {
+                --this.sliderPosition;
+                console.log(this.sliderPosition);
+                wrapper.style.transform = `translateX(-${this.sliderPosition * 100}%)`;
+                console.log(this.sliderPosition * 100);
+                this.pageCounter(this.sliderPosition, wrapper);
+            }
         }
 
         if (target.closest('.test__answer')) {
@@ -747,6 +800,13 @@ class Vocab {
             this.shuffle(answers);
 
             sliderWrapper.insertAdjacentHTML('beforeend', this.makeTestSlide(elem, answers));
+            const sliders = sliderWrapper.querySelectorAll('.test__slide');
+            sliders.forEach(slider => {
+                const answers = slider.querySelectorAll('.test__answer');
+                answers.forEach(answer => {
+                    answer.style.minHeight = answer.clientHeight + 2 + 'px';
+                });
+            });
         });
     }
 
@@ -761,6 +821,7 @@ class Vocab {
                     <button class="test__answer" type="button">${answers[3]}</button>
                 </div>
                 <div class="test__btn-box">
+                    <button class="test__prev">Prev</button>
                     <button class="test__close">Close</button>
                     <button class="test__next">Next</button>
                 </div>
@@ -773,6 +834,14 @@ class Vocab {
                 </div>
             </div>
         `;
+    }
+
+    pageCounter(position, wrapper) {
+        const slides = wrapper.querySelectorAll('.test__slide');
+        const curr = document.querySelector('.counter__current');
+        const total = document.querySelector('.counter__total');
+        curr.textContent = position + 1;
+        total.textContent = slides.length;
     }
 
     generateId() {

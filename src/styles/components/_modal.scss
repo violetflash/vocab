@@ -206,11 +206,17 @@
 
 .modal-edit {
   padding: 20px;
+  position: relative;
 }
+
 .test {
-  padding-bottom: 50px;
+  padding-bottom: 70px;
   overflow: hidden;
   max-width: 500px;
+
+  @media (max-width: $md4+px) {
+    padding: 20px 20px 50px;
+  }
 
   &__slider {
     overflow: hidden;
@@ -234,6 +240,12 @@
   }
 
   &__word {
+    display: block;
+    width: 100%;
+    font-size: 28px;
+    padding: 5px;
+    text-align: center;
+    //background-color: #eee1c7;
     margin-bottom: 20px;
   }
 
@@ -252,8 +264,8 @@
   &__answer {
     display: block;
     width: 100%;
-    padding: 5px 15px;
-    min-height: 30px;
+    padding: 10px 15px;
+    //min-height: 30px;
     margin-bottom: 5px;
     text-align: left;
     border: 1px solid #ccc;
@@ -285,7 +297,8 @@
 
     @media (max-width: $md3+px) {
       font-size: 16px;
-      padding: 10px 15px;
+      //padding: 10px 15px;
+      //min-height: 42px;
     }
   }
 
@@ -293,7 +306,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 40px;
+    margin: 60px 0 0 auto;
 
     & div {
       padding: 5px 10px;
@@ -318,6 +331,7 @@
   }
 
   &__stats-word {
+    font-weight: 700;
     margin-right: 5px;
     &::before,
     &::after {
@@ -332,6 +346,7 @@
     width: 100%;
     text-align: right;
     min-height: 26px;
+    margin-top: 10px;
 
     @media (max-width: $md3+px) {
       //width: unset;
@@ -339,7 +354,8 @@
   }
 
   &__next,
-  &__close {
+  &__close,
+  &__prev {
     display: none;
     padding: 5px 15px;
     text-transform: uppercase;
@@ -353,11 +369,47 @@
       position: absolute;
       content: ">";
       right: 4px;
-
     }
   }
 
   &__close {
-    margin: 0 auto;
+    //margin: 0 auto 0 0;
+  }
+
+  &__prev {
+    position: relative;
+    margin-right: auto;
+    &::before {
+      position: absolute;
+      content: "<";
+      left: 4px;
+    }
+  }
+
+  &__counter {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+
+  }
+}
+
+.counter {
+  padding: 5px 10px;
+  background-color: #ecddcd;
+  border-radius: 5px;
+
+  &__current {
+    position: relative;
+    padding-right: 5px;
+    &::after {
+      position: absolute;
+      content: "/";
+      right: -6px;
+    }
+  }
+
+  &__total {
+    padding-left: 5px;
   }
 }

@@ -113,13 +113,13 @@ const renderRow = (target, source, index, moveTo, list) => {
     const id = removeSpaces(source.word);
     target.insertAdjacentHTML('beforeend', `
         <li id="${id}" class="list__row" data-index="${index})"  data-master="${list}">
-        <div class="list__stats">
-                <div class="list__right">${source.stats.right}</div>
-                <div class="list__wrong">${source.stats.wrong}</div>
-            </div>
             <span class="list__word">${word}</span>
             
             <span class="list__translation">${source.translation}</span>
+            <div class="list__stats">
+                <div class="list__right">${source.stats.right}</div>
+                <div class="list__wrong">${source.stats.wrong}</div>
+            </div>
             <div class="list__controls controls">
                 <button class="controls__move button" data-move="${moveTo}">
                     <i class="controls__move-icon"></i>

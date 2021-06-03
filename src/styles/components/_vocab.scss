@@ -81,6 +81,7 @@
     @media (max-width: $md4+px) {
       //flex-direction: column;
       //align-items: flex-start;
+      justify-content: center;
       flex-wrap: wrap;
       padding-bottom: 5px;
     }
@@ -98,7 +99,9 @@
     justify-content: center;
 
     @media (max-width: $md4+px) {
-      margin: 10px 0 0 auto;
+      margin-top: 10px;
+      justify-content: center;
+      width: 100%;
     }
   }
 
@@ -174,6 +177,10 @@
   display: flex;
   align-items: center;
 
+  @media (max-width: $md4+px) {
+    margin-right: auto;
+  }
+
   &__btn {
     position: relative;
     //display: none;
@@ -198,16 +205,39 @@
         transform: translateX(0);
       }
     }
+
+    @media (max-width: $md2+px) {
+      margin-right: 60px;
+
+      &:hover {
+        //background-image: url('../assets/images/training.png');
+
+        .training__tooltip {
+          visibility: visible;
+          opacity: 1;
+          transform: translateX(55%);
+        }
+      }
+    }
   }
 
   &__tooltip {
     position: absolute;
-    right: 120%;
+    right: 100%;
     font-weight: 700;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease-in-out;
     transform: translateX(40%);
+
+    @media (max-width: $md2+px) {
+      right: -10px;
+      visibility: visible;
+      opacity: 1;
+      //right: 0;
+      transform: translateX(55%);
+
+    }
   }
 }
 
@@ -242,6 +272,7 @@
     @media (max-width: $md4+px) {
       flex-direction: column;
       align-items: flex-start;
+      padding-left: 20px;
     }
   }
 
@@ -265,6 +296,7 @@
   &__translation {
     background-color: #e5e2d7;
     padding: 5px 10px;
+    margin-right: 20px;
 
     @media (max-width: $md4+px) {
       max-width: 100%;
@@ -276,28 +308,36 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 10px;
-
+    //margin-right: 10px;
+    margin-left: auto;
     & div {
       padding: 2px 4px;
       font-weight: 700;
     }
+
+    @media (max-width: $md4+px) {
+      position: absolute;
+      top: 5px;
+      right: 0;
+    }
   }
 
   &__right {
-    border: 1px solid black;
+    border: 1px solid #ccc;
     border-right: 0.1px transparent;
-    background-color: #a9f6d5;
+    color: #07cd07;
   }
 
   &__wrong {
-    border: 1px solid black;
+    border: 1px solid #ccc;
     border-left: 0.1px transparent;
-    background-color: LightCoral;
+    color: LightCoral;
   }
 
   &__controls {
-    margin-left: auto;
+    position: absolute;
+    right: 40px;
+    //margin-left: auto;
   }
 }
 
