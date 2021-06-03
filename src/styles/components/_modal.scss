@@ -253,6 +253,7 @@
     display: block;
     width: 100%;
     padding: 5px 15px;
+    min-height: 30px;
     margin-bottom: 5px;
     text-align: left;
     border: 1px solid #ccc;
@@ -263,11 +264,23 @@
     }
 
     &.js-wrong {
-      background-color: red;
+      background-color: LightCoral;
     }
 
     &.js-right {
-      background-color: limegreen;
+      background-color: #76D7C4;
+    }
+
+    &.js-hidden {
+      font-size: 0;
+      &:hover {
+        background-color: inherit;
+        cursor: auto;
+      }
+    }
+
+    &.js-show-answer {
+      border: 2px solid #76D7C4;
     }
 
     @media (max-width: $md3+px) {
@@ -336,7 +349,14 @@
   }
 
   &__next {
+    position: relative;
     margin-left: auto;
+    &::after {
+      position: absolute;
+      content: ">";
+      right: 4px;
+
+    }
   }
 
   &__close {

@@ -539,13 +539,15 @@ class Vocab {
                 }
             }
             //preparing for training
-            this.translations = actual.map(element => element.translation); // ??
+            this.translations = actual.map(element => element.translation); // ?? NO NEED OF THIS
 
 
             this.generateTrainingArrays(actual, select);
             select.selectedIndex = localStorage.getItem('test-select-index') || 0;
             this.setActiveTrainArray(select);
-            this.makeAnswers(sliderWrapper);
+            if (!sliderWrapper.children.length) {
+                this.makeAnswers(sliderWrapper);
+            }
             this.showModal(trainModal);
         }
 
@@ -585,13 +587,34 @@ class Vocab {
             this.trainArray.forEach(elem => {
                 if (elem.word === word && target.textContent === elem.translation) {
                     target.classList.add('js-right');
+                    //HIDE OTHER ANSWERS
+                    answers.forEach(answer => {
+                        if (answer.classList.contains('js-right')) {
+                            return;
+                        }
+                        answer.classList.add('js-hidden');
+                    });
+                    //STATS COUNTER
                     right.textContent = +right.textContent + 1;
                 } else if (elem.word === word && target.textContent !== elem.translation) {
                     target.classList.add('js-wrong');
+                    //SHOW THE RIGHT ANSWER AND HIDE OTHERS
+                    answers.forEach(answer => {
+                        if (answer.classList.contains('js-wrong')) {
+                            return;
+                        }
+                        if (elem.word === word && answer.textContent === elem.translation) {
+                            answer.classList.add('js-right');
+                            return;
+                        }
+                        answer.classList.add('js-hidden');
+                    });
+                    //STATS COUNTER
                     wrong.textContent = +wrong.textContent + 1;
                 }
             });
 
+            //Buttons appear condition
             if (!this.checkSlidersEnd(target)) {
                 nextBtn.style.display = 'inline-block';
             } else {
