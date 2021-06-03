@@ -303,15 +303,13 @@
 
   &__stats-right {
     border: 1px solid black;
-    border-right-color: transparent;
-    border-right-width: 0.1px;
+    border-right: 0.1px transparent;
     background-color: #68e068;
   }
 
   &__stats-wrong {
     border: 1px solid black;
-    border-left-color: transparent;
-    border-left-width: 0.1px;
+    border-left: 0.1px transparent;
     background-color: #ec7171;
   }
 

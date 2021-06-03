@@ -272,6 +272,30 @@
     }
   }
 
+  &__stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+
+    & div {
+      padding: 2px 4px;
+      font-weight: 700;
+    }
+  }
+
+  &__right {
+    border: 1px solid black;
+    border-right: 0.1px transparent;
+    background-color: #a9f6d5;
+  }
+
+  &__wrong {
+    border: 1px solid black;
+    border-left: 0.1px transparent;
+    background-color: LightCoral;
+  }
+
   &__controls {
     margin-left: auto;
   }

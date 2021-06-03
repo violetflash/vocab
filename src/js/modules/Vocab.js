@@ -844,7 +844,7 @@ class Vocab {
                     localStorage.setItem('vocab', JSON.stringify(vocab));
                     const words = makeWordsList(vocab);
                     localStorage.setItem('vocabWords', JSON.stringify(words));
-                    // this.render();
+                    this.render();
                 } else {
                     // this.render();
                     console.log("No data available");
