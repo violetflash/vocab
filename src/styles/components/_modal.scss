@@ -211,11 +211,12 @@
 
 .test {
   padding-bottom: 70px;
+  padding-top: 50px;
   overflow: hidden;
   max-width: 500px;
 
   @media (max-width: $md4+px) {
-    padding: 20px 20px 50px;
+    padding: 50px 20px 50px;
   }
 
   &__slider {
