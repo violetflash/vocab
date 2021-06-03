@@ -1,5 +1,3 @@
-//TODO Huge lags bug on moving words. EventListeners accumulation
-
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import firebase from "firebase/app";
 // Add the Firebase products that you want to use
@@ -8,7 +6,7 @@ import makeStructure from './makeStructure';
 import {
     writeWord,
     deleteWord,
-    // readDatabase,
+    removeSpaces,
     checkInputs,
     renderRow,
     clearList,
@@ -17,13 +15,12 @@ import {
     unlockScreen,
     capitalizer,
     toggleElements,
-    checkSearchInputValue,
+    checkSearchCrossAppear,
     scroll,
     makeDropdownLink,
     scrollDistance,
     setCookie,
     getCookie,
-    // makeArraysFromData,
     makeWordsList,
     sortObject
 } from './utils';
@@ -48,49 +45,22 @@ class Vocab {
         this.sliderPosition = 0;
     }
 
-    addNewWord(reference, word, translation) {
-        writeWord(firebase, reference, word, translation);
+    addNewWord(reference, word, translation, stats) {
+        writeWord(firebase, reference, word, translation, stats);
         this.getData();
-        // const dbRef = firebase.database().ref('vocab/');
-        //
-        // dbRef.get()
-        //     .then(snapshot => {
-        //         if (snapshot.exists()) {
-        //             // makeArraysFromData(snapshot.val());
-        //             const vocab = {};
-        //             for (const key in snapshot.val()) {
-        //                 vocab[key] = [];
-        //                 for (const word in snapshot.val()[key]) {
-        //                     const sorted = sortObject(snapshot.val()[key][word]);
-        //                     //making arrays in cause of further sorting
-        //                     vocab[key].push(sorted);
-        //                 }
-        //             }
-        //
-        //             localStorage.setItem('vocab', JSON.stringify(vocab));
-        //             const words = makeWordsList(vocab);
-        //             localStorage.setItem('vocabWords', JSON.stringify(words));
-        //             this.setStats(vocab);
-        //             this.render();
-        //         } else {
-        //             console.warning('No data loaded');
-        //         }
-        //     })
-        //     .catch(err => {
-        //         console.error(err);
-        //     });
-        // this.words.push(word);
-        // localStorage.setItem('vocabWords', JSON.stringify(this.words));
     }
 
     deleteWord(target) {
         const row = target.closest('.list__row');
         const word = row.querySelector('.list__word').textContent.toLowerCase();
         const translation = row.querySelector('.list__translation').textContent.toLowerCase();
+        const right = row.querySelector('.list__right').textContent;
+        const wrong = row.querySelector('.list__wrong').textContent;
+        const stats = { right, wrong };
         const list = row.dataset.master;
         const ref = `${this.refPrefix}/${list}/${word}`;
         deleteWord(firebase, ref);
-        return { word, translation };
+        return { word, translation, stats };
     }
 
     getData() {
@@ -98,7 +68,6 @@ class Vocab {
         dbRef.get()
             .then(snapshot => {
                 if (snapshot.exists()) {
-                    // makeArraysFromData(snapshot.val());
                     const vocab = {};
                     for (const key in snapshot.val()) {
                         vocab[key] = [];
@@ -151,7 +120,9 @@ class Vocab {
     }
 
     renderList(arr, currentList, currentListId) {
-        const oppositeList = currentListId === 'actual' ? 'Learned' : 'Actual'; //capitalized for move button text
+        const oppositeList = currentListId === this.actualID ?
+            capitalizer(this.learnedID) :
+            capitalizer(this.actualID); //capitalized for move button text
 
         if (arr) {
             arr.forEach((elem, index) => {
@@ -168,7 +139,7 @@ class Vocab {
     render() {
         // console.log(this.wordsList);
         const { actualID, learnedID } = this;
-        const data = JSON.parse(localStorage.getItem('vocab'));
+        const data = JSON.parse(localStorage.getItem(this.refPrefix));
 
         const actualList = document.getElementById(actualID);
         const learnedList = document.getElementById(learnedID);
@@ -182,13 +153,13 @@ class Vocab {
         }
 
 
-        this.checkTitle('.vocab__title-actual', 'actual');
-        this.checkTitle('.vocab__title-learned', 'learned');
+        this.checkTitle(`.vocab__title-${this.actualID}`, this.actualID);
+        this.checkTitle(`.vocab__title-${this.learnedID}`, this.learnedID);
 
         this.checkSortOptionsRender();
         this.checkTrainingAppear();
-        this.checkListLength('actual', this.numToShow.actual);
-        this.checkListLength('learned', this.numToShow.learned);
+        this.checkListLength(this.actualID, this.numToShow.actual);
+        this.checkListLength(this.learnedID, this.numToShow.learned);
 
     }
 
@@ -277,7 +248,7 @@ class Vocab {
 
 
         if (modalSelector === '.modal-delete') {
-            this.translation = translation;
+            this.translation = translation; //saving data for further handling
             translationField.style.opacity = 0;
             modal.querySelector('.modal__word-to-delete').textContent = ` ${capitalizer(word)}`;
         }
@@ -309,13 +280,11 @@ class Vocab {
             }
             return 0;
         }
-
         array.sort(compare);
     }
 
     //  Fisher Yates Shuffle
     shuffle(array) {
-        // const {vocab} = toDoObject;
         for (let i = array.length - 1; i > 0; i--) {
             //  pick random index before current element
             const j = Math.floor(Math.random() * (i + 1));
@@ -336,6 +305,7 @@ class Vocab {
             this.sortArray(data[listID]);
             data[listID].reverse();
         }
+
         localStorage.setItem('vocab', JSON.stringify(data));
         sliderWrapper.innerHTML = '';
         this.render();
@@ -345,7 +315,7 @@ class Vocab {
         const dropdownList = document.querySelector('.dropdown__list');
         const noMatch = document.querySelector('.dropdown__no-match');
         this.clearDropdown();
-        checkSearchInputValue('.search__input', '.search__close-button');
+        checkSearchCrossAppear('.search__input', '.search__close-button');
 
         if (e.target.value) {
             const regExp = new RegExp(e.target.value.toLowerCase());
@@ -364,6 +334,7 @@ class Vocab {
             } else {
                 noMatch.style.display = 'none';
             }
+
         } else {
             noMatch.style.display = 'none';
         }
@@ -375,12 +346,10 @@ class Vocab {
         } else {
             this.trainArray = this.trainArrays.parts[select.selectedIndex - 1];
         }
-
     }
 
     generateTrainingArrays(vocab, select) {
         this.trainOption = select.value;
-
         this.trainArrays = {};
         this.trainArrays.all = [...vocab];
         this.trainArrays.parts = [];
@@ -392,10 +361,33 @@ class Vocab {
         this.setActiveTrainArray(select);
     }
 
-    updateStats(word, right, wrong) {
-        firebase.database().ref(`${this.refPrefix}/${this.actualID}/${word}/stats`).update({
-            right,
-            wrong
+    updateFirebaseStats(word, statName, statValue) {
+        const dbRef = firebase.database().ref(`${this.refPrefix}/${this.actualID}/${word}/stats`);
+        dbRef.update({
+            [statName]: statValue,
+        })
+            .then()
+            .catch(err => {
+                console.error(err);
+            });
+    }
+
+    updateRowStat(word, statName, value) {
+        const rowStatField = document.getElementById(removeSpaces(word)).querySelector(`.list__${statName}`);
+        rowStatField.textContent = value;
+    }
+
+    updateStats(vocab, word, statName, outputTarget) {
+        vocab[this.actualID].forEach(elem => {
+            if (elem.word !== word) {
+                return;
+            }
+
+            elem.stats[statName]++;
+            outputTarget.textContent = elem.stats[statName];
+            this.updateRowStat(word, statName, elem.stats[statName]);
+            this.updateFirebaseStats(word, statName, elem.stats[statName]);
+            localStorage.setItem('vocab', JSON.stringify(vocab));
         });
     }
 
@@ -441,10 +433,10 @@ class Vocab {
 
         if (target.closest('.controls__move')) {
             target = target.closest('.controls__move');
-            const { word, translation } = this.deleteWord(target);
+            const { word, translation, stats } = this.deleteWord(target);
             const targetList = target.dataset.move.toLowerCase();
             const reference = `${this.refPrefix}/${targetList}/`;
-            this.addNewWord(reference, word, translation);
+            this.addNewWord(reference, word, translation, stats);
         }
 
         if (target.closest('.controls__remove')) {
@@ -513,14 +505,16 @@ class Vocab {
                 this.checkListLength(list, this.numToShow[list]);
             }
 
+            //highlighting word
             elem.classList.add('js-active');
+            //remove highlight
             setTimeout(() => {
                 elem.classList.remove('js-active');
             }, 4000);
             scroll(elem);
             this.clearDropdown();
             this.addDropdownElement(word, link);
-            checkSearchInputValue('.search__input', '.search__close-button');
+            checkSearchCrossAppear('.search__input', '.search__close-button');
         }
 
         if (target.closest('.sort__shuffle') || target.closest('.sort__sort')) {
@@ -543,7 +537,6 @@ class Vocab {
                 this.sort[listID] = 'descending';
                 target.closest('.sort__sort').classList.add('js-active');
             }
-
 
             localStorage.setItem('vocabSortOptions', JSON.stringify(this.sort));
             this.sortList(listID);
@@ -619,6 +612,7 @@ class Vocab {
         if (target.closest('.test__next')) {
             const wrapper = target.closest('.test__slider-wrapper');
             const prevBtns = document.querySelectorAll('.test__prev');
+
             if (this.sliderPosition + 1) {
                 prevBtns.forEach((prev, index) => {
                     if (index === 0) {
@@ -626,34 +620,29 @@ class Vocab {
                     }
                     prev.style.display = 'inline-block';
                 });
-
             } else {
                 prevBtns.forEach(prev => prev.style.display = 'none');
             }
-            // this.checkSlidersEnd(target);
 
             ++this.sliderPosition;
             wrapper.style.transform = `translateX(-${this.sliderPosition * 100}%)`;
-            console.log(this.sliderPosition * 100);
-            console.log(this.sliderPosition);
             this.pageCounter(this.sliderPosition, wrapper);
         }
 
         //SLIDER PREV
         if (target.closest('.test__prev')) {
             const wrapper = target.closest('.test__slider-wrapper');
-            // this.checkSlidersEnd(target);
+
             if (this.sliderPosition !== 0) {
                 --this.sliderPosition;
-                console.log(this.sliderPosition);
                 wrapper.style.transform = `translateX(-${this.sliderPosition * 100}%)`;
-                console.log(this.sliderPosition * 100);
                 this.pageCounter(this.sliderPosition, wrapper);
             }
         }
 
         if (target.closest('.test__answer')) {
             //check for the already been clicked
+            const vocab = JSON.parse(localStorage.getItem('vocab'));
             const word = target.closest('.test__slide').querySelector('.test__word').textContent;
             const answerBlock = target.closest('.test__answers');
             const answers = answerBlock.querySelectorAll('.test__answer');
@@ -679,8 +668,10 @@ class Vocab {
                         }
                         answer.classList.add('js-hidden');
                     });
-                    //STATS COUNTER
-                    right.textContent = +right.textContent + 1;
+
+                    //STATS UPDATE
+                    this.updateStats(vocab, word, 'right', right);
+
                 } else if (elem.word === word && target.textContent !== elem.translation) {
                     target.classList.add('js-wrong');
                     //SHOW THE RIGHT ANSWER AND HIDE OTHERS
@@ -688,14 +679,16 @@ class Vocab {
                         if (answer.classList.contains('js-wrong')) {
                             return;
                         }
+
                         if (elem.word === word && answer.textContent === elem.translation) {
                             answer.classList.add('js-right');
                             return;
                         }
+
                         answer.classList.add('js-hidden');
                     });
                     //STATS COUNTER
-                    wrong.textContent = +wrong.textContent + 1;
+                    this.updateStats(vocab, word, 'wrong', wrong);
                 }
             });
 
@@ -705,9 +698,6 @@ class Vocab {
             } else {
                 closeBtn.style.display = 'inline-block';
             }
-
-            this.updateStats(word, right.textContent, wrong.textContent);
-
         }
 
         if (document.documentElement.clientWidth < 768) {
@@ -729,6 +719,8 @@ class Vocab {
             }
         }
     }
+
+
 
     eventListeners() {
         const deleteBtn = document.querySelector('.modal__delete-btn');
@@ -936,7 +928,6 @@ class Vocab {
                 }
             );
         });
-        console.log(this.stats);
     }
 
     init() {

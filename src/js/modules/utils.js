@@ -1,11 +1,13 @@
-const writeWord = (firebase, reference, word, translation) => {
+const writeWord = (
+    firebase,
+    reference,
+    word,
+    translation,
+    stats = { "right": 0, "wrong": 0 }) => {
     firebase.database().ref(reference + word).set({
         word,
         translation,
-        stats: {
-            right: 0,
-            wrong: 0
-        },
+        stats,
     });
 };
 
@@ -34,35 +36,6 @@ const sortObject = sourceObject => Object.keys(sourceObject).sort().reverse().re
     {}
 );
 
-const makeArraysFromData = response => {
-    //making arrays
-    const vocab = {};
-
-    for (const key in response) {
-        vocab[key] = [];
-        for (const word in response[key]) {
-            //making arrays in cause of further sorting
-            const sorted = sortObject(response[key][word]);
-            vocab[key].push(sorted);
-        }
-    }
-    localStorage.setItem('vocab', JSON.stringify(vocab));
-    const words = makeWordsList(vocab);
-    localStorage.setItem('vocabWords', JSON.stringify(words));
-};
-
-const readDatabase = firebase => {
-    const dbRef = firebase.database().ref('vocab/');
-    dbRef.on('value', snapshot => {
-        if (snapshot.exists()) {
-            makeArraysFromData(snapshot.val());
-        } else {
-            // console.log("No data available");
-            localStorage.setItem('vocab', JSON.stringify({}));
-        }
-    });
-};
-
 const makeDropdownLink = (word, anchor) => `
     <li class="dropdown__row">
         <a class="dropdown__link" href="#${removeSpaces(anchor)}">${word}</a>
@@ -80,7 +53,7 @@ const scrollDistance = distance => {
     });
 };
 
-const checkSearchInputValue = (inputSelector, buttonSelector) => {
+const checkSearchCrossAppear = (inputSelector, buttonSelector) => {
     const input = document.querySelector(inputSelector);
     const button = document.querySelector(buttonSelector);
     if (input.value) {
@@ -198,7 +171,6 @@ const getCookie = name => {
 export {
     writeWord,
     deleteWord,
-    readDatabase,
     checkInputs,
     renderRow,
     clearList,
@@ -208,12 +180,12 @@ export {
     capitalizer,
     toggleElements,
     makeWordsList,
-    checkSearchInputValue,
+    checkSearchCrossAppear,
     makeDropdownLink,
     scroll,
     scrollDistance,
     setCookie,
     getCookie,
-    makeArraysFromData,
     sortObject,
+    removeSpaces,
 };
