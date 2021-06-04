@@ -283,6 +283,18 @@ class Vocab {
         array.sort(compare);
     }
 
+    sortByStats(array) {
+        function compare(a, b) {
+            if (a.stats.right > b.stats.right) {
+                return 1;
+            } else if (a.stats.right < b.stats.right) {
+                return -1;
+            }
+            return 0;
+        }
+        array.sort(compare);
+    }
+
     //  Fisher Yates Shuffle
     shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -303,6 +315,11 @@ class Vocab {
             this.sortArray(data[listID]);
         } else if (this.sort[listID] === 'descending') {
             this.sortArray(data[listID]);
+            data[listID].reverse();
+        } else if (this.sort[listID] === 'right') {
+            this.sortByStats(data[listID]);
+        } else if (this.sort[listID] === 'wrong') {
+            this.sortByStats(data[listID]);
             data[listID].reverse();
         }
 
@@ -517,7 +534,9 @@ class Vocab {
             checkSearchCrossAppear('.search__input', '.search__close-button');
         }
 
-        if (target.closest('.sort__shuffle') || target.closest('.sort__sort')) {
+
+        //SORTING ARRAY
+        if (target.closest('.sort__shuffle') || target.closest('.sort__sort') || target.closest('.sort__stats')) {
             this.listID = target.closest('.vocab__info-line').nextElementSibling.id;
         }
 
@@ -540,6 +559,19 @@ class Vocab {
 
             localStorage.setItem('vocabSortOptions', JSON.stringify(this.sort));
             this.sortList(listID);
+        }
+        
+        if (target.closest('.sort__stats')) {
+            const { listID } = this;
+            if (this.sort[listID] === 'wrong') {
+                this.sort[listID] = 'right';
+                target.closest('.sort__stats').classList.remove('js-wrong');
+            }
+
+            if (this.sort[listID] === 'right') {
+                this.sort[listID] = 'right';
+                target.closest('.sort__stats').classList.remove('js-wrong');
+            }
         }
 
         if (target.closest('.training__btn')) {
