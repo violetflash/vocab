@@ -487,10 +487,18 @@
   }
 
   &__stats {
-    background-image: url('../assets/images/sort-stats-right.png');
+    background-image: url('../assets/images/sort-stats-right-asc.png');
 
     &.js-wrong {
-      background-image: url('../assets/images/sort-stats-wrong.png');
+      background-image: url('../assets/images/sort-stats-wrong-asc.png');
+    }
+  }
+
+  &__stats--desc {
+    background-image: url('../assets/images/sort-stats-right-desc.png');
+
+    &.js-wrong {
+      background-image: url('../assets/images/sort-stats-wrong-desc.png');
     }
   }
 }

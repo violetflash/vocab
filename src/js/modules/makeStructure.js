@@ -55,7 +55,8 @@ const makeActual = () => `
                     <div class="vocab__sort sort sort-actual">
                         <button class="sort__shuffle"></button>
                         <button class="sort__sort"></button>
-                        <button class="sort__stats"></button>
+                        <button class="sort__stats" data-sort="asc"></button>
+                        <button class="sort__stats sort__stats--desc" data-sort="desc"></button>
                     </div>
                 </div>
             </div>
@@ -84,8 +85,8 @@ const makeLearned = () => `
                 <div class="vocab__sort sort sort-learned">
                     <button class="sort__shuffle"></button>
                     <button class="sort__sort"></button>
-                    <button class="sort__stats"></button>
-<!--                    <button class="sort__descending">descending</button>-->
+                    <button class="sort__stats" data-sort="asc"></button>
+                    <button class="sort__stats sort__stats--desc" data-sort="desc"></button>
                 </div>
             </div>
         </div>

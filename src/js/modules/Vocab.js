@@ -271,11 +271,11 @@ class Vocab {
         dropdownList.insertAdjacentHTML('beforeend', makeDropdownLink(word, word));
     }
 
-    sortArray(array) {
+    sortArray(array, key) {
         function compare(a, b) {
-            if (a.word > b.word) {
+            if (a[key] > b[key]) {
                 return 1;
-            } else if (a.word < b.word) {
+            } else if (a[key] < b[key]) {
                 return -1;
             }
             return 0;
@@ -283,16 +283,14 @@ class Vocab {
         array.sort(compare);
     }
 
-    sortByStats(array) {
-        function compare(a, b) {
-            if (a.stats.right > b.stats.right) {
-                return 1;
-            } else if (a.stats.right < b.stats.right) {
-                return -1;
-            }
-            return 0;
+    sortArrayByStats(array, key, method) {
+        if (method === 'asc') {
+            return array.sort((a, b) => b.stats[key] - a.stats[key]);
         }
-        array.sort(compare);
+
+        if (method === 'desc') {
+            return array.sort((a, b) => a.stats[key] - b.stats[key]);
+        }
     }
 
     //  Fisher Yates Shuffle
@@ -305,22 +303,24 @@ class Vocab {
         }
     }
 
-    sortList(listID) {
+    sortList(listID, method) {
         const sliderWrapper = document.querySelector('.test__slider-wrapper');
         const data = JSON.parse(localStorage.getItem('vocab'));
 
         if (this.sort[listID] === 'shuffle') {
             this.shuffle(data[listID]);
         } else if (this.sort[listID] === 'ascending') {
-            this.sortArray(data[listID]);
+            this.sortArray(data[listID], 'word');
         } else if (this.sort[listID] === 'descending') {
-            this.sortArray(data[listID]);
+            this.sortArray(data[listID], 'word');
             data[listID].reverse();
-        } else if (this.sort[listID] === 'right') {
-            this.sortByStats(data[listID]);
-        } else if (this.sort[listID] === 'wrong') {
-            this.sortByStats(data[listID]);
-            data[listID].reverse();
+        } else if (method && this.sort[listID] === 'right') {
+            this.sortArrayByStats(data[listID], 'right', method);
+            console.log('its right now');
+        } else if (method && this.sort[listID] === 'wrong') {
+            this.sortArrayByStats(data[listID], 'wrong', method);
+            console.log('its left now');
+
         }
 
         localStorage.setItem('vocab', JSON.stringify(data));
@@ -536,7 +536,8 @@ class Vocab {
 
 
         //SORTING ARRAY
-        if (target.closest('.sort__shuffle') || target.closest('.sort__sort') || target.closest('.sort__stats')) {
+        if (target.closest('.sort__shuffle') || target.closest('.sort__sort') ||
+            target.closest('.sort__stats')) {
             this.listID = target.closest('.vocab__info-line').nextElementSibling.id;
         }
 
@@ -549,7 +550,7 @@ class Vocab {
 
         if (target.closest('.sort__sort')) {
             const { listID } = this;
-            if (this.sort[listID] === 'shuffle' || this.sort[listID] === 'descending') {
+            if (this.sort[listID] !== 'ascending') {
                 this.sort[listID] = 'ascending';
                 target.closest('.sort__sort').classList.remove('js-active');
             } else if (!this.sort[listID] || this.sort[listID] === 'ascending') {
@@ -560,18 +561,21 @@ class Vocab {
             localStorage.setItem('vocabSortOptions', JSON.stringify(this.sort));
             this.sortList(listID);
         }
-        
+
         if (target.closest('.sort__stats')) {
             const { listID } = this;
-            if (this.sort[listID] === 'wrong') {
+            if (this.sort[listID] !== 'right') {
                 this.sort[listID] = 'right';
-                target.closest('.sort__stats').classList.remove('js-wrong');
+                target.classList.remove('js-wrong');
+            } else if (!this.sort[listID] || this.sort[listID] === 'right') {
+                this.sort[listID] = 'wrong';
+                target.classList.add('js-wrong');
             }
 
-            if (this.sort[listID] === 'right') {
-                this.sort[listID] = 'right';
-                target.closest('.sort__stats').classList.remove('js-wrong');
-            }
+            console.log(this.sort[listID]);
+
+            localStorage.setItem('vocabSortOptions', JSON.stringify(this.sort));
+            this.sortList(listID, target.dataset.sort);
         }
 
         if (target.closest('.training__btn')) {
