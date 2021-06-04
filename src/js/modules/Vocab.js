@@ -137,7 +137,6 @@ class Vocab {
     }
 
     render() {
-        // console.log(this.wordsList);
         const { actualID, learnedID } = this;
         const data = JSON.parse(localStorage.getItem(this.refPrefix));
 
@@ -316,10 +315,8 @@ class Vocab {
             data[listID].reverse();
         } else if (method && this.sort[listID] === 'right') {
             this.sortArrayByStats(data[listID], 'right', method);
-            console.log('its right now');
         } else if (method && this.sort[listID] === 'wrong') {
             this.sortArrayByStats(data[listID], 'wrong', method);
-            console.log('its left now');
 
         }
 
@@ -572,7 +569,6 @@ class Vocab {
                 target.classList.add('js-wrong');
             }
 
-            console.log(this.sort[listID]);
 
             localStorage.setItem('vocabSortOptions', JSON.stringify(this.sort));
             this.sortList(listID, target.dataset.sort);
