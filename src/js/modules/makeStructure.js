@@ -146,9 +146,24 @@ const makeModals = () => `
             <path d="M23.954 21.03l-9.184-9.095 9.092-9.174-2.832-2.807-9.09 9.179-9.176-9.088-2.81 2.81 9.186 
                 9.105-9.095 9.184 2.81 2.81 9.112-9.192 9.18 9.1z"/>
         </svg>
-        <h3 class="modal__title">Words training</h3>
+        <h2 class="modal__title">Words training options</h2>
         <div class="modal__form">
             <div class="modal__train-options">
+                <h4 class="modal__subtitle">Split words by:</h4>
+                <div class="modal__train-checkboxes">
+                    <label class="checkbox">
+                      <input class="checkbox__input" type="radio" name="amount" value="10">
+                      <span class="checkbox__text">10</span>
+                    </label>
+                    <label class="checkbox">
+                      <input class="checkbox__input" type="radio" name="amount" value="15">
+                      <span class="checkbox__text">15</span>
+                    </label>
+                    <label class="checkbox">
+                      <input class="checkbox__input" type="radio" name="amount" value="20" checked>
+                      <span class="checkbox__text">20</span>
+                    </label>
+                </div>
                 <div class="modal__select-label">
                     Please choose which part of words would you like to train:
                     <select class="modal__select"></select>

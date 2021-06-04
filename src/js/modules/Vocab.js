@@ -362,14 +362,14 @@ class Vocab {
         }
     }
 
-    generateTrainingArrays(vocab, select) {
+    generateTrainingArrays(vocab, select, divider) {
         this.trainOption = select.value;
         this.trainArrays = {};
         this.trainArrays.all = [...vocab];
         this.trainArrays.parts = [];
 
         while (vocab.length) {
-            this.trainArrays.parts.push(vocab.splice(0, 20));
+            this.trainArrays.parts.push(vocab.splice(0, divider));
         }
 
         this.setActiveTrainArray(select);
@@ -436,6 +436,40 @@ class Vocab {
         searchInput.value = '';
         searchCloseBtn.style.display = 'none';
         noMatch.style.display = 'none';
+    }
+
+    fillSelect(select, array, divider) {
+        select.innerHTML = `<option value="all">All words (${array.length})</option>`;
+        let full = 0;
+
+        if (array.length > divider) {
+            const rest = array.length % divider;
+            full = Math.floor(array.length / divider);
+
+
+            if (full > 0) {
+                let num = 1;
+                for (let i = 1; i <= full; i++) {
+                    select.insertAdjacentHTML('beforeend', `
+                            <option value="${i - 1}">${i}) ${num}-${i * divider}</option>    
+                        `);
+                    num += divider;
+                }
+            }
+
+            if (rest && full > 0) {
+                const max = full * divider;
+                select.insertAdjacentHTML('beforeend', `
+                        <option value="${full}">
+                            ${full + 1}) ${max + 1}-${max + rest}
+                        </option>    
+                    `);
+            } else if (rest) {
+                select.insertAdjacentHTML('beforeend', `
+                        <option value="1-${rest}">${1}) 1-${rest}</option>    
+                    `);
+            }
+        }
     }
 
     clickHandler(e) {
@@ -578,48 +612,27 @@ class Vocab {
             const sliderWrapper = document.querySelector('.test__slider-wrapper');
             const trainModal = document.querySelector('.modal-training');
             const actualList = document.getElementById('actual');
+            const checkboxes = document.querySelectorAll('.checkbox__input');
             toggleElements('.list__translation', 'hide', actualList);
+
+            let divider = 0;
+            //get default num of words to train
+            checkboxes.forEach(elem => {
+                if (elem.checked === true) {
+                    divider = +elem.value;
+                }
+            });
 
             //making select options
             const actual = JSON.parse(localStorage.getItem('vocab')).actual;
             const select = trainModal.querySelector('.modal__select');
-            select.innerHTML = `<option value="all">All words (${actual.length})</option>`;
-            let full = 0;
-            if (actual.length > 20) {
-                const rest = actual.length % 20;
-                full = Math.floor(actual.length / 20);
+            this.fillSelect(select, actual, divider);
 
-
-                if (full > 0) {
-                    let num = 1;
-                    for (let i = 1; i <= full; i++) {
-                        select.insertAdjacentHTML('beforeend', `
-                            <option value="${i - 1}">${i}) ${num}-${i * 20}</option>    
-<!--                            <option value="${num}-${i * 20}">${i}) ${num}-${i * 20}</option>    -->
-                        `);
-                        num += 20;
-                    }
-                }
-
-                if (rest && full > 0) {
-                    const max = full * 20;
-                    select.insertAdjacentHTML('beforeend', `
-<!--                        <option value="${max + 1}-${max + rest}">-->
-                        <option value="${full}">
-                            ${full + 1}) ${max + 1}-${max + rest}
-                        </option>    
-                    `);
-                } else if (rest) {
-                    select.insertAdjacentHTML('beforeend', `
-                        <option value="1-${rest}">${1}) 1-${rest}</option>    
-                    `);
-                }
-            }
             //preparing for training
             this.translations = actual.map(element => element.translation); // ?? NO NEED OF THIS
 
 
-            this.generateTrainingArrays(actual, select);
+            this.generateTrainingArrays(actual, select, divider);
             select.selectedIndex = localStorage.getItem('test-select-index') || 0;
             this.setActiveTrainArray(select);
             if (!sliderWrapper.children.length) {
@@ -730,6 +743,15 @@ class Vocab {
             } else {
                 closeBtn.style.display = 'inline-block';
             }
+        }
+
+        //CHECKBOXES
+        if (target.closest('.modal-training input[type="radio"]')) {
+            const select = document.querySelector('.modal__select');
+            const divider = +target.value;
+            const actual = JSON.parse(localStorage.getItem('vocab'))[this.actualID];
+            this.fillSelect(select, actual, divider);
+            this.generateTrainingArrays(actual, select, divider);
         }
 
         if (document.documentElement.clientWidth < 768) {
