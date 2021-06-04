@@ -79,8 +79,8 @@ class Vocab {
                     }
 
                     localStorage.setItem('vocab', JSON.stringify(vocab));
-                    const words = makeWordsList(vocab);
-                    localStorage.setItem('vocabWords', JSON.stringify(words));
+                    this.words = makeWordsList(vocab);
+                    localStorage.setItem('vocabWords', JSON.stringify(this.words));
                     this.setStats(vocab);
                     this.render();
                 } else {
