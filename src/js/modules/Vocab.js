@@ -688,8 +688,12 @@ class Vocab {
         if (target.closest('.test__answer')) {
             //check for the already been clicked
             const vocab = JSON.parse(localStorage.getItem('vocab'));
+            const fullAnswers = document.getElementsByClassName('test__answer js-right');
+            const congratsModal = document.querySelector('.congrats');
+            const congratsMessage = congratsModal.querySelector('.congrats__subtitle');
             const word = target.closest('.test__slide').querySelector('.test__word').textContent;
             const answerBlock = target.closest('.test__answers');
+            const total = document.querySelector('.counter__total').textContent;
             const answers = answerBlock.querySelectorAll('.test__answer');
             const nextBtn = answerBlock.nextElementSibling.querySelector('.test__next');
             const closeBtn = answerBlock.nextElementSibling.querySelector('.test__close');
@@ -706,6 +710,16 @@ class Vocab {
             this.trainArray.forEach(elem => {
                 if (elem.word === word && target.textContent === elem.translation) {
                     target.classList.add('js-right');
+
+                    //
+                    if (fullAnswers.length === +total) {
+                        congratsMessage.textContent = `${total} out of ${total}!`;
+                        this.showModal(congratsModal);
+
+                        setTimeout(() => {
+                            congratsModal.classList.remove('js-active');
+                        }, 10000);
+                    }
                     //HIDE OTHER ANSWERS
                     answers.forEach(answer => {
                         if (answer.classList.contains('js-right')) {
@@ -743,6 +757,10 @@ class Vocab {
             } else {
                 closeBtn.style.display = 'inline-block';
             }
+        }
+
+        if (target.closest('.congrats__cross') || target.closest('.congrats__btn')) {
+            document.querySelector('.congrats').classList.remove('js-active');
         }
 
         //CHECKBOXES
