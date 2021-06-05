@@ -683,6 +683,7 @@ class Vocab {
             this.showModal(testModal);
             toggleElements('.list__translation', 'hide', actualList);
             this.sliderPosition = 0;
+            this.hit = 0;
             this.pageCounter(this.sliderPosition, wrapper);
         }
 
@@ -721,7 +722,6 @@ class Vocab {
         if (target.closest('.test__answer')) {
             //check for the already been clicked
             const vocab = JSON.parse(localStorage.getItem('vocab'));
-            const fullAnswers = document.getElementsByClassName('test__answer js-right');
             const congratsModal = document.querySelector('.congrats');
             const congratsMessage = congratsModal.querySelector('.congrats__subtitle');
             const word = target.closest('.test__slide').querySelector('.test__word').textContent;
@@ -742,10 +742,11 @@ class Vocab {
             //CONDITION OF SUCCESS PICK
             this.trainArray.forEach(elem => {
                 if (elem.word === word && target.textContent === elem.translation) {
+                    this.hit++;
                     target.classList.add('js-right');
 
-                    //
-                    if (fullAnswers.length === +total) {
+                    console.log(this.hit);
+                    if (this.hit === +total) {
                         congratsMessage.textContent = `${total} out of ${total}!`;
                         this.showModal(congratsModal);
 
