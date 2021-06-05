@@ -335,7 +335,7 @@
 
   &__controls {
     position: absolute;
-    right: 40px;
+    right: 60px;
     //margin-left: auto;
   }
 }
@@ -498,6 +498,14 @@
 
     &.js-wrong {
       background-image: url('../assets/images/sort-stats-wrong-desc.png');
+    }
+  }
+
+  &__new {
+    background-image: url('../assets/images/sort-time.png');
+
+    &:active {
+      background-image: url('../assets/images/sort-time-color.png');
     }
   }
 }

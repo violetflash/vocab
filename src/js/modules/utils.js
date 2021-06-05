@@ -3,12 +3,24 @@ const writeWord = (
     reference,
     word,
     translation,
+    timestamp,
     stats = { "right": 0, "wrong": 0 }) => {
     firebase.database().ref(reference + word).set({
         word,
         translation,
         stats,
+        timestamp,
     });
+};
+
+const makeTimestamps = vocab => {
+    const timestamps = {};
+    for (const vocabKey in vocab) {
+        if (vocab[vocabKey]) {
+            vocab[vocabKey].forEach(elem => timestamps[elem.word] = elem.timestamp);
+        }
+    }
+    return timestamps;
 };
 
 const removeSpaces = string => string.replace(/\s/g, '');
@@ -188,4 +200,5 @@ export {
     getCookie,
     sortObject,
     removeSpaces,
+    makeTimestamps,
 };

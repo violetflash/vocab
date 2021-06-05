@@ -22,7 +22,8 @@ import {
     setCookie,
     getCookie,
     makeWordsList,
-    sortObject
+    sortObject,
+    makeTimestamps,
 } from './utils';
 
 //TODO header - make canvas with arc
@@ -45,14 +46,15 @@ class Vocab {
         this.sliderPosition = 0;
     }
 
-    addNewWord(reference, word, translation, stats) {
-        writeWord(firebase, reference, word, translation, stats);
-        this.getData();
+    addNewWord(reference, word, translation, timestamp, stats) {
+        writeWord(firebase, reference, word, translation, timestamp, stats);
+        this.getData('timestamp');
     }
 
     deleteWord(target) {
         const row = target.closest('.list__row');
         const word = row.querySelector('.list__word').textContent.toLowerCase();
+        const timestamp = this.timestamps ? this.timestamps[word] : this.generateId();
         const translation = row.querySelector('.list__translation').textContent.toLowerCase();
         const right = row.querySelector('.list__right').textContent;
         const wrong = row.querySelector('.list__wrong').textContent;
@@ -60,10 +62,10 @@ class Vocab {
         const list = row.dataset.master;
         const ref = `${this.refPrefix}/${list}/${word}`;
         deleteWord(firebase, ref);
-        return { word, translation, stats };
+        return { word, translation, stats, timestamp };
     }
 
-    getData() {
+    getData(sortOptions) {
         const dbRef = firebase.database().ref('vocab/');
         dbRef.get()
             .then(snapshot => {
@@ -78,10 +80,27 @@ class Vocab {
                         }
                     }
 
-                    localStorage.setItem('vocab', JSON.stringify(vocab));
                     this.words = makeWordsList(vocab);
+                    this.timestamps = makeTimestamps(vocab);
+                    localStorage.setItem('timestamps', JSON.stringify(this.timestamps));
                     localStorage.setItem('vocabWords', JSON.stringify(this.words));
                     this.setStats(vocab);
+
+                    if (sortOptions && sortOptions === "timestamp") {
+                        this.sortArrayByKey(vocab.actual, sortOptions);
+                    }
+
+                    // if (this.sort)  {
+                    //     for (const key in this.sort) {
+                    //         if (this.sort[key]) {
+                    //             if (this.sort[key] === 'right') {
+                    //                 console.log('right');
+                    //                 this.sortArrayByStats(vocab[key], 'right', 'ascending');
+                    //             }
+                    //         }
+                    //     }
+                    // }
+                    localStorage.setItem(this.refPrefix, JSON.stringify(vocab));
                     this.render();
                 } else {
                     console.warning('No data loaded');
@@ -282,6 +301,10 @@ class Vocab {
         array.sort(compare);
     }
 
+    sortArrayByKey(array, key) {
+        return array.sort((a, b) => b[key] - a[key]);
+    }
+
     sortArrayByStats(array, key, method) {
         if (method === 'asc') {
             return array.sort((a, b) => b.stats[key] - a.stats[key]);
@@ -317,7 +340,8 @@ class Vocab {
             this.sortArrayByStats(data[listID], 'right', method);
         } else if (method && this.sort[listID] === 'wrong') {
             this.sortArrayByStats(data[listID], 'wrong', method);
-
+        } else if (this.sort[listID] === 'new') {
+            this.sortArrayByKey(data[listID], 'timestamp');
         }
 
         localStorage.setItem('vocab', JSON.stringify(data));
@@ -481,10 +505,10 @@ class Vocab {
 
         if (target.closest('.controls__move')) {
             target = target.closest('.controls__move');
-            const { word, translation, stats } = this.deleteWord(target);
+            const { word, translation, stats, timestamp } = this.deleteWord(target);
             const targetList = target.dataset.move.toLowerCase();
             const reference = `${this.refPrefix}/${targetList}/`;
-            this.addNewWord(reference, word, translation, stats);
+            this.addNewWord(reference, word, translation, timestamp, stats);
         }
 
         if (target.closest('.controls__remove')) {
@@ -567,9 +591,18 @@ class Vocab {
 
 
         //SORTING ARRAY
+
+
         if (target.closest('.sort__shuffle') || target.closest('.sort__sort') ||
-            target.closest('.sort__stats')) {
+            target.closest('.sort__stats') || target.closest('.sort__new')) {
             this.listID = target.closest('.vocab__info-line').nextElementSibling.id;
+        }
+
+        if (target.closest('.sort__new')) {
+            const { listID } = this;
+            this.sort[listID] = 'new';
+            localStorage.setItem('vocabSortOptions', JSON.stringify(this.sort));
+            this.sortList(listID);
         }
 
         if (target.closest('.sort__shuffle')) {
@@ -834,7 +867,7 @@ class Vocab {
                 if (form.classList.contains('vocab__form') && checkInputs(inputs)) {  //write word to database
                     const word = document.querySelector('#word').value.toLowerCase();
                     const translation = document.querySelector('#translation').value.toLowerCase();
-                    this.addNewWord(`${this.refPrefix}/${this.actualID}/`, word, translation);
+                    this.addNewWord(`${this.refPrefix}/${this.actualID}/`, word, translation, this.generateId());
                     form.reset();
                     document.getElementById('word').focus();
                 }
@@ -845,10 +878,11 @@ class Vocab {
                     const word = wordField.value.toLowerCase().trim();
                     const translationField = form.querySelector('input[name="translation"]');
                     const translation = translationField.value.toLowerCase().trim();
+                    const timestamp = this.timestamps[oldWord];
                     const list = document.querySelector('.modal-edit').dataset.list;
                     const ref = `${this.refPrefix}/${list}/`;
                     deleteWord(firebase, ref + oldWord);
-                    this.addNewWord(ref, word, translation);
+                    this.addNewWord(ref, word, translation, timestamp);
                     this.hideModals();
                 }
 
@@ -990,16 +1024,19 @@ class Vocab {
 
     setStats(vocab) {
         this.stats = [];
-        vocab[this.actualID].forEach(elem => {
-            this.stats.push(
-                {
-                    [elem.word]: {
-                        right: elem.stats.right,
-                        wrong: elem.stats.wrong,
+        if (vocab[this.actualID]) {
+            vocab[this.actualID].forEach(elem => {
+                this.stats.push(
+                    {
+                        [elem.word]: {
+                            right: elem.stats.right,
+                            wrong: elem.stats.wrong,
+                        }
                     }
-                }
-            );
-        });
+                );
+            });
+        }
+
     }
 
     init() {
