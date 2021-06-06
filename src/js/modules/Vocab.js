@@ -745,7 +745,6 @@ class Vocab {
                     this.hit++;
                     target.classList.add('js-right');
 
-                    console.log(this.hit);
                     if (this.hit === +total) {
                         congratsMessage.textContent = `${total} out of ${total}!`;
                         this.showModal(congratsModal);
