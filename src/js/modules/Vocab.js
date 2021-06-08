@@ -865,8 +865,8 @@ class Vocab {
                 e.preventDefault();
 
                 if (form.classList.contains('vocab__form') && checkInputs(inputs)) {  //write word to database
-                    const word = document.querySelector('#word').value.toLowerCase();
-                    const translation = document.querySelector('#translation').value.toLowerCase();
+                    const word = document.querySelector('#word').value.toLowerCase().trim();
+                    const translation = document.querySelector('#translation').value.toLowerCase().trim();
                     this.addNewWord(`${this.refPrefix}/${this.actualID}/`, word, translation, this.generateId());
                     form.reset();
                     document.getElementById('word').focus();
