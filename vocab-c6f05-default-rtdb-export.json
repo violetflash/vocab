@@ -1,6 +1,15 @@
 {
   "vocab" : {
     "actual" : {
+      "abate" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623182231072",
+        "translation" : "утихать",
+        "word" : "abate"
+      },
       "accommodation" : {
         "stats" : {
           "right" : 2,
@@ -10,14 +19,41 @@
         "translation" : "жилье, помещение",
         "word" : "accommodation"
       },
+      "amusement" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623435943462",
+        "translation" : "развлечение, забава",
+        "word" : "amusement"
+      },
+      "arbitrary" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623124912472",
+        "translation" : "произвольный",
+        "word" : "arbitrary"
+      },
       "arose" : {
         "stats" : {
-          "right" : 9,
+          "right" : 10,
           "wrong" : "1"
         },
         "timestamp" : "060520211622891479091",
         "translation" : "возникать, появляться, происходить",
         "word" : "arose"
+      },
+      "artificially" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060720211623046869830",
+        "translation" : "искусственно",
+        "word" : "artificially"
       },
       "astoundingly" : {
         "stats" : {
@@ -28,6 +64,33 @@
         "translation" : "поразительно",
         "word" : "astoundingly"
       },
+      "asunder" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623434592585",
+        "translation" : "на части, пополам",
+        "word" : "asunder"
+      },
+      "beneath" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623184074477",
+        "translation" : "ниже",
+        "word" : "beneath"
+      },
+      "bent" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623158231636",
+        "translation" : "изогнутый, кривой, бесчестный",
+        "word" : "bent"
+      },
       "bizzare" : {
         "stats" : {
           "right" : 7,
@@ -36,6 +99,15 @@
         "timestamp" : "060520211622891480621",
         "translation" : "причудливый",
         "word" : "bizzare"
+      },
+      "bleak" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623218776208",
+        "translation" : "унылый",
+        "word" : "bleak"
       },
       "bloody" : {
         "stats" : {
@@ -46,6 +118,15 @@
         "translation" : "чертовски",
         "word" : "bloody"
       },
+      "bloom" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623157034551",
+        "translation" : "цвести",
+        "word" : "bloom"
+      },
       "blurt" : {
         "stats" : {
           "right" : 4,
@@ -54,6 +135,15 @@
         "timestamp" : "060520211622891481575",
         "translation" : "болтать",
         "word" : "blurt"
+      },
+      "blush" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623163761368",
+        "translation" : "краснеть, румянец",
+        "word" : "blush"
       },
       "bookkeeper" : {
         "stats" : {
@@ -84,12 +174,21 @@
       },
       "bristly" : {
         "stats" : {
-          "right" : 5,
+          "right" : 6,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891482823",
         "translation" : "щетинистый",
         "word" : "bristly"
+      },
+      "broad" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061020211623348195611",
+        "translation" : "широкий",
+        "word" : "broad"
       },
       "browbeaten" : {
         "stats" : {
@@ -108,6 +207,15 @@
         "timestamp" : "060520211622909166404",
         "translation" : "помять",
         "word" : "bruise"
+      },
+      "carpenter" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623184410926",
+        "translation" : "плотник",
+        "word" : "carpenter"
       },
       "cliff" : {
         "stats" : {
@@ -136,6 +244,15 @@
         "translation" : "загромождённый",
         "word" : "cluttered"
       },
+      "commemorate" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623434820788",
+        "translation" : "почтить память",
+        "word" : "commemorate"
+      },
       "compel" : {
         "stats" : {
           "right" : 5,
@@ -156,21 +273,30 @@
       },
       "concern" : {
         "stats" : {
-          "right" : 4,
+          "right" : 2,
           "wrong" : 0
         },
-        "timestamp" : "060520211622904624684",
-        "translation" : "беспокойство",
+        "timestamp" : "060720211623046962158",
+        "translation" : "проблема",
         "word" : "concern"
       },
       "condemn" : {
         "stats" : {
-          "right" : 5,
+          "right" : "5",
           "wrong" : "2"
         },
-        "timestamp" : "060520211622891486230",
+        "timestamp" : "060820211623163332530",
         "translation" : "осуждать",
         "word" : "condemn"
+      },
+      "condensed" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061020211623348153277",
+        "translation" : "уплотненный",
+        "word" : "condensed"
       },
       "condolences" : {
         "stats" : {
@@ -199,6 +325,15 @@
         "translation" : "скованность, принуждение, стеснение",
         "word" : "constraint"
       },
+      "contemplate" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623435982884",
+        "translation" : "созерцать, лицезреть",
+        "word" : "contemplate"
+      },
       "contribute" : {
         "stats" : {
           "right" : 4,
@@ -207,6 +342,24 @@
         "timestamp" : "060520211622891488695",
         "translation" : "содействовать",
         "word" : "contribute"
+      },
+      "convenient" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "061020211623347504773",
+        "translation" : "удобный",
+        "word" : "convenient"
+      },
+      "cookie cutter" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060720211623087258163",
+        "translation" : "форма для печенья",
+        "word" : "cookie cutter"
       },
       "cough" : {
         "stats" : {
@@ -219,7 +372,7 @@
       },
       "counsel" : {
         "stats" : {
-          "right" : 1,
+          "right" : 2,
           "wrong" : 0
         },
         "timestamp" : "060620211622920117448",
@@ -244,6 +397,33 @@
         "translation" : "реквизиты для входа",
         "word" : "credentials"
       },
+      "crucial" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060720211623089113007",
+        "translation" : "ключевой",
+        "word" : "crucial"
+      },
+      "cumber" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623352677647",
+        "translation" : "затруднение, стеснение, препятствие",
+        "word" : "cumber"
+      },
+      "cumbersome" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623352649271",
+        "translation" : "громоздкий, обременительный",
+        "word" : "cumbersome"
+      },
       "cunning" : {
         "stats" : {
           "right" : "2",
@@ -262,6 +442,24 @@
         "translation" : "кудрявый",
         "word" : "curly"
       },
+      "curriculum" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "061020211623335998042",
+        "translation" : "учебный план",
+        "word" : "curriculum"
+      },
+      "decree" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623435103484",
+        "translation" : "указ, постановление",
+        "word" : "decree"
+      },
       "defileded" : {
         "stats" : {
           "right" : "2",
@@ -279,6 +477,15 @@
         "timestamp" : "060520211622891493062",
         "translation" : "требовать",
         "word" : "demand"
+      },
+      "deplorable" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623435419757",
+        "translation" : "печальный, скверный",
+        "word" : "deplorable"
       },
       "despise" : {
         "stats" : {
@@ -306,6 +513,15 @@
         "timestamp" : "060520211622891494256",
         "translation" : "различие, отличие, различение",
         "word" : "distinction"
+      },
+      "distress" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060720211623070055935",
+        "translation" : "страдание, горе, бедствие",
+        "word" : "distress"
       },
       "dour" : {
         "stats" : {
@@ -342,6 +558,15 @@
         "timestamp" : "060520211622891496218",
         "translation" : "глупость",
         "word" : "dunder"
+      },
+      "embrace" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060720211623046826942",
+        "translation" : "включать, охватывать, принимать, обнимать",
+        "word" : "embrace"
       },
       "embroidered" : {
         "stats" : {
@@ -390,7 +615,7 @@
       },
       "famished" : {
         "stats" : {
-          "right" : "2",
+          "right" : 4,
           "wrong" : "1"
         },
         "timestamp" : "060520211622891499094",
@@ -405,6 +630,24 @@
         "timestamp" : "060520211622891499840",
         "translation" : "изысканный",
         "word" : "fancy"
+      },
+      "fascinating" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623435307972",
+        "translation" : "очаровательный",
+        "word" : "fascinating"
+      },
+      "fertile" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623437446694",
+        "translation" : "плодородный",
+        "word" : "fertile"
       },
       "fetch" : {
         "stats" : {
@@ -432,6 +675,15 @@
         "translation" : "набег",
         "word" : "foray"
       },
+      "fortnight" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623183162423",
+        "translation" : "две недели",
+        "word" : "fortnight"
+      },
       "foul" : {
         "stats" : {
           "right" : 3,
@@ -450,14 +702,32 @@
         "translation" : "хрупкий базовый класс",
         "word" : "fragile base class"
       },
+      "freaking out" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623164660338",
+        "translation" : "психовать",
+        "word" : "freaking out"
+      },
       "from the get go" : {
         "stats" : {
-          "right" : 3,
+          "right" : 4,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891502452",
         "translation" : "с самого начала",
         "word" : "from the get go"
+      },
+      "frown" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623435848149",
+        "translation" : "хмуриться",
+        "word" : "frown"
       },
       "gambler" : {
         "stats" : {
@@ -468,6 +738,15 @@
         "translation" : "азартный игрок",
         "word" : "gambler"
       },
+      "gap" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060720211623046349983",
+        "translation" : "зазор, разрыв",
+        "word" : "gap"
+      },
       "garland" : {
         "stats" : {
           "right" : 4,
@@ -477,6 +756,24 @@
         "translation" : "венок",
         "word" : "garland"
       },
+      "generosity" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623434845740",
+        "translation" : "щедрость",
+        "word" : "generosity"
+      },
+      "glance" : {
+        "stats" : {
+          "right" : 2,
+          "wrong" : 0
+        },
+        "timestamp" : "060720211623047200206",
+        "translation" : "беглый взгляд, взглянуть мельком",
+        "word" : "glance"
+      },
       "glimpse" : {
         "stats" : {
           "right" : 3,
@@ -485,6 +782,15 @@
         "timestamp" : "060520211622891503958",
         "translation" : "намек",
         "word" : "glimpse"
+      },
+      "go nuts" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623219193023",
+        "translation" : "сходить с ума, помешаться",
+        "word" : "go nuts"
       },
       "gorilla banana problem" : {
         "stats" : {
@@ -506,7 +812,7 @@
       },
       "granularity" : {
         "stats" : {
-          "right" : 1,
+          "right" : 2,
           "wrong" : 0
         },
         "timestamp" : "060620211622969799284",
@@ -542,12 +848,21 @@
       },
       "guilty" : {
         "stats" : {
-          "right" : "2",
+          "right" : 3,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891507969",
         "translation" : "виновный",
         "word" : "guilty"
+      },
+      "gullible" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623437273006",
+        "translation" : "доверчивый",
+        "word" : "gullible"
       },
       "handout" : {
         "stats" : {
@@ -569,7 +884,7 @@
       },
       "heathen" : {
         "stats" : {
-          "right" : 3,
+          "right" : 4,
           "wrong" : 0
         },
         "timestamp" : "060520211622909692672",
@@ -584,6 +899,15 @@
         "timestamp" : "060520211622891464756",
         "translation" : "привет",
         "word" : "hello"
+      },
+      "hence" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061220211623481982010",
+        "translation" : "следовательно",
+        "word" : "hence"
       },
       "hodgepodge" : {
         "stats" : {
@@ -612,6 +936,15 @@
         "translation" : "дерзкий",
         "word" : "impertinent"
       },
+      "implore" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623158116412",
+        "translation" : "умолять",
+        "word" : "implore"
+      },
       "incomprehensibilities" : {
         "stats" : {
           "right" : "2",
@@ -629,6 +962,24 @@
         "timestamp" : "060520211622891511708",
         "translation" : "неизбежный, неминуемый, неизменный",
         "word" : "inevitable"
+      },
+      "insult" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623181362595",
+        "translation" : "оскорблять, обижать",
+        "word" : "insult"
+      },
+      "intact" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623124694064",
+        "translation" : "нетронутый, неповрежденный",
+        "word" : "intact"
       },
       "intersection" : {
         "stats" : {
@@ -648,6 +999,15 @@
         "translation" : "запугивать, пугать, устрашать",
         "word" : "intimidate"
       },
+      "jolly" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623157169159",
+        "translation" : "веселый",
+        "word" : "jolly"
+      },
       "labor" : {
         "stats" : {
           "right" : 4,
@@ -659,12 +1019,30 @@
       },
       "larder" : {
         "stats" : {
-          "right" : "2",
+          "right" : 3,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891512933",
         "translation" : "кладовая",
         "word" : "larder"
+      },
+      "leaner" : {
+        "stats" : {
+          "right" : "0",
+          "wrong" : "0"
+        },
+        "timestamp" : "061020211623350273623",
+        "translation" : "худой, скудный, тощий",
+        "word" : "leaner"
+      },
+      "liable" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "061020211623314110414",
+        "translation" : "подлежащий",
+        "word" : "liable"
       },
       "litter" : {
         "stats" : {
@@ -674,6 +1052,24 @@
         "timestamp" : "060520211622891513406",
         "translation" : "помет, мусор",
         "word" : "litter"
+      },
+      "loosely coupled" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060720211623047018502",
+        "translation" : "слабо связанный",
+        "word" : "loosely coupled"
+      },
+      "lump" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623436927250",
+        "translation" : "кусок, ком",
+        "word" : "lump"
       },
       "lunge" : {
         "stats" : {
@@ -693,6 +1089,24 @@
         "translation" : "калечить",
         "word" : "maim"
       },
+      "maintainable" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061220211623483074901",
+        "translation" : "ремонтопригодный",
+        "word" : "maintainable"
+      },
+      "marvel" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623183251023",
+        "translation" : "чудо",
+        "word" : "marvel"
+      },
       "mess" : {
         "stats" : {
           "right" : 5,
@@ -711,6 +1125,33 @@
         "translation" : "держатся жеманно, рубить, фарш",
         "word" : "mince"
       },
+      "mischief" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623180806327",
+        "translation" : "озорство, вред",
+        "word" : "mischief"
+      },
+      "miser" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623183810464",
+        "translation" : "скряга, жмот",
+        "word" : "miser"
+      },
+      "miserable" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623183788040",
+        "translation" : "несчастный, печальный",
+        "word" : "miserable"
+      },
       "mock" : {
         "stats" : {
           "right" : 4,
@@ -720,9 +1161,18 @@
         "translation" : "насмехаться",
         "word" : "mock"
       },
+      "mongrel" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623123603844",
+        "translation" : "помесь",
+        "word" : "mongrel"
+      },
       "muzzle" : {
         "stats" : {
-          "right" : 1,
+          "right" : 2,
           "wrong" : 0
         },
         "timestamp" : "060620211622921153065",
@@ -737,6 +1187,42 @@
         "timestamp" : "060620211622919923145",
         "translation" : "племянник",
         "word" : "nephew"
+      },
+      "nitty-gritty" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061020211623337984695",
+        "translation" : "мелкозернистый",
+        "word" : "nitty-gritty"
+      },
+      "no offence" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623184346679",
+        "translation" : "не в обиду",
+        "word" : "no offence"
+      },
+      "nonsense" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623437034798",
+        "translation" : "ерунда, вздор, глупость",
+        "word" : "nonsense"
+      },
+      "nutshell" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061020211623344763979",
+        "translation" : "вкратце",
+        "word" : "nutshell"
       },
       "oaf" : {
         "stats" : {
@@ -758,7 +1244,7 @@
       },
       "obsession" : {
         "stats" : {
-          "right" : "2",
+          "right" : 3,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891516458",
@@ -785,7 +1271,7 @@
       },
       "oink" : {
         "stats" : {
-          "right" : "2",
+          "right" : 3,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891518163",
@@ -810,6 +1296,15 @@
         "translation" : "перекрытие, совпадение, нахлестка",
         "word" : "overlap"
       },
+      "ox" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623183060824",
+        "translation" : "бык, вол, буйвол",
+        "word" : "ox"
+      },
       "partake" : {
         "stats" : {
           "right" : 3,
@@ -828,6 +1323,15 @@
         "translation" : "куропатка",
         "word" : "partridge"
       },
+      "pious" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623437189634",
+        "translation" : "благочестивый",
+        "word" : "pious"
+      },
       "pity" : {
         "stats" : {
           "right" : "2",
@@ -836,6 +1340,15 @@
         "timestamp" : "060520211622891520304",
         "translation" : "жалость",
         "word" : "pity"
+      },
+      "pivot" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060720211623045654137",
+        "translation" : "вращаться",
+        "word" : "pivot"
       },
       "pivoted" : {
         "stats" : {
@@ -848,7 +1361,7 @@
       },
       "plank" : {
         "stats" : {
-          "right" : "2",
+          "right" : 3,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891521160",
@@ -857,12 +1370,21 @@
       },
       "pledge" : {
         "stats" : {
-          "right" : 4,
-          "wrong" : "1"
+          "right" : 0,
+          "wrong" : 0
         },
-        "timestamp" : "060520211622891521858",
-        "translation" : "залог",
+        "timestamp" : "061120211623434632138",
+        "translation" : "обет, обещание, залог",
         "word" : "pledge"
+      },
+      "poacher" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623123630985",
+        "translation" : "браконьер",
+        "word" : "poacher"
       },
       "ponderous" : {
         "stats" : {
@@ -882,6 +1404,15 @@
         "translation" : "владеть, обладать",
         "word" : "possess"
       },
+      "pour" : {
+        "stats" : {
+          "right" : 1,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623184744942",
+        "translation" : "литься, наливать",
+        "word" : "pour"
+      },
       "pox" : {
         "stats" : {
           "right" : 5,
@@ -899,6 +1430,15 @@
         "timestamp" : "060520211622891524027",
         "translation" : "предшествовать, превосходить, предпосылать",
         "word" : "preceded"
+      },
+      "precise" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061020211623351200200",
+        "translation" : "точный",
+        "word" : "precise"
       },
       "predict" : {
         "stats" : {
@@ -936,9 +1476,36 @@
         "translation" : "склонности",
         "word" : "proclivities"
       },
+      "procurer" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623180921297",
+        "translation" : "поставщик",
+        "word" : "procurer"
+      },
+      "prone" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061020211623347976570",
+        "translation" : "склонный",
+        "word" : "prone"
+      },
+      "proper" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060720211623055740363",
+        "translation" : "правильный, надлежащий, собственный",
+        "word" : "proper"
+      },
       "prosper" : {
         "stats" : {
-          "right" : 4,
+          "right" : 5,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891527015",
@@ -1001,7 +1568,7 @@
       },
       "ragged" : {
         "stats" : {
-          "right" : 5,
+          "right" : 6,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891531579",
@@ -1017,6 +1584,15 @@
         "translation" : "скорее, довольно, вернее",
         "word" : "rather"
       },
+      "recap" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061020211623314526679",
+        "translation" : "вывод, резюме, краткое повторение",
+        "word" : "recap"
+      },
       "relief" : {
         "stats" : {
           "right" : "2",
@@ -1025,6 +1601,15 @@
         "timestamp" : "060520211622891532364",
         "translation" : "облегчение",
         "word" : "relief"
+      },
+      "repugnant" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623435532357",
+        "translation" : "отвратительный",
+        "word" : "repugnant"
       },
       "resemblance" : {
         "stats" : {
@@ -1044,6 +1629,15 @@
         "translation" : "соответственный",
         "word" : "respective"
       },
+      "rest assured" : {
+        "stats" : {
+          "right" : 2,
+          "wrong" : 0
+        },
+        "timestamp" : "060720211623045578716",
+        "translation" : "будьте уверены",
+        "word" : "rest assured"
+      },
       "restraint" : {
         "stats" : {
           "right" : 1,
@@ -1055,7 +1649,7 @@
       },
       "retain" : {
         "stats" : {
-          "right" : 4,
+          "right" : 5,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891533678",
@@ -1091,7 +1685,7 @@
       },
       "roughshod over you" : {
         "stats" : {
-          "right" : "2",
+          "right" : 3,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891535751",
@@ -1134,6 +1728,15 @@
         "translation" : "царапать",
         "word" : "scrape"
       },
+      "scrunch down" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623163205367",
+        "translation" : "сжаться",
+        "word" : "scrunch down"
+      },
       "sdk" : {
         "stats" : {
           "right" : "2",
@@ -1154,12 +1757,21 @@
       },
       "severity" : {
         "stats" : {
-          "right" : "2",
+          "right" : 3,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891538539",
         "translation" : "строгость",
         "word" : "severity"
+      },
+      "singular" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623183279575",
+        "translation" : "исключительный, единственный",
+        "word" : "singular"
       },
       "slander" : {
         "stats" : {
@@ -1181,7 +1793,7 @@
       },
       "smuggler" : {
         "stats" : {
-          "right" : "2",
+          "right" : 3,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891539791",
@@ -1190,16 +1802,25 @@
       },
       "solemn" : {
         "stats" : {
-          "right" : 3,
+          "right" : 5,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891540206",
         "translation" : "торжественный",
         "word" : "solemn"
       },
+      "sour" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061220211623438052216",
+        "translation" : "сердитый, озлобленный",
+        "word" : "sour"
+      },
       "spare" : {
         "stats" : {
-          "right" : "2",
+          "right" : 3,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891540967",
@@ -1223,6 +1844,15 @@
         "timestamp" : "060520211622891542065",
         "translation" : "злобный",
         "word" : "spiteful"
+      },
+      "standalone" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623126546337",
+        "translation" : "автономный",
+        "word" : "standalone"
       },
       "stern" : {
         "stats" : {
@@ -1253,7 +1883,7 @@
       },
       "substantial" : {
         "stats" : {
-          "right" : 0,
+          "right" : 1,
           "wrong" : 0
         },
         "timestamp" : "060620211622970863117",
@@ -1269,6 +1899,15 @@
         "translation" : "тонкости",
         "word" : "subtleties"
       },
+      "sullen" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623434292099",
+        "translation" : "угрюмый, мрачный, замкнутый",
+        "word" : "sullen"
+      },
       "sweep" : {
         "stats" : {
           "right" : 3,
@@ -1280,12 +1919,21 @@
       },
       "tackle" : {
         "stats" : {
-          "right" : 5,
+          "right" : 6,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891545309",
         "translation" : "взяться",
         "word" : "tackle"
+      },
+      "tally" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060820211623177105834",
+        "translation" : "подсчет",
+        "word" : "tally"
       },
       "tanner" : {
         "stats" : {
@@ -1314,6 +1962,15 @@
         "translation" : "скучный",
         "word" : "tedious"
       },
+      "tend" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623434734020",
+        "translation" : "иметь склонность, тенденцию",
+        "word" : "tend"
+      },
       "tense up" : {
         "stats" : {
           "right" : 3,
@@ -1322,6 +1979,15 @@
         "timestamp" : "060520211622909523016",
         "translation" : "напрягаться",
         "word" : "tense up"
+      },
+      "thigh" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623435589756",
+        "translation" : "бедро",
+        "word" : "thigh"
       },
       "thorough" : {
         "stats" : {
@@ -1343,7 +2009,7 @@
       },
       "thud" : {
         "stats" : {
-          "right" : 1,
+          "right" : 2,
           "wrong" : 0
         },
         "timestamp" : "060620211622922888912",
@@ -1359,18 +2025,36 @@
         "translation" : "таким образом",
         "word" : "thus"
       },
+      "tied" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061020211623314275943",
+        "translation" : "связанный",
+        "word" : "tied"
+      },
       "tight coupling problem" : {
         "stats" : {
-          "right" : 8,
+          "right" : 9,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891549572",
         "translation" : "проблема плотного сцепления",
         "word" : "tight coupling problem"
       },
+      "timid" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623180705461",
+        "translation" : "робкий, застенчивый",
+        "word" : "timid"
+      },
       "tiny" : {
         "stats" : {
-          "right" : 4,
+          "right" : 5,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891549948",
@@ -1379,12 +2063,21 @@
       },
       "to consummate" : {
         "stats" : {
-          "right" : 1,
+          "right" : 2,
           "wrong" : 0
         },
         "timestamp" : "060620211622922680454",
         "translation" : "довести до конца",
         "word" : "to consummate"
+      },
+      "to rock" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623181563033",
+        "translation" : "качаться",
+        "word" : "to rock"
       },
       "token" : {
         "stats" : {
@@ -1421,6 +2114,15 @@
         "timestamp" : "060520211622891551806",
         "translation" : "откатиться",
         "word" : "trundled off"
+      },
+      "tuck tail" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "060920211623184561279",
+        "translation" : "поджать хвост",
+        "word" : "tuck tail"
       },
       "tulip" : {
         "stats" : {
@@ -1503,10 +2205,19 @@
         "translation" : "ходить вразвалку",
         "word" : "waddle"
       },
+      "wages" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061220211623438192511",
+        "translation" : "зарплата",
+        "word" : "wages"
+      },
       "weep" : {
         "stats" : {
           "right" : 0,
-          "wrong" : 1
+          "wrong" : 2
         },
         "timestamp" : "060620211622920705208",
         "translation" : "плакать",
@@ -1514,7 +2225,7 @@
       },
       "whimpering" : {
         "stats" : {
-          "right" : 7,
+          "right" : 9,
           "wrong" : "0"
         },
         "timestamp" : "060520211622891557382",
@@ -1529,6 +2240,15 @@
         "timestamp" : "060520211622891557782",
         "translation" : "капризы",
         "word" : "whims"
+      },
+      "wisdom" : {
+        "stats" : {
+          "right" : 0,
+          "wrong" : 0
+        },
+        "timestamp" : "061120211623437409814",
+        "translation" : "мудрость",
+        "word" : "wisdom"
       },
       "wit" : {
         "stats" : {

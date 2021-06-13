@@ -1,3 +1,5 @@
+//TODO Num of answers variants are hardcoded in 'makeTestSlide' method
+
 // Firebase App (the core Firebase SDK) is always required and must be listed first
 import firebase from "firebase/app";
 // Add the Firebase products that you want to use
@@ -44,6 +46,7 @@ class Vocab {
         this.words = JSON.parse(localStorage.getItem('vocabWords'));
         this.sort = JSON.parse(localStorage.getItem('vocabSortOptions')) || { "actual": "", "learned": "" };
         this.sliderPosition = 0;
+        this.numOfAnswers = 5;
     }
 
     addNewWord(reference, word, translation, timestamp, stats) {
@@ -918,7 +921,7 @@ class Vocab {
             const answers = [elem.translation];
 
             if (this.vocabToTrain) {
-                while (answers.length !== 4) {
+                while (answers.length !== this.numOfAnswers) {
                     const randIndex = Math.floor(Math.random() * this.vocabToTrain.length);
 
                     if (elem.translation === this.vocabToTrain[randIndex].translation ||
@@ -932,6 +935,8 @@ class Vocab {
             this.shuffle(answers);
 
             sliderWrapper.insertAdjacentHTML('beforeend', this.makeTestSlide(elem, answers));
+
+            //sets min-height to avoid field collapse when the text inside will be disappeared
             const sliders = sliderWrapper.querySelectorAll('.test__slide');
             sliders.forEach(slider => {
                 const answers = slider.querySelectorAll('.test__answer');
@@ -951,6 +956,7 @@ class Vocab {
                     <button class="test__answer" type="button">${answers[1]}</button>
                     <button class="test__answer" type="button">${answers[2]}</button>
                     <button class="test__answer" type="button">${answers[3]}</button>
+                    <button class="test__answer" type="button">${answers[4]}</button>
                 </div>
                 <div class="test__btn-box">
                     <button class="test__prev">Prev</button>
